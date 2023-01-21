@@ -2,9 +2,22 @@ import json
 from flask import Flask, make_response
 from flask import jsonify
 from flask import request
-
+from flask_oidc  import OpenIDConnect
 app = Flask(__name__)
 
+app.config.update({
+    'SECRET_KEY': 'my_secret',
+    'TESTING': True,
+    'DEBUG': True,
+    'OIDC_CLIENT_SECRETS': 'client_secrets.json',
+    'OIDC_OPENID_REALM': 'local',
+    'OIDC_INTROSPECTION_AUTH_METHOD': 'bearer',
+    'OIDC-SCOPES': ['openid'],
+    'OIDC_INTROSPECTION_AUTH_METHOD': 'client_secret_post',
+    'OIDC_TOKEN_TYPE_HINT': 'access_token'
+})
+
+oidc = OpenIDConnect(app)
 
 def bad_request(message):
     response = {
@@ -16,7 +29,9 @@ def server_error():
     response = jsonify({'message': 'Something went wrong in the server. If the problem persists please contact Periculum'})
     return response, 500
 
+
 @app.route('/health', methods = ['GET'])
+@oidc.accept_token(require_token=True)
 def health():
     return jsonify(
       application='Prod Periculum PFM API',
