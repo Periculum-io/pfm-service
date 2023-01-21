@@ -1,2 +1,5 @@
 Flask
 flask-cors
+PyJWT
+Flask-OIDC
+itsdangerous==2.0.0
