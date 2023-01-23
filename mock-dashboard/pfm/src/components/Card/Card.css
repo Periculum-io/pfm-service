@@ -1,0 +1,25 @@
+.card {
+  width: 100%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  padding: 2em;
+}
+
+.card-detail {
+  margin: .5em 0 0 0;
+  font-size: 2em;
+}
+
+.card-link {
+  text-decoration: none;
+  font-weight: 600;
+  color: #000;
+  font-size: .8em;
+}
+
+.card-red {
+  background: #A1282F;
+  color: #fff;
+}
