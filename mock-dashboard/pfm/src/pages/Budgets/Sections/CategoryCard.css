@@ -8,17 +8,20 @@
   box-shadow: 2px 2px 20px rgba(0, 0, 0, .05);
 }
 
-.category-card-body .list-row {
+.category-card-body .category-card-list-doughnut-container {
+  display: flex;
   justify-content: space-between;
-  gap: 2em;
+  align-items: center;
+  gap: 1em;
+  margin: 1em 0 0 0;
+}
+
+.category-card-body .category-card-list-doughnut-container .list-row:last-child .list-item-col {
+  align-items: flex-end;
 }
 
 .category-card-body .list-row .list-item-col {
   gap: .5em;
-}
-
-.category-card-body .list-row .list-item-col:last-child {
-  align-items: flex-end;
 }
 
 .category-card-body .list-row .list-item-col h2 {
@@ -27,6 +30,12 @@
 
 .category-card-body .list-row .list-item-col p {
   font-size: 1.3em;
+}
+
+/* Doughnut */
+.category-card-body .category-card-doughnut-container {
+  height: 6em;
+  width: 6em;
 }
 
 /* Budget Exceeded or Reached*/

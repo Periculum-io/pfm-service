@@ -34,14 +34,21 @@
 }
 
 .budgets-body .budget-categories-container {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 1em;
   margin: 2em 0;
 }
 
-.budgets-body .budget-categories-container .category-card-body {
-  flex: 1 1 340px;
+.budgets-body .budget-view-all-button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media only screen and (max-width: 1150px) {
+  .budgets-body .budget-categories-container {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media only screen and (max-width: 900px) {

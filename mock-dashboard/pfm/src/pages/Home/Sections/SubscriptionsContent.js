@@ -61,7 +61,7 @@ function SubscriptionsContent(props) {
       <div className="header-row">
         <h2 className="text-dark">{props.title}</h2>
         {!Utils.isFieldEmpty(props.parentCallback) &&
-          <button className="button-link-lighter button-link-bold button-link-large" 
+          <button className="button-link-lighter button-link-bold button-text-large" 
           onClick={() => props.parentCallback()}>See all</button>
         }
       </div>

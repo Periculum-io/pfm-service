@@ -4,14 +4,55 @@ import List from "../../../components/List/List";
 import { Currency } from "../../../library/Data";
 import Utils from "../../../library/Utils";
 import "./CategoryCard.css";
+import { Chart as 
+  ChartJS, 
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip, 
+  Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
 
 function CategoryCard(props) {
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    ArcElement,
+    Title,
+    Tooltip,
+    Legend,
+  );
+
   let exceededOrReached = "reached";
 
   const category = props.category;
   const isBudgetMet = category.amountSpent >= category.budgetSet ? true : false;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const ref = useRef(null);
+  const pieChartColors = [category.color, "#D8E0E7"];
+  const pieLabels = ["Amount Spent", "Budget Set"];
+  const pieData = [category.amountSpent, category.budgetSet];
+  const pieChartOptions = {
+    cutout: 30,
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            let dataset = context.dataset.data;
+            let amount = Utils.formatCurrency(Currency.format, Currency.symbol, dataset[context.dataIndex]);
+      
+            return amount;
+          }
+        }
+      },
+      legend: {
+        display: false
+      },
+    }
+  }
 
   if(category.amountSpent > category.budgetSet) {
     exceededOrReached = "exceeded";
@@ -51,14 +92,27 @@ function CategoryCard(props) {
         <h3 className="text-dark">{category.name}</h3>
         {menuContainer}
       </div>
-      <Bar values={{ amount: category.amountSpent, total: category.budgetSet }} color={ category.color } />
-      <div>
+      <div className="category-card-list-doughnut-container">
         <List listClass="list-row" listItemClass="list-item-col" headerClass={"text-medium list-header-small list-header-light list-header-row"}
           listDetailClass="text-dark list-detail-big list-detail-bold" listContent={[
             {
               header: 'Amount Spent',
               detail: Utils.formatCurrency(Currency.format, Currency.symbol, category.amountSpent)
-            },
+            }
+          ]} />
+        <div className="category-card-doughnut-container">
+          <Doughnut data={{
+            labels: pieLabels,
+            datasets: [
+              {
+                data: pieData,
+                backgroundColor: pieChartColors
+              }
+            ]
+          }} options={pieChartOptions} />
+        </div>
+        <List listClass="list-row" listItemClass="list-item-col" headerClass={"text-medium list-header-small list-header-light list-header-row"}
+          listDetailClass="text-dark list-detail-big list-detail-bold" listContent={[
             {
               header: 'Budget Set',
               detail: Utils.formatCurrency(Currency.format, Currency.symbol, category.budgetSet)

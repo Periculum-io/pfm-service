@@ -18,6 +18,7 @@ import { BudgetView } from "../../library/Variables";
 import BudgetForm from "./Sections/BudgetForm";
 import CategoryCard from "./Sections/CategoryCard";
 import CategoryTransactions from "../../components/Modal/CategoryTransactions";
+import AllCategories from "./Sections/AllCategories";
 
 if (process.env.NODE_ENV !== 'test') {
   Modal.setAppElement('#root');
@@ -162,16 +163,23 @@ function Budgets() {
         <div className="budget-categories-container">
           {!Utils.isFieldEmpty(BudgetSpending.categories) &&
             (BudgetSpending.categories).map((element, i) => {
-              return <CategoryCard category={element} key={i} 
-                parentCallback={(category) => handleCategoryCallback(category)} />
+              if(i < 4) {
+                return <CategoryCard category={element} key={i} parentCallback={(category) => handleCategoryCallback(category)} />
+              }
             })
           }
+        </div>
+        <div className="budget-view-all-button-container">
+          <button className="button-link-lighter button-link-bold button-text-large" onClick={() => setBudgetView(BudgetView.ALL_BUDGET_CATEGORIES)}>
+            View all</button>
         </div>
       </>
     } else if(budgetView === BudgetView.EDIT_BUDGET) {
       content = <BudgetForm data={BudgetSpending} parentCallback={() => handleBudgetFormCallback()} buttonLabel={"Save"} />
     } else if(budgetView === BudgetView.ADD_BUDGET) {
       content = <BudgetForm parentCallback={() => handleBudgetFormCallback()} buttonLabel={"Create budget"} />
+    } else if(budgetView === BudgetView.ALL_BUDGET_CATEGORIES) {
+      content = <AllCategories parentCallback={() => setBudgetView(BudgetView.INITIAL)} />
     }
   } else {
     content = <BudgetForm parentCallback={() => handleBudgetFormCallback()} buttonLabel={"Create budget"} />

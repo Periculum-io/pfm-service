@@ -94,6 +94,12 @@ hr {
   justify-content: flex-end;
 }
 
+/* BUTTON */
+.button-row-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
 button {
   cursor: pointer;
 }
@@ -136,8 +142,8 @@ button {
   font-weight: 600;
 }
 
-.button-link-large {
-  font-size: 1.15em;
+.button-text-large {
+  font-size: 1.1em;
 }
 
 .button-back {

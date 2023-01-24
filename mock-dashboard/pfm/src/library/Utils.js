@@ -58,6 +58,16 @@ const Utils = {
 
     return formatter.format(number);
   },
+  formatDecimalPercentage: function (number) {
+    let percent = 0;
+
+    if(!Utils.isFieldEmpty(number)) {
+      percent = number * 100;
+      percent = Math.round(percent * 100) / 100;
+    }    
+
+    return percent + "%"
+  },
   formatCurrency: function (numFormat, currSymbol, number) {
     const formatter = new Intl.NumberFormat(numFormat, {
       style: 'currency',
@@ -229,7 +239,7 @@ const Utils = {
     var d = date;
     d = d.split(' ')[0];
     return d;
-  } 
+  }
 }
 
 

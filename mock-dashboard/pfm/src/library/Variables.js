@@ -22,7 +22,8 @@ export const SpendingCategoriesSelector = {
 export const BudgetView = {
   INITIAL: "INITIAL",
   ADD_BUDGET: "ADD_BUDGET",
-  EDIT_BUDGET: "EDIT_BUDGET"
+  EDIT_BUDGET: "EDIT_BUDGET",
+  ALL_BUDGET_CATEGORIES: "ALL_BUDGET_CATEGORIES"
 }
 
 export const AlertTypes = {
