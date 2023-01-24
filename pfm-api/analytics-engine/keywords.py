@@ -1,5 +1,22 @@
 ## contains all keywords.
 
+salary_keywords = r"\s+sal\s+|slry.|\s*sal\s*(?:jan|feb|mar|apr|may|jun|july|aug|sep|oct|nov\
+                    |dec).*|\s*staff\s*sal.*|\s*(?:jan.*|feb.*|mar.*|apr.*|may.*|jun.*|july.*|aug.*|sep.*|oct.*|nov.*\
+                    |dec.*)\s*sal.*|\s*salr.*|\s.allow.*|\s.ibt.*|\s.rem.*|\feder:|net\spay|netpay|\
+                    |ippis\s*ncs\s*(?:jan.*|feb.*|mar.*|apr.*|may.*|jun.*|july.*|aug.*|sep.*|oct.*|nov.*\|dec.*)|(?<!13th month)\s+salary\s+(?!advance)"
+
+keywords_to_remove_for_salary = ["loan", "palmcredit", "kwikmoney", "lendigo", "branch", "swiss credit", "reversal",
+                                 "cash dep", "888sport", "deposit", "deduct","trfby", "fairmoney", "13th month",
+                                 "credit direct", "piggyvest", "disbursement credit", "sporty", "bonus", " renmoney",
+                                 "loan repayment", "loan repymt", "loan rpmt", "pos", "merrybet",
+                                 "bet\s+", "bill", "salary\s*advance", "reverse", "allowance"]
+
+keywords_to_remove_for_other_income = ["loan", "palmcredit", "kwikmoney", "lendigo", "branch", "swiss\s*credit",
+                                       "reversal", "cash\s*dep", "888sport", "deposit", "deduct", "fairmoney",
+                                       "credit\s*direct", "piggyvest", "disbursement\s*credit", "sporty", "renmoney",
+                                       "loan\s*repayment", "loan\s*repymt", "loan\s*rpmt", "swiss", "renm",
+                                       "pos", "merrybet", "bet\s+", "bill\s+", "feder:", "cash\s*advance"]
+
 loan_or_repayment_keywords = r"loan\s+|palmcred\s+|kwikmon\s+|lendig\s*|repaym\s*|repymt\s*|onefi\s+|\s+zedvance\s+|\s+aella\s+|\s+quickcheck\s+|\s+creditville\s+" \
                                      r"|\s+paylater\s+|\s+onepipe\s+|\s+lidya\s+|\s+okash\s+|\s+jumiapay\s+|\s+branch\s+international|\s+pettycash\s+|\s+shecluded\s+|\s+fast\s*credit\s+|\s+devonsley\s+|\s+fast\s*point\s+|\s+swiss\s*credit\s+" \
                                      r"|\s+yes\s*credit\s+|\s+c24\s+|\s+arvo\s+|\s+heat\s*finance\s+|\s+helium\s*health\s+|\s+airopay\s+|\s+meritlend\s+|\s+sycamore\s+|\s+credit\s*express\s+|\s+micro\s*leasing\s+|\s+trakade\s+|\s+pennywise\s+" \
@@ -24,19 +41,23 @@ gambling_keywords = r'bet(?!a|t|h|w|o|e|i|m|r|u|y)|sv\s+gaming|konfam\s*bonus\s*
 transfer_keywords = r'transf(?!er\slevy)|trf|tnf|trsf|trtr|fip|nip|neft|nibss|tsf\s+|trnsf|trnf|mob2|send\s*money\s*'\
                             r'mobile\s*money\s*tr|transfer(?!\slevy)'
 
-atm_and_pos_keywords = r'atm|terminal\s+|pos[\s+|\/|@]+|point.*of.*sale'
+atm_keywords = r'atm|terminal\s+'
 
-online_and_web_keywords = r'(?:web\s*(?:pay|purc|pur|paid|.*onlin|:[\d|\w|\s]*|pmnt|pmt)|online\s*(?:pay|pmnt|pmt|international\s+money\s+transfer|paid|pur|:[\d|\w|\s]*)'
+pos_keywords = r'pos[\s+|\/|@]+|point.*of.*sale'
+
+online_and_web_keywords = r'(?:web\s*(?:pay|purc|pur|paid|.*onlin|:[\d|\w|\s]*|pmnt|pmt)|online\s*(?:pay|pmnt|pmt|international\s+money\s+transfer|paid|pur|:[\d|\w|\s]*))'
 
 ussd_keywords = r'ussd'
 
-airtime_and_data_keywords = r'air\s*time|glo([\s+|_|@|\/|\\|:]+)|mtn([\s+|_|@|\/|\\|:]+)|9mobile|airtel|vtu|topup|etisalat|spectranet'\
-                            r'|data\s*sub|ipnx|tizeti|bundles|faiba\s+|telkom|skynet|tabana|innovis\s*telecom|airtime\s+|safaricomhome|airtime\s+|safaricomhome|ussd\s\w+\s\d{13}'
+airtime_keywords = r'air\s*time|glo([\s+|_|@|\/|\\|:]+)|mtn([\s+|_|@|\/|\\|:]+)|9mobile|airtel|vtu|topup|etisalat'
+                            
 
-utilities_keywords = r'dstv|tstv|prepaid(?!\s*card)|postpaid(?!\s*card)|cable\s*tv|star\s*times|mytv|gotv|electric|utility'\
-                            r'|kplc|kenya\s*power|sanitation|showmax|\s+actv\s+|\s+cantv\s+|iroko\s+tv|trendtv|cable\s+television|infinity\s+tv|\s+daarsat\s+'\
-                            r'|\s+ovamann\s+|solar\s+energy|\s+phcn\s+|\s+zlga\s+|water|\s+kplc\s+|utilit|\s+kedco\s+|\s+kisumu\s+|\s+lumos\s+|\s+nawec\s+|\s+tawasco\s+|\s+phed\s+|\s+ibedc\s+|\s+ekedp\s+'\
-                            r'|\s+ekedc\s+|\s+cofred\s+|\s+aedc\s+|\s+bedc\s+|\snwsc\s|\sumeme\s|\syaka\s'
+internet_data_keywords = r'spectranet| data\s*sub|ipnx|tizeti|bundles|faiba\s+|telkom|skynet|tabana|innovis\s*telecom|airtime\s+|safaricomhome|airtime\s+|safaricomhome|ussd\s\w+\s\d{13}'
+
+# utilities_keywords = r'dstv|tstv|prepaid(?!\s*card)|postpaid(?!\s*card)|cable\s*tv|star\s*times|mytv|gotv|electric|utility'\
+#                             r'|kplc|kenya\s*power|sanitation|showmax|\s+actv\s+|\s+cantv\s+|iroko\s+tv|trendtv|cable\s+television|infinity\s+tv|\s+daarsat\s+'\
+#                             r'|\s+ovamann\s+|solar\s+energy|\s+phcn\s+|\s+zlga\s+|water|\s+kplc\s+|utilit|\s+kedco\s+|\s+kisumu\s+|\s+lumos\s+|\s+nawec\s+|\s+tawasco\s+|\s+phed\s+|\s+ibedc\s+|\s+ekedp\s+'\
+#                             r'|\s+ekedc\s+|\s+cofred\s+|\s+aedc\s+|\s+bedc\s+|\snwsc\s|\sumeme\s|\syaka\s'
 
 transportation_keywords = r'uber|bolt|cab\s+|taxi\s+|taxify|plentywaka|indriver|logistics|aero\s+|airline|travel'\
                             r'|airway|air\s+|aviance|jefa\s+|ucoel\s+pay|wakanow|rwandair|emirates\s+|hotel\s+booking|slim\s+trader|smatmove|outdoors\s+tour|\s+sprym\s+'\
@@ -46,16 +67,32 @@ health_keywords = r'hospital|clinic|pharmacy|pharmaceuticals|dental'
 
 travel_keywords = r'travel|airline|flight|railway|train(?!ing)'
 
-entertainment_keywords = r'movie|cinema|games|netflix|streaming|apple\s*music|spotify|youtube|hulu|deezer|boomplay|audiomack'\
-                            r'|entertainment|mall'
+# entertainment_keywords = r'movie|cinema|games|netflix|streaming|apple\s*music|spotify|youtube|hulu|deezer|boomplay|audiomack'\
+#                             r'|entertainment|mall'
 
-hospitality_and_food_keywords = r'restaurant|hotel|food|drink\s+|lounge\s+|bar\s+|\s+kfc\s+|resort|salon|barber|pub\s+|eatery|supermarket\s'\
-                                r'|naivas|wine\s+|chicken\s+inn|cuisine|pizza|mart\s+|artcaffe|whisky|chicken\s+hut|carrefour|\s+grill\s+|\s+club\s+|entertainment|café'\
-                                r'|cinemax|sheraton|golden\stulip|bandali|marriot|mestil|caliente|latitude\s256|mall|shoprite'
+# hospitality_and_food_keywords = r'restaurant|hotel|food|drink\s+|lounge\s+|bar\s+|\s+kfc\s+|resort|salon|barber|pub\s+|eatery|supermarket\s'\
+#                                 r'|naivas|wine\s+|chicken\s+inn|cuisine|pizza|mart\s+|artcaffe|whisky|chicken\s+hut|carrefour|\s+grill\s+|\s+club\s+|entertainment|café'\
+#                                 r'|cinemax|sheraton|golden\stulip|bandali|marriot|mestil|caliente|latitude\s256|mall|shoprite'
 
 insurance_keywords = r'insurance'
 
+religious_keywords = r'tithe|offering'
+
 rent_keywords = r'\s+rent'
+
+fitness_keywords = r'gym'
+
+waste_and_water_keywords = r'water|waste'
+
+bars_lounge_club_keywords = r'bar|lounge|s+club\s+'
+
+grocery_and_malls_keywords = r'grocery|naivas|mart\s+|mall|shoprite'
+
+tv_and_streaming_subscription_keywords = r'dstv|tstv|cable\s*tv|star\s*times|mytv|gotv|showmax|\s+actv\s+|\s+cantv\s+|iroko\s+tv|trendtv|cable\s+television|infinity\s+tv|\s+daarsat\s+'
+
+food_and_drinks_keywords = r'food|wine\s+|chicken\s+inn|cuisine|pizza|artcaffe|whisky|chicken\s+hut|carrefour|\s+grill\s+'
+
+electricity_keywords = r'\s+phcn\s+|electric|\s+aedc\s+|\s+bedc\s+|\s+ibedc\s+|\s+ekedp\s+'
 
 charges_and_stamp_duty_keywords = r'charge|stamp\s*duty|card\s*maint|wtax|card\s+issuance\s+fee|excise\s+duty|loop\s+commission|stamp\s*duties|sms\s*alert\s*fee'\
                                 r'|account\s*maintenance\s*fee\ |bill\s*payment\s*fee|eft\s*comm|service\s*fee|cash\s*withdrawal\s*fee|comm\s*on\s*inward\s*credit|transfer\s*levy'
