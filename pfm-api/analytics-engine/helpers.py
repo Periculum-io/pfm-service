@@ -106,9 +106,9 @@ def filter_by_transaction_narration(data, category_flag):
             # filter by keyword related to loan, gambling e.t.c to remove them from the dataframe.
             # This is for salary computation
             return df[~df.description.str.contains("|".join(keywords_to_remove_for_salary))]
-        elif category_flag == other_income_variables:
-            df = df[~df["description"].str.contains(salary_keywords)]
-            return df[~df.description.str.contains("|".join(keywords_to_remove_for_other_income))]
+        # elif category_flag == other_income_variables:
+        #     df = df[~df["description"].str.contains(salary_keywords)]
+        #     return df[~df.description.str.contains("|".join(keywords_to_remove_for_other_income))]
         else:
             return df
     except TypeError:
@@ -404,13 +404,13 @@ def create_salary_or_other_income_or_recurrent_expense_df(data, category_flag):
             final_data = filter_by_transaction_amount(fourth_filtered, category_flag)
             # print(final_data)
             unduplicated_data = drop_duplicates(fourth_filtered).sort_values("date").reset_index().drop("index", axis=1)
-        elif category_flag == other_income_variables:
-            other_income_filter = filter_by_other_income_keywords(data, category_flag)
-            fourth_filtered = combine_both_outputs(third_filtered, other_income_filter)
-            unduplicated_data = drop_duplicates(fourth_filtered)
-            unduplicated_data = unduplicated_data.sort_values("date").reset_index().drop("index", axis=1)
-        elif category_flag == recurring_expense_variables:
-            unduplicated_data = drop_duplicates(third_filtered)
-            unduplicated_data = unduplicated_data.sort_values("date").reset_index().drop("index", axis=1)
-            unduplicated_data['date'] = pd.to_datetime(unduplicated_data['date'])
+        # elif category_flag == other_income_variables:
+        #     other_income_filter = filter_by_other_income_keywords(data, category_flag)
+        #     fourth_filtered = combine_both_outputs(third_filtered, other_income_filter)
+        #     unduplicated_data = drop_duplicates(fourth_filtered)
+        #     unduplicated_data = unduplicated_data.sort_values("date").reset_index().drop("index", axis=1)
+        # elif category_flag == recurring_expense_variables:
+        #     unduplicated_data = drop_duplicates(third_filtered)
+        #     unduplicated_data = unduplicated_data.sort_values("date").reset_index().drop("index", axis=1)
+        #     unduplicated_data['date'] = pd.to_datetime(unduplicated_data['date'])
         return unduplicated_data

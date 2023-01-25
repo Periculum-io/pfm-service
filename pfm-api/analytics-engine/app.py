@@ -1,6 +1,7 @@
 
 import numpy as np
 import pandas as pd
+import json
 from flask import Flask, jsonify, request
 from preprocessing import preprocessing_layer
 from helpers import compute_number_of_transacting_month
@@ -66,6 +67,9 @@ def process():
             summary["insurance"] = None
             summary["miscellaneous"] = None
             summary["self_transfer"] = None
+            summary['average_predicted_salary'] = 0
+            summary['salary_transactions'] = None
+            summary['number_of_salary_payments'] = 0
             return summary
         else:
             if len(credit_transactions) == 0:
@@ -102,7 +106,6 @@ def process():
             summary['count_of_savings_and_investment_transactions'] = len(savings_and_investments)
             summary["savings_and_investment"] = round(float(savings_and_investments.groupby(pd.Grouper(key='date', freq="M")).sum()["amount"].sum()), 2) 
             summary['savings_and_investment_transaction'] = savings_and_investments[['date', 'amount', 'description']].to_dict(orient='records')
-
 
             airtime = debit_transactions[debit_transactions['description'].str.contains(airtime_keywords)]
             summary['count_of_airtime_transactions'] = len(airtime)
@@ -235,6 +238,7 @@ def process():
                             gambling, health, fitness, grocery_and_malls, food_and_drinks, waste_and_water, bars_lounge_club, electricity, insurance, religious]
             
             df_concat_spend = pd.concat(concat_spend)
+
             # remove duplicates
             distinct_spend = df_concat_spend.drop_duplicates(subset=['amount', "date", "description"])
 
@@ -243,15 +247,12 @@ def process():
 
             total_spend_on_other_transactions = round(float(total_transactions - total_distinct_spend), 2)
             summary['other_transactions'] = total_spend_on_other_transactions
-        return summary
         
-    def calculate_salary(data, category_flag):
-        summary = {}
-            # get salary transactions
+        # calculate salary
         predicted_salary = create_salary_or_other_income_or_recurrent_expense_df(data, category_flag)
 
         predicted_salary = predicted_salary[
-                                    predicted_salary['description'].str.contains(str(account_name))]
+                                    ~predicted_salary['description'].str.contains(str(account_name))]
         predicted_salary[["amount", "balance"]] = predicted_salary[["amount", "balance"]].astype(float)
         predicted_salary["key"] = "salary"
 
@@ -266,38 +267,34 @@ def process():
             salary_df["year"] = salary_df["year"].apply(lambda x: str(x))
             salary_df['month_name'] = salary_df['date'].dt.month_name()
             
-            #the salary variable is not adding up what do I dooooo this is just a comment line that I will take out
-            # 
 
-        #     cats = ['January', 'February', 'March', 'April','May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-        #     # sort month name
-        #     salary_df['month-name'] = pd.Categorical(salary_df['month_name'],categories=cats, ordered=True)
-        #     salary_df = salary_df.sort_values(["year", "month-name"])
-        #     salary_df = salary_df[['year', 'month-name', 'amount', 'description']]
-        #     salary_df = salary_df.to_dict(orient='records')
-        #     summary["salary_transactions"] = salary_df
+            cats = ['January', 'February', 'March', 'April','May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+            # sort month name
+            salary_df['month-name'] = pd.Categorical(salary_df['month_name'],categories=cats, ordered=True)
+            salary_df = salary_df.sort_values(["year", "month-name"])
+            salary_df = salary_df[['year', 'month-name', 'amount', 'description']]
+            salary_df = salary_df.to_dict(orient='records')
+            summary["salary_transactions"] = salary_df
 
-        #     try:
-        #         for index, row in predicted_salary.iterrows():
-        #             if row['difference_in_days'] > 16:
-        #                 summary["average_predicted_salary"] = round(float(predicted_salary.groupby(pd.Grouper(key='date', freq="M")).sum().sum()["amount"]) / len(self.predicted_salary), 2)
-        #             else:
-        #                 summary["average_predicted_salary"] = round(float(predicted_salary.groupby(pd.Grouper(key='date', freq="M")).sum().sum()["amount"]) / (no_unique_months), 2)
-        #     except:
-        #         summary["average_predicted_salary"] = 0
-        #     summary["number_of_salary_payments"] = int(len(predicted_salary))
-            return summary, predicted_salary
+            try:
+                for index, row in predicted_salary.iterrows():
+                    if row['difference_in_days'] > 16:
+                        summary["average_predicted_salary"] = round(float(predicted_salary.groupby(pd.Grouper(key='date', freq="M")).sum().sum()["amount"]) / len(predicted_salary), 2)
+                    else:
+                        summary["average_predicted_salary"] = round(float(predicted_salary.groupby(pd.Grouper(key='date', freq="M")).sum().sum()["amount"]) / (no_unique_months), 2)
+            except:
+                summary["average_predicted_salary"] = 0
+            summary["number_of_salary_payments"] = int(len(predicted_salary))
+            return summary
 
 
 
     output = pfm_variables(data, salary_variables)
-    salary = calculate_salary(data, salary_variables)
 
     output = {"analysis output": output, "status": "success"}
 
     return output
     
-
 
 if __name__ == "__main__":
     print("starting app")
