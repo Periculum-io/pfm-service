@@ -34,8 +34,17 @@
 
 /* Doughnut */
 .category-card-body .category-card-doughnut-container {
-  height: 6em;
-  width: 6em;
+  height: 10em;
+  width: 10em;
+  position: relative;
+}
+
+.category-card-body .category-card-doughnut-container .category-chart-center-label {
+  position: absolute;
+  top: calc(50% - 1em);
+  right: 50%;
+  transform: translate(50%, 50%);
+  font-size: 1.2em;
 }
 
 /* Budget Exceeded or Reached*/

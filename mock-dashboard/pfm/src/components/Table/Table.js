@@ -5,6 +5,7 @@ import {
   useTable,
   useFilters,
   useRowSelect,
+  useExpanded,
   useGlobalFilter,
   useAsyncDebounce,
   usePagination,
@@ -139,6 +140,7 @@ dateRangeFilterFn.autoRemove = val => !val;
 export function Table(props) {
   const data = props.data;
   const columns = props.columns;
+  const renderRowSubComponent = props.renderRowSubComponent;
   const [pagination] = useState(props.pagination);
   const [isFilterShown, setFilterShown] = useState(false);
   const filterRef = useRef(null);
@@ -184,6 +186,7 @@ export function Table(props) {
     headerGroups,
     rows,
     prepareRow,
+    visibleColumns,
     page,
     canPreviousPage,
     canNextPage,
@@ -192,7 +195,7 @@ export function Table(props) {
     gotoPage,
     nextPage,
     previousPage,
-    state: { pageIndex, globalFilter },
+    state: { pageIndex, globalFilter, expanded },
     preGlobalFilteredRows,
     setGlobalFilter
   } = useTable(
@@ -210,6 +213,7 @@ export function Table(props) {
     useGlobalFilter,
     useGroupBy,
     useSortBy,
+    useExpanded,
     usePagination,
     useRowSelect
   )
@@ -262,8 +266,8 @@ export function Table(props) {
                 }
               </div>
             }
-            {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroups.map((headerGroup, i) => (
+              <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id + i}>
                 {headerGroup.headers.map(column => (
                 <th className="header-row" key={column.id} 
                   {...column.getHeaderProps(column.getSortByToggleProps())}>
@@ -286,13 +290,20 @@ export function Table(props) {
           {page.map((row, i) => {
             prepareRow(row)
             return (
-              <tr {...row.getRowProps()} key={row.id} id={row.id} className={props.rowClass}>
-                {row.cells.map(cell => {
-                  return <td key={cell.id} {...cell.getCellProps()}>
-                    {cell.render('Cell')}
-                  </td>
-                })}
-              </tr>
+              <>
+                <tr {...row.getRowProps()} key={row.id + i} id={row.id} className={props.rowClass}>
+                  {row.cells.map(cell => {
+                    return <td key={cell.id + i} {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  })}
+                </tr>
+                {row.isExpanded ? (
+                  <tr>
+                    <td colSpan={visibleColumns.length}>
+                      {renderRowSubComponent({ row })}
+                    </td>
+                  </tr>
+                ) : null}
+              </>
             )
           })}
         </tbody>
@@ -309,7 +320,7 @@ export function Table(props) {
           </div>
           <div className='pagination-center'>
             {pageOptions.map((page, i) => {
-              return <button id={pageIndex === i ? "active-button-page" : null} onClick={() => gotoPage(i)}>{page + 1}</button>
+              return <button key={i} id={pageIndex === i ? "active-button-page" : null} onClick={() => gotoPage(i)}>{page + 1}</button>
             })}
           </div>
           <div className='pagination-arrows'>

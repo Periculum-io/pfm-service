@@ -48,5 +48,6 @@ export const AddFinancialGoalViews = {
 
 export const HomeCategoriesView = {
   INITIAL: "INITIAL",
-  SUBSCRIPTIONS: "SUBSCRIPTIONS"
+  SUBSCRIPTIONS: "SUBSCRIPTIONS",
+  CATEGORIES: "CATEGORIES"
 }

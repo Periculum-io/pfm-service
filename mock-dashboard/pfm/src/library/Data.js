@@ -90,6 +90,911 @@ export const SpendingCategories = {
   }
 }
 
+export const SpendingCategoriesAll = {
+  "CUSTOM": [
+    {
+      label: "Airtime And Data",
+      field: "airtimeAndData",
+      amount: 0,
+      iconLink: "/assets/icons/airtime.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        },
+        {
+          name: "Store 2",
+          total: 1000,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Food And Drinks",
+      field: "foodAndDrinks",
+      amount: 2000,
+      iconLink: "/assets/icons/drink.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Electricity",
+      field: "electricity",
+      amount: 18000,
+      iconLink: "/assets/icons/electricity.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Bars, Lounge, And Clubs",
+      field: "barsLoungeAndClubs",
+      amount: 0,
+      iconLink: "/assets/icons/bars.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label:  "Waste And Water",
+      field: "wasteAndWater",
+      amount: 3000,
+      iconLink: "/assets/icons/delete.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "ATM Withdrawals",
+      field: "atmWithdrawals",
+      amount: 0,
+      iconLink: "/assets/icons/atm.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Groceries",
+      field: "groceries",
+      amount: 30000,
+      iconLink: "/assets/icons/groceries.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Charges And Stamp Duty",
+      field: "chargesAndStampDuty",
+      amount: 0,
+      iconLink: "/assets/icons/money-send.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Insurance",
+      field: "insurance",
+      amount: 35000,
+      iconLink: "/assets/icons/insurance.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Family",
+      field: "family",
+      amount: 22000,
+      iconLink: "/assets/icons/family.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Transportation",
+      field: "transportation",
+      amount: 21000,
+      iconLink: "/assets/icons/transportation.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Savings And Investment",
+      field: "savingsAndInvestment",
+      amount: 15000,
+      iconLink: "/assets/icons/savings.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Online Web Purchases",
+      field: "onlineWebPurchases",
+      amount: 20000,
+      iconLink: "/assets/icons/cart.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Health Fitness",
+      field: "healthFitness",
+      amount: 0,
+      iconLink: "/assets/icons/health.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "POS Spend",
+      field: "posSpend",
+      amount: 15000,
+      iconLink: "/assets/icons/pos.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Uncategorized Miscellaneous",
+      field: "uncategorizedMiscellaneous",
+      amount: 7000,
+      iconLink: "/assets/icons/miscellaneous.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Self Transfer",
+      field: "selfTransfer",
+      amount: 3000,
+      iconLink: "/assets/icons/transfer.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    }
+  ],
+  "SEVEN": [
+    {
+      label: "Airtime And Data",
+      field: "airtimeAndData",
+      amount: 0,
+      iconLink: "/assets/icons/airtime.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Food And Drinks",
+      field: "foodAndDrinks",
+      amount: 2400,
+      iconLink: "/assets/icons/drink.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 300,
+          date: "2023-01-05"
+        },
+        {
+          name: "Store 2",
+          total: 2100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Electricity",
+      field: "electricity",
+      amount: 18000,
+      iconLink: "/assets/icons/electricity.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Bars, Lounge, And Clubs",
+      field: "barsLoungeAndClubs",
+      amount: 0,
+      iconLink: "/assets/icons/bars.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label:  "Waste And Water",
+      field: "wasteAndWater",
+      amount: 3000,
+      iconLink: "/assets/icons/delete.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "ATM Withdrawals",
+      field: "atmWithdrawals",
+      amount: 0,
+      iconLink: "/assets/icons/atm.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Groceries",
+      field: "groceries",
+      amount: 30000,
+      iconLink: "/assets/icons/groceries.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Charges And Stamp Duty",
+      field: "chargesAndStampDuty",
+      amount: 0,
+      iconLink: "/assets/icons/money-send.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Insurance",
+      field: "insurance",
+      amount: 35000,
+      iconLink: "/assets/icons/insurance.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Family",
+      field: "family",
+      amount: 22000,
+      iconLink: "/assets/icons/family.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Transportation",
+      field: "transportation",
+      amount: 21000,
+      iconLink: "/assets/icons/transportation.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Savings And Investment",
+      field: "savingsAndInvestment",
+      amount: 15000,
+      iconLink: "/assets/icons/savings.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Online Web Purchases",
+      field: "onlineWebPurchases",
+      amount: 20000,
+      iconLink: "/assets/icons/cart.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Health Fitness",
+      field: "healthFitness",
+      amount: 0,
+      iconLink: "/assets/icons/health.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "POS Spend",
+      field: "posSpend",
+      amount: 15000,
+      iconLink: "/assets/icons/pos.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Uncategorized Miscellaneous",
+      field: "uncategorizedMiscellaneous",
+      amount: 7000,
+      iconLink: "/assets/icons/miscellaneous.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Self Transfer",
+      field: "selfTransfer",
+      amount: 3000,
+      iconLink: "/assets/icons/transfer.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    }
+  ],
+  "THIRTY": [
+    {
+      label: "Airtime And Data",
+      field: "airtimeAndData",
+      amount: 0,
+      iconLink: "/assets/icons/airtime.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Food And Drinks",
+      field: "foodAndDrinks",
+      amount: 2000,
+      iconLink: "/assets/icons/drink.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Electricity",
+      field: "electricity",
+      amount: 18000,
+      iconLink: "/assets/icons/electricity.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Bars, Lounge, And Clubs",
+      field: "barsLoungeAndClubs",
+      amount: 0,
+      iconLink: "/assets/icons/bars.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label:  "Waste And Water",
+      field: "wasteAndWater",
+      amount: 3000,
+      iconLink: "/assets/icons/delete.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "ATM Withdrawals",
+      field: "atmWithdrawals",
+      amount: 0,
+      iconLink: "/assets/icons/atm.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Groceries",
+      field: "groceries",
+      amount: 30000,
+      iconLink: "/assets/icons/groceries.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Charges And Stamp Duty",
+      field: "chargesAndStampDuty",
+      amount: 0,
+      iconLink: "/assets/icons/money-send.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Insurance",
+      field: "insurance",
+      amount: 35000,
+      iconLink: "/assets/icons/insurance.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Family",
+      field: "family",
+      amount: 22000,
+      iconLink: "/assets/icons/family.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Transportation",
+      field: "transportation",
+      amount: 21000,
+      iconLink: "/assets/icons/transportation.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Savings And Investment",
+      field: "savingsAndInvestment",
+      amount: 15000,
+      iconLink: "/assets/icons/savings.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Online Web Purchases",
+      field: "onlineWebPurchases",
+      amount: 20000,
+      iconLink: "/assets/icons/cart.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Health Fitness",
+      field: "healthFitness",
+      amount: 0,
+      iconLink: "/assets/icons/health.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "POS Spend",
+      field: "posSpend",
+      amount: 15000,
+      iconLink: "/assets/icons/pos.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Uncategorized Miscellaneous",
+      field: "uncategorizedMiscellaneous",
+      amount: 7000,
+      iconLink: "/assets/icons/miscellaneous.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Self Transfer",
+      field: "selfTransfer",
+      amount: 3000,
+      iconLink: "/assets/icons/transfer.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    }
+  ],
+  "YEAR": [
+    {
+      label: "Airtime And Data",
+      field: "airtimeAndData",
+      amount: 0,
+      iconLink: "/assets/icons/airtime.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Food And Drinks",
+      field: "foodAndDrinks",
+      amount: 2000,
+      iconLink: "/assets/icons/drink.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Electricity",
+      field: "electricity",
+      amount: 18000,
+      iconLink: "/assets/icons/electricity.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Bars, Lounge, And Clubs",
+      field: "barsLoungeAndClubs",
+      amount: 0,
+      iconLink: "/assets/icons/bars.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label:  "Waste And Water",
+      field: "wasteAndWater",
+      amount: 3000,
+      iconLink: "/assets/icons/delete.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "ATM Withdrawals",
+      field: "atmWithdrawals",
+      amount: 0,
+      iconLink: "/assets/icons/atm.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Groceries",
+      field: "groceries",
+      amount: 30000,
+      iconLink: "/assets/icons/groceries.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Charges And Stamp Duty",
+      field: "chargesAndStampDuty",
+      amount: 0,
+      iconLink: "/assets/icons/money-send.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Insurance",
+      field: "insurance",
+      amount: 35000,
+      iconLink: "/assets/icons/insurance.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Family",
+      field: "family",
+      amount: 22000,
+      iconLink: "/assets/icons/family.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Transportation",
+      field: "transportation",
+      amount: 21000,
+      iconLink: "/assets/icons/transportation.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Savings And Investment",
+      field: "savingsAndInvestment",
+      amount: 15000,
+      iconLink: "/assets/icons/savings.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Online Web Purchases",
+      field: "onlineWebPurchases",
+      amount: 20000,
+      iconLink: "/assets/icons/cart.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Health Fitness",
+      field: "healthFitness",
+      amount: 0,
+      iconLink: "/assets/icons/health.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "POS Spend",
+      field: "posSpend",
+      amount: 15000,
+      iconLink: "/assets/icons/pos.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Uncategorized Miscellaneous",
+      field: "uncategorizedMiscellaneous",
+      amount: 7000,
+      iconLink: "/assets/icons/miscellaneous.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    },
+    {
+      label: "Self Transfer",
+      field: "selfTransfer",
+      amount: 3000,
+      iconLink: "/assets/icons/transfer.svg",
+      transactions: [
+        {
+          name: "Store 1",
+          total: 100,
+          date: "2023-01-05"
+        }
+      ]
+    }
+  ]
+}
+
 export const TopDebits = [
   "Netflix",
   "Remita",
@@ -282,7 +1187,7 @@ export const BudgetSpending = {
       field: "chargesAndStampDuty",
       amountSpent: 40000,
       budgetSet: 44000,
-      color: "#407BFF"
+      color: "#0CBC8B"
     },
     {
       name: "Electricity",

@@ -9,17 +9,19 @@
 .home-body .doughnut-chart-container {
   width: 100%;
   margin: 2em 0;
-  display: grid;
+  padding: 0 2em;
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  grid-template-columns: .9fr 1.1fr;
-  grid-template-areas: '. .';
   gap: 2em;
 }
 
 .home-body .doughnut-chart {
-  height: 20em;
+  height: 14em;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 1em 0 2em 0;
 }
 
 .home-body .doughnut-chart .doughnut-chart-center-label {
@@ -30,13 +32,10 @@
   font-size: 2em;
 }
 
-.home-body .doughnut-chart .reset-chart {
-  position: absolute;
-  top: 0;
-  right: 5em;
-  width: 1.4em;
-  height: 1.4em;
-  cursor: pointer;
+.home-body .doughnut-chart .doughnut-chart-name-label {
+  text-align: center;
+  margin: 1em 0 0 0;
+  font-size: 1.2em;
 }
 
 .home-body .doughnut-chart-container .list-legend {

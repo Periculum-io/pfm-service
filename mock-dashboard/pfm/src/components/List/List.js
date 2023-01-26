@@ -7,7 +7,7 @@ function List(props) {
 
   const listItems = !Utils.isFieldEmpty(listContent) && listContent.map((item, i) => {
     if(typeof item === 'object') {
-      return <li key={i} className={props.listItemClass} id={item.isActive === true ? "active-list-row" : null}>
+      return <li key={i} className={props.listItemClass}>
         <h2 className={props.headerClass}>
           {!Utils.isFieldEmpty(item.legendColor) && <span className="list-legend" style={{ background: item.legendColor }}></span>}
           {item.header}

@@ -34,19 +34,13 @@ function CategoryCard(props) {
   const pieLabels = ["Amount Spent", "Budget Set"];
   const pieData = [category.amountSpent, category.budgetSet];
   const pieChartOptions = {
-    cutout: 30,
+    cutout: 50,
     responsive: true,
     maintainAspectRatio: false,
+    events: [],
     plugins: {
       tooltip: {
-        callbacks: {
-          label: function(context) {
-            let dataset = context.dataset.data;
-            let amount = Utils.formatCurrency(Currency.format, Currency.symbol, dataset[context.dataIndex]);
-      
-            return amount;
-          }
-        }
+        enabled: false
       },
       legend: {
         display: false
@@ -101,6 +95,7 @@ function CategoryCard(props) {
             }
           ]} />
         <div className="category-card-doughnut-container">
+          <p className="category-chart-center-label">{Utils.formatDecimalPercentage(category.amountSpent/category.budgetSet)}</p>
           <Doughnut data={{
             labels: pieLabels,
             datasets: [
