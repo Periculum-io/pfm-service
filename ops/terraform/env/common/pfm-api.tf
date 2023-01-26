@@ -3,7 +3,6 @@ locals {
 }
 
 module "pfm_api" {
-  source = "../../modules/pfm-service"
 
   service_name = "pfm-api"
   environment  = var.environment

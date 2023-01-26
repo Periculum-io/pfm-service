@@ -7,7 +7,6 @@ locals {
   ]
 }
 module "frontend" {
-  source = "../../modules/pfm-service"
 
   service_name = "frontend"
   environment  = var.environment

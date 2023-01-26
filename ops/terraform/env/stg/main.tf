@@ -7,7 +7,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "insights-terraform-backend-bucket"
+    bucket = "pfm-terraform-backend-bucket"
     key    = "staging/terraform.tfstate"
     region = "us-east-1"
   }
