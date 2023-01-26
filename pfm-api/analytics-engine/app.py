@@ -8,7 +8,9 @@ from helpers import compute_number_of_transacting_month
 from keywords import *
 from helpers import create_salary_or_other_income_or_recurrent_expense_df, compute_number_of_transacting_month, compute_salary_frequency, forecast_salary_day
 from keywords import salary_keywords
-from helpers import salary_variables
+from helpers import salary_variables, other_income_variables
+import stop_words
+from collections import Counter
 
 
 app = Flask("periculum-pfm-api")
@@ -31,7 +33,7 @@ def process():
     data = df.copy()
 
  
-    def pfm_variables(data, category_flag):
+    def pfm_variables(data, salary_variables, other_income_variables):
         summary = {}
         data = preprocessing_layer(data)
         debit_transactions = data[data["type"] == "debit"]
@@ -69,7 +71,10 @@ def process():
             summary["self_transfer"] = None
             summary['average_predicted_salary'] = 0
             summary['salary_transactions'] = None
-            summary['number_of_salary_payments'] = 0
+            summary['bonuses_and_allowances'] = 0
+            summary['bonuses_and_allowances_transactions'] = None
+            summary['most_frequent_credit_transfer'] = None
+            summary['most_frequent_debit_transfer'] = None
             return summary
         else:
             if len(credit_transactions) == 0:
@@ -247,9 +252,90 @@ def process():
 
             total_spend_on_other_transactions = round(float(total_transactions - total_distinct_spend), 2)
             summary['other_transactions'] = total_spend_on_other_transactions
+
+            # get most frquent debits and credits (top billers and beneficiaries)
+            list_stopwords = set(stop_words.get_stop_words("en"))
+            most_frequent_transactions = data.copy()
+            most_frequent_transactions['description'] = most_frequent_transactions['description'].str.lower()
+            most_frequent_transactions['description'] = most_frequent_transactions["description"].replace(
+                {"withdrawal": "", "transfer": "", "transaction": "", "reversal": "", "cash": "", "funds\s*": "",
+                 "tsf\s+": "", "bank": "", "payref": "", "plc": "", "onepay": "",
+                 "trf": "", "nip": "", "pur": "", "pmt": "", "pyt": "", "fee": "", "commission": "", "fip": "",
+                 "nibss": "",
+                 "first": "", "sterling": "", "stanbic\s+ibtc": "", "access": "", "gt": "", "unity": "", "neft": "",
+                 "union": "", "uba": "", "wema": "", "fcmb": "", "zenith": "", "providus": "", "trnf": "",
+                 "eco": "", "fidelity": "", "keystone": "", "wdl": "", "wd": "", "trsf": "", "stamp": "", "duty": "",
+                 "charge": "", "sms": "", "alert": "", "ref": "", "gw": "", "via": "", "vat": "", "atm":"", "acc":"", 
+                 "api":"", "idr":"", "any":"", "account":"", "agg":"", "transaction\s*":"", "loop":"", "eazzy":"", 
+                 "trnsf":"", "funds":"", "airtime":"", "safcom":"", "visa":"", "paypal":"", "mps":"", "ltd":"", "bal":"",
+                 "wallet":"", "payment":"", "mmoney":"", "mono":"", "technologies":"", "nigeria":"", "resources":"", "united":"", 
+                 "word":"", "enterprises":"", "thanks":"", "online":""}, regex=True)
+
+        
+            most_frequent_transactions['description'] = most_frequent_transactions['description'].replace(
+                {"-": "", "_": "", "!": "", "@": "", "#": "", "$": "", "()": "", "=": "", "{": "", "}": "", "|": "",
+                 "%": "", "^": "",
+                 ";": "", ":": "", ",": "", "`": "", "~": "", "<": "", ">": "", "/": "", "&": "", "\*": "", "\.": ""},
+                regex=True)
+            most_frequent_transactions['description'] = most_frequent_transactions['description'].str.replace(r'[0-9]', "")
+            most_frequent_transactions['description'] = most_frequent_transactions['description'].str.replace(r"\b\w\b", "")
+
+            most_frequent_debit_transactions = most_frequent_transactions[most_frequent_transactions["type"] == "debit"]
+            if len(most_frequent_debit_transactions) == 0:
+                summary["most_frequent_debit_transfer"] = None
+            else:
+                debit_split_df = most_frequent_debit_transactions['description'].str.split('to\s+|between').str[1]
+                debit_split_df.fillna('', inplace=True)
+                most_occurring_debit = [values[0] for values in
+                                        Counter(" ".join(debit_split_df).split()).most_common(1)]
+            if len(most_occurring_debit) == 0:
+                summary["most_frequent_debit_transfer"] = None
+            else:
+                # convert the keywords to a dataframe
+                most_occurring_debit_df = pd.DataFrame(most_occurring_debit).rename(
+                    columns={0: 'most_occurring_debit_transfer'})
+                most_occurring_debit_df = most_occurring_debit_df['most_occurring_debit_transfer'].apply(
+                    lambda x: " ".join([word for word in x.split() if word not in list_stopwords and len(word)>3]))
+                most_occurring_debit_df = pd.DataFrame(most_occurring_debit_df).rename(
+                    columns={0: 'most_occurring_debit_transfer'})
+                if len(most_occurring_debit_df) == 0:
+                    most_occurring_debit_df = None
+                else:
+                    most_frequent_debit_transfer = most_occurring_debit_df['most_occurring_debit_transfer'].tolist()
+                    summary["most_frequent_debit_transfer"] = ' '.join(
+                        [str(elem) for elem in most_frequent_debit_transfer])
+
+            # for most frequent credit transactions
+            most_fequent_credit_transactions = most_frequent_transactions[most_frequent_transactions["type"] == "credit"]
+            if len(most_fequent_credit_transactions) == 0:
+                summary['most_frequent_credit_transfer'] = None
+            else:
+                credit_split_df = most_fequent_credit_transactions['description'].str.split('from\s+|frm|between').str[1]
+                credit_split_df.fillna('', inplace=True)
+                credit_split_df = credit_split_df.str.split('to\s+').str[1]
+                credit_split_df.fillna('', inplace=True)
+                most_occurring_credit = [values[0] for values in Counter(" ".join(credit_split_df).split()).most_common(1)]
+                if len(most_occurring_credit) == 0:
+                    summary["most_frequent_credit_transfer"] = None
+                else:
+                # convert the keywords to a dataframe
+                    most_occurring_credit_df = pd.DataFrame(most_occurring_credit).rename(
+                    columns={0: 'most_occurring_credit_transfer'})
+                    most_occurring_credit_df = most_occurring_credit_df['most_occurring_credit_transfer'].apply(
+                    lambda x: " ".join([word for word in x.split() if word not in list_stopwords and len(word)>3 ]))
+                    most_occurring_credit_df = pd.DataFrame(most_occurring_credit_df).rename(
+                    columns={0: 'most_occurring_credit_transfer'})
+
+                    if len(most_occurring_credit_df) == 0:
+                        most_occurring_credit_df = None
+                    else:
+                        most_frequent_credit_transfer = most_occurring_credit_df['most_occurring_credit_transfer'].tolist()
+                        summary["most_frequent_credit_transfer"] = ' '.join(
+                        [str(elem) for elem in most_frequent_credit_transfer])
+
         
         # calculate salary
-        predicted_salary = create_salary_or_other_income_or_recurrent_expense_df(data, category_flag)
+        predicted_salary = create_salary_or_other_income_or_recurrent_expense_df(data, salary_variables)
 
         predicted_salary = predicted_salary[
                                     ~predicted_salary['description'].str.contains(str(account_name))]
@@ -284,12 +370,39 @@ def process():
                         summary["average_predicted_salary"] = round(float(predicted_salary.groupby(pd.Grouper(key='date', freq="M")).sum().sum()["amount"]) / (no_unique_months), 2)
             except:
                 summary["average_predicted_salary"] = 0
-            summary["number_of_salary_payments"] = int(len(predicted_salary))
+            # summary["number_of_salary_payments"] = int(len(predicted_salary))
+
+            
+            # calculate bonuses and allowances
+            predicted_other_income = create_salary_or_other_income_or_recurrent_expense_df(data, other_income_variables)
+            # merge salary plus other income. I need to remove scenarios where other income picked what salary picked
+            predicted_other_income = pd.concat([predicted_salary, predicted_other_income], axis=0).drop_duplicates(subset=["date", "description"], keep=False)
+            predicted_other_income = predicted_other_income[predicted_other_income["key"] != "salary"]
+            predicted_other_income["key"] = "other_income"
+            predicted_other_income[["amount", "balance"]] = predicted_other_income[["amount", "balance"]].astype(float)
+            predicted_other_income['date'] = pd.to_datetime(predicted_other_income['date'])
+            
+
+            if len(predicted_other_income) == 0 :
+                summary['bonuses_and_allowances_transactions'] = []
+            else:
+                other_income_df =  predicted_other_income[["date", "description", "amount"]]
+                other_income_df['date'] = pd.to_datetime(other_income_df['date'])
+                other_income_df["year"] = pd.to_datetime(other_income_df["date"]).dt.year
+                other_income_df["year"] = other_income_df["year"].apply(lambda x: str(x))
+                other_income_df['month_name'] = other_income_df['date'].dt.month_name()
+
+                cats = ['January', 'February', 'March', 'April','May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+                # sort month name
+                other_income_df['month-name'] = pd.Categorical(other_income_df['month_name'],categories=cats, ordered=True)
+                other_income_df = other_income_df.sort_values(["year", "month-name"])
+                other_income_df = other_income_df[['year', 'month-name', 'amount', 'description']]
+                other_income_df = other_income_df.to_dict(orient='records')
+                summary['bonuses_and_allowances_transactions'] = other_income_df
+
             return summary
 
-
-
-    output = pfm_variables(data, salary_variables)
+    output = pfm_variables(data, salary_variables=salary_variables, other_income_variables=other_income_variables)
 
     output = {"analysis output": output, "status": "success"}
 
