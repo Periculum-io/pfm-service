@@ -7,7 +7,6 @@ locals {
   }
   pdf_processing_api_credentials_secret = {
     s3_bucket_name = "${local.resource_name_prefix}-${var.bucket_names[0]}"
-    sqs_url = aws_sqs_queue.sqs_queue_pdf_processing.url
     database_connection_string = aws_db_instance.db_instance_pfm.address
     database_username = local.rds_secret_string_pfm_integration.username
     database_password = local.rds_secret_string_pfm_integration.password
@@ -18,7 +17,7 @@ locals {
     access_key_secret = aws_iam_access_key.iam_access_key.secret
     github_username = local.github_info.username
     github_personal_access_token = local.github_info.personal_access_token
-    secret_name = aws_secretsmanager_secret.pfm_api_secret.name
+    secret_name = aws_secretsmanager_secret.pfm_admin_api_secret.name
   }
   public_subnet_ids = [for s in data.aws_subnet.pfm_public_subnet : s.id]
 }

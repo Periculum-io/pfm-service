@@ -1,13 +1,13 @@
 resource "aws_kms_key" "kms_key_for_rds_pdf_processing" {
-  count                   = length(var.rds_kms_key_alias_names_pdf_processing)
-  description             = "${local.resource_name_prefix}-${var.rds_kms_key_alias_names_pdf_processing[count.index]}"
+  count                   = length(var.rds_kms_key_alias_names_pfm)
+  description             = "${local.resource_name_prefix}-${var.rds_kms_key_alias_names_pfm[count.index]}"
   deletion_window_in_days = var.enc_key_deletion_in_days
   enable_key_rotation     = var.enc_key_rotation_enabled
 }
 
 resource "aws_kms_alias" "kms_key_alias_rds_pdf_processing" {
-  count         = length(var.rds_kms_key_alias_names_pdf_processing)
-  name          = "alias/${local.resource_name_prefix}-${var.rds_kms_key_alias_names_pdf_processing[count.index]}-key"
+  count         = length(var.rds_kms_key_alias_names_pfm)
+  name          = "alias/${local.resource_name_prefix}-${var.rds_kms_key_alias_names_pfm[count.index]}-key"
   target_key_id = aws_kms_key.kms_key_for_rds_pdf_processing[count.index].key_id
 }
 

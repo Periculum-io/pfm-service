@@ -3,18 +3,18 @@ dynamodb_table_name           = "pfm-state"
 dynamodb_table_read_capacity  = 20
 dynamodb_table_write_capacity = 20
 
-vpc_id = "vpc-01c4b586d9b30a704"
-vpc_pfm_public_subnets = [ "subnet-0fd50fcff1564b322", "subnet-03f99ef94eed8df92" ]
+vpc_id = "vpc-014bfbd3f00327eef"
+vpc_pfm_public_subnets = [ "subnet-0b9c698432334975f", "subnet-06e82436f3260a957" ]
 
-ec2_ami_id = "ami-052efd3df9dad4825"
+ec2_ami_id = "ami-04505e74c0741db8d"
 ec2_instance_type = "t3.micro"
-ec2_prod_insights_private_subnet_us_east_1a = "subnet-09727753b48abb509"
+ec2_dev_insights_private_subnet_us_east_1a = "subnet-016820b574afcf03a"
 ec2_ssh_private_key_secret_name = "pfm/dev/ec2/key"
 ec2_ssh_public_key_secret_name = "pfm/dev/ec2/key.pub"
 ec2_lb_log_prefix = "lb"
 ec2_lb_log_enabled = true
 
-rds_kms_key_alias_names_pdf_processing = ["pfm-rds-key", "pfm-rds-performance-key"]
+rds_kms_key_alias_names_pfm = ["pfm-rds-key", "pfm-rds-performance-key"]
 enc_key_deletion_in_days = 10
 enc_key_rotation_enabled = true
 pfm_aws_db_subnet_group = "dev-pfm-private"
@@ -40,6 +40,6 @@ bucket_enc_key_deletion_in_days = 10
 bucket_enc_key_rotation_enabled = true
 
 ec2_lb_hosted_zone_domain = "periculum-models.link"
-ec2_lb_domain_name = "pdfprocessing.periculum-models.link"
+ec2_lb_domain_name = "pfm.dev.periculum-models.link"
 
 secrets_manager_vm_github_personal_access_token_arn = "arn:aws:secretsmanager:us-east-1:962374658537:secret:pdf-parser/prod/ec2/github-Ef5lEy"

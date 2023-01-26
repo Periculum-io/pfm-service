@@ -123,48 +123,8 @@ resource "aws_instance" "pdf_api_instance_1" {
   }
 }
 
-resource "aws_instance" "html_to_pdf_api_instance_1" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = var.ec2_instance_type
-  key_name      = aws_key_pair.ssh-key.key_name
-
-  user_data     = base64encode(templatefile("init-html-to-pdf.sh", local.template_file_vars))
-  
-  subnet_id     = local.public_subnet_ids[0]
-
-  vpc_security_group_ids = [aws_security_group.security_group_ec2.id]
-
-  tags = {
-    Name = "prod-html-to-pdf-ec2-instance-1"
-  }
-}
-
-resource "aws_instance" "pdf_parser_background_worker_instance_1" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = var.ec2_instance_type
-  key_name      = aws_key_pair.ssh-key.key_name
-
-  user_data     = base64encode(templatefile("init-background-worker.sh", local.template_file_vars))
-  
-  subnet_id     = local.public_subnet_ids[0]
-
-  vpc_security_group_ids = [aws_security_group.security_group_ec2.id]
-
-  tags = {
-    Name = "pdf-parser-background-worker-instance-1"
-  }
-}
-
 output "instance_1_host_address" {
   value = aws_instance.pdf_api_instance_1.public_dns
-}
-
-output "html_to_pdf_api_instance_1_host_address" {
-  value = aws_instance.html_to_pdf_api_instance_1.public_dns
-}
-
-output "pdf_parser_background_worker_instance_1_host_address" {
-  value = aws_instance.pdf_parser_background_worker_instance_1.public_dns
 }
 
 output "github_username" {

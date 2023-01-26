@@ -66,7 +66,7 @@ resource "aws_iam_policy" "iam_policy_secrets_manager_read" {
             "secretsmanager:ListSecretVersionIds"
         ],
         "Resource": [
-            aws_secretsmanager_secret.pfm_api_secret.arn
+            aws_secretsmanager_secret.pfm_admin_api_secret.arn
         ]
       }
     ]

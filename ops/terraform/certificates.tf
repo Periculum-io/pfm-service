@@ -7,7 +7,7 @@ resource "aws_acm_certificate" "acm_certificate_pfm" {
   validation_method = "DNS"
 
   tags = {
-    "Application" = "PDF Processing"
+    "Application" = "PFM Admin"
   }
 }
 

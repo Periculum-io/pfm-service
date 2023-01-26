@@ -3,8 +3,8 @@ dynamodb_table_name           = "pfm-state"
 dynamodb_table_read_capacity  = 20
 dynamodb_table_write_capacity = 20
 
-vpc_id = "vpc-01c4b586d9b30a704"
-vpc_pfm_public_subnets = [ "subnet-0fd50fcff1564b322", "subnet-03f99ef94eed8df92" ]
+vpc_id = "vpc-0fd17cb32f91348df"
+vpc_pfm_public_subnets = [ "subnet-08cafa3b095c507cb", "subnet-03c42ca5e70e6253f" ]
 
 ec2_ami_id = "ami-052efd3df9dad4825"
 ec2_instance_type = "t3.micro"
@@ -14,7 +14,7 @@ ec2_ssh_public_key_secret_name = "pfm/stag/ec2/key.pub"
 ec2_lb_log_prefix = "lb"
 ec2_lb_log_enabled = true
 
-rds_kms_key_alias_names_pdf_processing = ["pfm-rds-key", "pfm-rds-performance-key"]
+rds_kms_key_alias_names_pfm = ["pfm-rds-key", "pfm-rds-performance-key"]
 enc_key_deletion_in_days = 10
 enc_key_rotation_enabled = true
 pfm_aws_db_subnet_group = "stag-pfm-private"

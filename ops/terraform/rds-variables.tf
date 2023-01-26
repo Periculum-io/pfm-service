@@ -1,4 +1,4 @@
-variable "rds_kms_key_alias_names_pdf_processing" {
+variable "rds_kms_key_alias_names_pfm" {
   type = list(string)
   description = "Name of keys that will be used for encryption of rds and performance for pdf processing."
   default = ["pdf-processing-rds-key", "pdf-processing-rds-key"]

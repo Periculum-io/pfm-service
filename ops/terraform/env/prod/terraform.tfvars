@@ -14,7 +14,7 @@ ec2_ssh_public_key_secret_name = "pfm/prod/ec2/key.pub"
 ec2_lb_log_prefix = "lb"
 ec2_lb_log_enabled = true
 
-rds_kms_key_alias_names_pdf_processing = ["pfm-rds-key", "pfm-rds-performance-key"]
+rds_kms_key_alias_names_pfm = ["pfm-rds-key", "pfm-rds-performance-key"]
 enc_key_deletion_in_days = 10
 enc_key_rotation_enabled = true
 pfm_aws_db_subnet_group = "prod-pfm-private"
