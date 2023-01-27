@@ -18,6 +18,13 @@ salary_variables = {
     "amountGreaterThan": 30000.00,
 }
 
+other_income_variables = {
+    "transactionAmountThreshold": 0.27,
+    "minDifferenceInPaymentDays": 18,
+    "maxDifferenceInPaymentDays": 50,
+    "thresholdForDifferenceInDaysOccurrence": 0.50,
+    "amountGreaterThan": 2000.00,
+}
 
 def clean_description(data, category_flag):
     data["description"] = data["description"].str.lower()
@@ -404,11 +411,11 @@ def create_salary_or_other_income_or_recurrent_expense_df(data, category_flag):
             final_data = filter_by_transaction_amount(fourth_filtered, category_flag)
             # print(final_data)
             unduplicated_data = drop_duplicates(fourth_filtered).sort_values("date").reset_index().drop("index", axis=1)
-        # elif category_flag == other_income_variables:
-        #     other_income_filter = filter_by_other_income_keywords(data, category_flag)
-        #     fourth_filtered = combine_both_outputs(third_filtered, other_income_filter)
-        #     unduplicated_data = drop_duplicates(fourth_filtered)
-        #     unduplicated_data = unduplicated_data.sort_values("date").reset_index().drop("index", axis=1)
+        elif category_flag == other_income_variables:
+            other_income_filter = filter_by_other_income_keywords(data, category_flag)
+            fourth_filtered = combine_both_outputs(third_filtered, other_income_filter)
+            unduplicated_data = drop_duplicates(fourth_filtered)
+            unduplicated_data = unduplicated_data.sort_values("date").reset_index().drop("index", axis=1)
         # elif category_flag == recurring_expense_variables:
         #     unduplicated_data = drop_duplicates(third_filtered)
         #     unduplicated_data = unduplicated_data.sort_values("date").reset_index().drop("index", axis=1)

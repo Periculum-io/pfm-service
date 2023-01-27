@@ -52,7 +52,7 @@ ussd_keywords = r'ussd'
 airtime_keywords = r'air\s*time|glo([\s+|_|@|\/|\\|:]+)|mtn([\s+|_|@|\/|\\|:]+)|9mobile|airtel|vtu|topup|etisalat'
                             
 
-internet_data_keywords = r'spectranet| data\s*sub|ipnx|tizeti|bundles|faiba\s+|telkom|skynet|tabana|innovis\s*telecom|airtime\s+|safaricomhome|airtime\s+|safaricomhome|ussd\s\w+\s\d{13}'
+internet_data_keywords = r'spectranet| data\s*sub|ipnx|tizeti|bundles|faiba\s+|telkom|skynet|tabana|innovis\s*telecom|safaricomhome|safaricomhome|ussd\s\w+\s\d{13}'
 
 # utilities_keywords = r'dstv|tstv|prepaid(?!\s*card)|postpaid(?!\s*card)|cable\s*tv|star\s*times|mytv|gotv|electric|utility'\
 #                             r'|kplc|kenya\s*power|sanitation|showmax|\s+actv\s+|\s+cantv\s+|iroko\s+tv|trendtv|cable\s+television|infinity\s+tv|\s+daarsat\s+'\
@@ -82,7 +82,7 @@ rent_keywords = r'\s+rent'
 
 fitness_keywords = r'gym'
 
-waste_and_water_keywords = r'water|waste'
+waste_and_water_keywords = r'\s+water\s+|\s+waste\s+'
 
 bars_lounge_club_keywords = r'bar|lounge|s+club\s+'
 
@@ -94,7 +94,7 @@ food_and_drinks_keywords = r'food|wine\s+|chicken\s+inn|cuisine|pizza|artcaffe|w
 
 electricity_keywords = r'\s+phcn\s+|electric|\s+aedc\s+|\s+bedc\s+|\s+ibedc\s+|\s+ekedp\s+'
 
-charges_and_stamp_duty_keywords = r'charge|stamp\s*duty|card\s*maint|wtax|card\s+issuance\s+fee|excise\s+duty|loop\s+commission|stamp\s*duties|sms\s*alert\s*fee'\
+charges_and_stamp_duty_keywords = r'\s+charge\s+|stamp\s*duty|card\s*maint|wtax|card\s+issuance\s+fee|excise\s+duty|loop\s+commission|stamp\s*duties|sms\s*alert\s*fee'\
                                 r'|account\s*maintenance\s*fee\ |bill\s*payment\s*fee|eft\s*comm|service\s*fee|cash\s*withdrawal\s*fee|comm\s*on\s*inward\s*credit|transfer\s*levy'
 
 international_transactions_keywords = r'paypal|amazon\s*pay|skrill|stripe|payza|bluesnap|braintree|securionpay|2checkout|authorize\.net|cellulant'
