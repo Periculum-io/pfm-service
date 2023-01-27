@@ -1,0 +1,91 @@
+.spending-categories-table-container table {
+  margin: 1em 0 0 0;
+}
+
+.spending-categories-table-container table tbody tr {
+  border-bottom: 1px solid #D8E0E7;
+  font-size: 1.2em;
+}
+
+.spending-categories-table-container table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.spending-categories-table-container table tbody tr:only-child {
+  border: none;
+}
+
+.spending-categories-table-container table tbody tr td {
+  background-color: #fff;
+}
+
+.spending-categories-table-container table tbody tr td:first-child {
+  width: 10%;
+  padding: 1em 2em;
+}
+
+.spending-categories-table-container table tbody tr td:last-child {
+  width: 10%;
+  padding: 1em 2em;
+}
+
+.spending-categories-table-container table tbody tr td:nth-last-child(2) p {
+  text-align: end;
+}
+
+.spending-categories-table-container table tbody tr:first-child td:first-child {
+  border-radius: 10px 0 0 0;
+}
+
+.spending-categories-table-container table tbody tr:first-child td:last-child {
+  border-radius: 0 10px 0 0;
+}
+
+.spending-categories-table-container table tbody tr:last-child td:first-child {
+  border-radius: 0 0 0 10px;
+}
+
+.spending-categories-table-container table tbody tr:last-child td:last-child {
+  border-radius: 0 0 10px 0;
+}
+
+.spending-categories-table-container table tbody tr:only-child td:first-child {
+  border-radius: 10px 0 0 10px;
+}
+
+.spending-categories-table-container table tbody tr:only-child td:last-child {
+  border-radius: 0 10px 10px 0;
+}
+
+.category-icon {
+  background-color: #D8E0E7;
+  border-radius: 50%;
+  padding: 3px 0 0 0;
+  width: 4em;
+  height: 4em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.category-icon img {
+  width: 2em;
+  height: 2em;
+}
+
+/* Table expanded row */
+.spending-categories-table-container .list-col .list-item-row {
+  justify-content: space-between;
+  padding: 1em 2em;
+  align-items: flex-end;
+}
+
+.spending-categories-table-container .list-col .list-item-row .list-header-col-container {
+  display: flex;
+  flex-direction: column;
+  font-size: .9em;
+}
+
+.spending-categories-table-container .list-col .list-item-row p {
+  font-size: .9em;
+}

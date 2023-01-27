@@ -1,0 +1,255 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table thead {
+  font-size: 1em;
+  position: relative;
+}
+
+thead tr th span {
+  font-size: .8em;
+}
+
+table tbody {
+  font-size: .9em;
+}
+
+table thead tr {
+  text-align: left;
+  position: relative;
+}
+
+table th,
+table td {
+  padding: 1em;
+  color: #130F26;
+  font-weight: 500;
+}
+
+.table-row-two-colored:nth-child(odd) {
+  background-color: #F6F8FC;
+}
+
+.table-row-two-colored:nth-child(even) {
+  background-color: #D9E5FF;
+}
+
+/* Filter Row with Global Search */
+.tb-global-and-filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 1em 0;
+}
+
+.global-filter-container {
+  border: 1px solid #E7ECF2;
+  background-color: #FFF;
+  display: flex;
+  align-items: center;
+  padding: .5em 1em;
+  gap: .5em;
+  width: 30%;
+}
+
+.global-filter-container input {
+  background: transparent;
+  border: none;
+  width: 100%;
+}
+
+.global-filter-container input:focus{
+  outline: none;
+}
+
+.tb-filter-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 1;
+  border-radius: 5px;
+  padding: .2em .5em;
+  border: none;
+}
+
+.tb-filter-container button {
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: .5em;
+  cursor: pointer;
+}
+
+.tb-filter-container button .filter-icon {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.tb-filter-container .tb-filters {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  padding: 1.5em 1em 1em 1em;
+  z-index: 2;
+  position: absolute;
+  right: 0;
+  top: 2em;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, .1);
+}
+
+.table-filter-field-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.tb-filter-container .tb-filters label {
+  font-weight: 600;
+  font-size: .9em;
+}
+
+.tb-filter-inputs {
+  padding: .6em;
+  width: 100%;
+  margin: .2em 0 1em 0;
+  background: rgba(255, 255, 255, .8);
+  border: 1px solid rgba(0, 0, 0, .2);
+}
+
+.tb-filter-default {
+  width: 100%;
+}
+
+.tb-filter-select {
+  width: 100%;
+  height: 100%;
+  padding: .6em 0;
+  border: none;
+  border-radius: 5px;
+  background-color: transparent;
+}
+
+/* Single Filter */
+.tb-filter-single {
+  position: absolute;
+  right: 0;
+  top: .7em;
+  background-color: transparent;
+}
+
+/* Date Range Picker */
+table .table-date-range-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+table .table-date-range-container span {
+  text-align: center;
+  font-weight: 500;
+  margin: 0 .3em;
+}
+
+/* Pagination */
+.pagination {
+  width: 100%;
+  padding: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 0 1em;
+}
+
+.pagination .pagination-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .5em;
+}
+
+.pagination-center button {
+  background: none;
+  border: none;
+  font-size: 1em;
+  text-align: center;
+  cursor: pointer;
+}
+
+.pagination-center #active-button-page {
+  font-weight: 600;
+}
+
+.pagination-arrows {
+  display: flex;
+  flex-direction: row;
+  gap: 0 1em;
+}
+
+.pagination-arrows button {
+  cursor: pointer;
+}
+
+.pagination-arrows button:disabled {
+  cursor: unset;
+}
+
+.pagination-arrows button {
+  border: none;
+  background-color: transparent;
+  font-size: 1.1em;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.pagination-arrows button:disabled {
+  opacity: .4;
+  cursor: unset;
+}
+
+.pagination span {
+  margin: 0 1em;
+}
+
+
+@media only screen and (max-width: 900px) {
+  table thead th {
+    padding: 10px;
+    display: block;
+  }
+
+  table,
+  table thead,
+  table tbody, 
+  table tr { 
+		display: block; 
+	}
+
+  table tbody tr {
+    margin: 0 0 1em 0;
+    background-color: #FFF;
+  }
+
+  table tbody td {
+    border: none;
+    display: block;
+  }
+	
+	td:before { 
+		position: absolute;
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+
+  .table-row-buttons-container {
+    justify-content: flex-start;
+  }
+}

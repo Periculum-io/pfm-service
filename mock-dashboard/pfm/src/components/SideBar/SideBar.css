@@ -1,0 +1,132 @@
+.sidebar,
+.sidebar-burger {
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: #ffffff;
+}
+
+.sidebar {
+  display: flex;
+  width: 220px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, .1);
+}
+
+.sidebar-burger {
+  width: 90%;
+}
+
+.burger-container,
+.sidebar-burger {
+  display: none;
+}
+
+.burger-container {
+  z-index: 8;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.burger-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 9;
+  position: relative;
+}
+
+.burger-icon {
+  width: 20px;
+}
+
+.logo-container {
+  width: 100%;
+  padding: 1em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-link img {
+  width: 119px;
+}
+
+.sidebar-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 4em 0 0 0;
+}
+
+.sidebar-link-row {
+  width: 90%;
+  padding: .7em;
+  gap: .7em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+}
+
+.sidebar-link-row p {
+  color: #130F26;
+  font-size: 16px;
+}
+
+.sidebar-link-row img {
+  width: 24px;
+  height: 24px;
+}
+
+.sidebar-link-logout {
+  position: absolute;
+  bottom: 0;
+}
+
+.sidebar-link-logout p {
+  font-weight: 600;
+  color: #4C92FB;
+}
+
+.sidebar-link-row.active p {
+  color: #040E6A;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.sidebar-link-row.active p::after{
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 0 0 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  background-color: #040E6A;
+}
+
+.sidebar-link-row.active img {
+  filter: brightness(0) saturate(100%) invert(12%) sepia(70%) saturate(3377%) hue-rotate(232deg) brightness(78%) contrast(119%);
+}
+
+@media only screen and (max-width: 800px) {
+  .sidebar {
+    display: none;
+  }
+
+  .burger-container,
+  .sidebar-burger {
+    display: flex;
+  }
+}
