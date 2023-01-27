@@ -1,4 +1,17 @@
 aws_region                    = "us-east-1"
+
+# Infra related
+ecs_cluster_name = "pfm-ecs-cluster"
+ecs_cluster_capacity_providers = ["FARGATE", "FARGATE_SPOT"]
+ecs_container_insights_enabled = "disabled"
+vpc_public_subnets_cidr = ["10.0.0.0/24", "10.0.1.0/24"]
+vpc_private_subnets_cidr = ["10.0.2.0/24", "10.0.3.0/24"]
+
+alb_log_prefix = "alb"
+alb_log_enabled = true
+alb_s3_bucket_acl = "private"
+
+
 dynamodb_table_name           = "pfm-state"
 dynamodb_table_read_capacity  = 20
 dynamodb_table_write_capacity = 20

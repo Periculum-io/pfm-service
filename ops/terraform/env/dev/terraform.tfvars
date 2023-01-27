@@ -8,7 +8,7 @@ vpc_pfm_public_subnets = [ "subnet-0b9c698432334975f", "subnet-06e82436f3260a957
 
 ec2_ami_id = "ami-04505e74c0741db8d"
 ec2_instance_type = "t3.micro"
-ec2_dev_insights_private_subnet_us_east_1a = "subnet-016820b574afcf03a"
+ec2_dev_insights_private_subnets_us_east_1 = ["subnet-016820b574afcf03a", "subnet-0a2a871e51f705350"]
 ec2_ssh_private_key_secret_name = "pfm/dev/ec2/key"
 ec2_ssh_public_key_secret_name = "pfm/dev/ec2/key.pub"
 ec2_lb_log_prefix = "lb"

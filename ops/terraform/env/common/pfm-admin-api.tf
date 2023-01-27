@@ -9,7 +9,7 @@ module "pfm_admin_api" {
 
   aws_region   = var.aws_region
   vpc_id       = module.aws_infrastructure.vpc_id
-  subnet_ids   = module.aws_infrastructure.subnet_private_ids
+  subnet_ids   = .awmodules_infrastructure.subnet_private_ids
   aws_cloudwatch_logs_group = module.aws_infrastructure.cloudwatch_log_group_name
 
   ecs_cluster_id               = module.aws_infrastructure.ecs_cluster_id

@@ -7,13 +7,14 @@ locals {
   ]
 }
 module "frontend" {
-
+  source = "../../modules/insights-service"
+  
   service_name = "frontend"
   environment  = var.environment
 
   aws_region                = var.aws_region
-  vpc_id                    = module.aws_infrastructure.vpc_id
-  subnet_ids                = module.aws_infrastructure.subnet_private_ids
+  vpc_id                    = data.aws_vpc.insights_vpc.id
+  subnet_ids                = var.ec2_dev_insights_private_subnets_us_east_1
   aws_cloudwatch_logs_group = module.aws_infrastructure.cloudwatch_log_group_name
 
   ecs_cluster_id               = module.aws_infrastructure.ecs_cluster_id
