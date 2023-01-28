@@ -5,7 +5,7 @@ locals {
     username = local.rds_username
     password = random_password.rds_password_pdf_processing.result
   }
-  pdf_processing_api_credentials_secret = {
+  pfm_api_credentials_secret = {
     s3_bucket_name = "${local.resource_name_prefix}-${var.bucket_names[0]}"
     database_connection_string = aws_db_instance.db_instance_pfm.address
     database_username = local.rds_secret_string_pfm_integration.username

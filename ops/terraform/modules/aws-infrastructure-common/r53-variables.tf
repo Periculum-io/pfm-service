@@ -5,7 +5,7 @@ variable "r53_hosted_zone_id" {
 
 variable "r53_target_domain_pfm_admin_api" {
   type = string
-  description = "Domain where the application shall be exposed to"
+  description = "Domain where the api shall be exposed to"
 }
 
 variable "r53_target_domain_pfm_admin_frontend" {

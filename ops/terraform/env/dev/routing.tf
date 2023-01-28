@@ -7,28 +7,13 @@ locals {
 }
 
 # A valid certificate for given domain must exist in ACM prior creation of the environment
-data "aws_acm_certificate" "acm_insights" {
-  domain   = var.r53_target_domain
+data "aws_acm_certificate" "acm_pfm_admin_api" {
+  domain   = var.r53_target_domain_pfm_admin_api
   statuses = ["ISSUED"]
 }
 
-data "aws_acm_certificate" "acm_insights_mono_integration" {
-  domain   = var.r53_target_domain_mono_integration
-  statuses = ["ISSUED"]
-}
-
-data "aws_acm_certificate" "acm_insights_dojah_integration" {
-  domain   = var.r53_target_domain_dojah_integration
-  statuses = ["ISSUED"]
-}
-
-data "aws_acm_certificate" "acm_insights_consumer" {
-  domain   = var.r53_target_domain_consumer_frontend
-  statuses = ["ISSUED"]
-}
-
-data "aws_acm_certificate" "acm_insights_consumer_backend" {
-  domain   = var.r53_target_domain_consumer_backend
+data "aws_acm_certificate" "acm_pfm_frontend" {
+  domain   = var.r53_target_domain_pfm_admin_frontend
   statuses = ["ISSUED"]
 }
 
@@ -40,7 +25,7 @@ resource "aws_alb_listener" "alb_listener_https" {
   # If URL does not match any rule, it is currently being forwarded to UI
   default_action {
     type = "forward"
-    target_group_arn = module.frontend.target_group_id
+    target_group_arn = module.pfm-service.target_group_id
   }
 
   tags = merge(
@@ -53,131 +38,36 @@ resource "aws_alb_listener" "alb_listener_https" {
   depends_on = [module.aws_infrastructure]
 }
 
-resource "aws_alb_listener_certificate" "alb_insights_certificate" {
+resource "aws_alb_listener_certificate" "alb_pfm_admin_certificate" {
   listener_arn = aws_alb_listener.alb_listener_https.arn
-  certificate_arn = data.aws_acm_certificate.acm_insights.arn
+  certificate_arn = data.aws_acm_certificate.acm_pfm_admin_api.arn
 }
 
-resource "aws_alb_listener_certificate" "alb_insights_certificate_mono_integration" {
+resource "aws_alb_listener_certificate" "alb_pfm_api_certificate" {
   listener_arn = aws_alb_listener.alb_listener_https.arn
-  certificate_arn = data.aws_acm_certificate.acm_insights_mono_integration.arn
-}
+  certificate_arn = data.aws_acm_certificate.acm_pfm_frontend.arn
+} 
 
-resource "aws_alb_listener_certificate" "alb_insights_certificate_dojah_integration" {
-  listener_arn = aws_alb_listener.alb_listener_https.arn
-  certificate_arn = data.aws_acm_certificate.acm_insights_dojah_integration.arn
-}
-
-resource "aws_alb_listener_certificate" "alb_insights_certificate_consumer" {
-  listener_arn = aws_alb_listener.alb_listener_https.arn
-  certificate_arn = data.aws_acm_certificate.acm_insights_consumer.arn
-}
-
-resource "aws_alb_listener_certificate" "alb_insights_certificate_consumer_backend" {
-  listener_arn = aws_alb_listener.alb_listener_https.arn
-  certificate_arn = data.aws_acm_certificate.acm_insights_consumer_backend.arn
-}
-
-resource "aws_alb_listener_rule" "alb_listener_rule_insights_mono_integration_frontend" {
-  listener_arn = aws_alb_listener.alb_listener_https.arn
-  priority     = 600
-
-  action {
-    type             = "forward"
-    target_group_arn = module.insights_mono_integration_frontend.target_group_id
-  }
-
-  condition {
-    host_header {
-      values = [var.alb_listener_routing_host_insights_mono_integration_frontend]
-    }
-  }
-}
-
-resource "aws_alb_listener_rule" "alb_listener_rule_insights_dojah_integration_frontend" {
-  listener_arn = aws_alb_listener.alb_listener_https.arn
-  priority     = 500
-
-  action {
-    type             = "forward"
-    target_group_arn = module.insights_dojah_integration_frontend.target_group_id
-  }
-
-  condition {
-    host_header {
-      values = [var.alb_listener_routing_host_insights_dojah_integration_frontend]
-    }
-  }
-}
-
-resource "aws_alb_listener_rule" "alb_listener_rule_insights_api" {
+# for pfm platform
+resource "aws_alb_listener_rule" "alb_listener_rule_pfm_admin" {
   listener_arn = aws_alb_listener.alb_listener_https.arn
   priority     = 200
 
   action {
     type             = "forward"
-    target_group_arn = module.insights_api.target_group_id
+    target_group_arn = module.pfm-service.target_group_id
   }
 
   condition {
     host_header {
-      values = [var.alb_listener_routing_host_insights_api]
+      values = [var.alb_listener_routing_host_pfm_admin]
     }
   }
 }
 
-resource "aws_alb_listener_rule" "alb_listener_rule_insights_mono_integration_api" {
+resource "aws_alb_listener_rule" "alb_listener_rule_pfm_api" {
   listener_arn = aws_alb_listener.alb_listener_https.arn
   priority     = 100
-
-  action {
-    type             = "forward"
-    target_group_arn = module.insights_mono_integration_api.target_group_id
-  }
-
-  condition {
-    host_header {
-      values = [var.alb_listener_routing_host_insights_mono_integration_api]
-    }
-  }
-}
-
-resource "aws_alb_listener_rule" "alb_listener_rule_insights_dojah_integration_api" {
-  listener_arn = aws_alb_listener.alb_listener_https.arn
-  priority     = 300
-
-  action {
-    type             = "forward"
-    target_group_arn = module.insights_dojah_integration_api.target_group_id
-  }
-
-  condition {
-    host_header {
-      values = [var.alb_listener_routing_host_insights_dojah_integration_api]
-    }
-  }
-}
-
-# for consumer platform
-resource "aws_alb_listener_rule" "alb_listener_rule_insights_consumer_api" {
-  listener_arn = aws_alb_listener.alb_listener_https.arn
-  priority     = 400
-
-  action {
-    type             = "forward"
-    target_group_arn = module.insights_consumer_api.target_group_id
-  }
-
-  condition {
-    host_header {
-      values = [var.alb_listener_routing_host_insights_consumer_api]
-    }
-  }
-}
-
-resource "aws_alb_listener_rule" "alb_listener_rule_insights_consumer_frontend" {
-  listener_arn = aws_alb_listener.alb_listener_https.arn
-  priority     = 700
 
   action {
     type             = "forward"
@@ -186,7 +76,7 @@ resource "aws_alb_listener_rule" "alb_listener_rule_insights_consumer_frontend" 
 
   condition {
     host_header {
-      values = [var.alb_listener_routing_host_insights_consumer_frontend]
+      values = [var.alb_listener_routing_host_pfm_api]
     }
   }
 }

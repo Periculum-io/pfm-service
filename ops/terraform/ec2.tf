@@ -63,7 +63,7 @@ data "aws_secretsmanager_secret_version" "sm_init_ec2_key_pub_current" {
 
 resource "aws_security_group" "security_group_ec2" {
   name              = "${local.resource_name_prefix}-ec2-security-group"
-  description       = "SG for ec2 instance that hosts pdf parsing api"
+  description       = "SG for ec2 instance that hosts pfm flask api"
   vpc_id            = var.vpc_id
 
   tags = {
@@ -107,7 +107,7 @@ resource "aws_key_pair" "ssh-key" {
   public_key = data.aws_secretsmanager_secret_version.sm_init_ec2_key_pub_current.secret_string
 }
 
-resource "aws_instance" "pdf_api_instance_1" {
+resource "aws_instance" "pfm_api_instance_1" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.ec2_instance_type
   key_name      = aws_key_pair.ssh-key.key_name
@@ -124,7 +124,7 @@ resource "aws_instance" "pdf_api_instance_1" {
 }
 
 output "instance_1_host_address" {
-  value = aws_instance.pdf_api_instance_1.public_dns
+  value = aws_instance.pfm_api_instance_1.public_dns
 }
 
 output "github_username" {

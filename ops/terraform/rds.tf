@@ -1,18 +1,18 @@
-resource "aws_kms_key" "kms_key_for_rds_pdf_processing" {
+resource "aws_kms_key" "kms_key_for_rds_pfm" {
   count                   = length(var.rds_kms_key_alias_names_pfm)
   description             = "${local.resource_name_prefix}-${var.rds_kms_key_alias_names_pfm[count.index]}"
   deletion_window_in_days = var.enc_key_deletion_in_days
   enable_key_rotation     = var.enc_key_rotation_enabled
 }
 
-resource "aws_kms_alias" "kms_key_alias_rds_pdf_processing" {
+resource "aws_kms_alias" "kms_key_alias_rds_pfm" {
   count         = length(var.rds_kms_key_alias_names_pfm)
   name          = "alias/${local.resource_name_prefix}-${var.rds_kms_key_alias_names_pfm[count.index]}-key"
-  target_key_id = aws_kms_key.kms_key_for_rds_pdf_processing[count.index].key_id
+  target_key_id = aws_kms_key.kms_key_for_rds_pfm[count.index].key_id
 }
 
 data "aws_db_subnet_group" "db_subnet_group_insights" {
-  name       = var.pfm_aws_db_subnet_group
+  name = var.pfm_aws_db_subnet_group
 }
 
 resource "aws_db_parameter_group" "db_parameter_group" {
@@ -33,7 +33,7 @@ resource "random_password" "rds_password_pdf_processing" {
 
 resource "aws_security_group" "security_group_rds" {
   name              = "${local.resource_name_prefix}-rds-security-group"
-  description       = "RDS security group to allow only inbound traffic from ec2 instances that perform pdf processing"
+  description       = "RDS security group to allow only inbound traffic from ec2 instances that perform pfm analysis"
   vpc_id            = var.vpc_id
 
   tags = {
@@ -102,14 +102,14 @@ resource "aws_db_instance" "db_instance_pfm" {
 
   iam_database_authentication_enabled = true
   storage_encrypted = true
-  kms_key_id = aws_kms_key.kms_key_for_rds_pdf_processing[0].arn
+  kms_key_id = aws_kms_key.kms_key_for_rds_pfm[0].arn
 
   publicly_accessible = false
   skip_final_snapshot = var.rds_skip_final_snapshot
   monitoring_interval = 10
   monitoring_role_arn = aws_iam_role.iam_role_rds_enhanced_monitoring.arn
   performance_insights_enabled = var.rds_performance_insights_enabled
-  performance_insights_kms_key_id = aws_kms_key.kms_key_for_rds_pdf_processing[1].arn
+  performance_insights_kms_key_id = aws_kms_key.kms_key_for_rds_pfm[1].arn
 
   parameter_group_name = aws_db_parameter_group.db_parameter_group.name
   vpc_security_group_ids = [aws_security_group.security_group_rds.id]

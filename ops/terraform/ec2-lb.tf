@@ -109,7 +109,7 @@ resource "aws_alb_listener" "alb_listener_https" {
 
   certificate_arn     = aws_acm_certificate.acm_certificate_pfm.arn
 
-  # If URL does not match any rule, it is currently being forwarded to pdf parser api
+  # If URL does not match any rule, it is currently being forwarded to pfm api
   default_action {
     type = "forward"
     target_group_arn = aws_lb_target_group.ec2_load_balancer_pfm_target_group.arn
@@ -128,8 +128,8 @@ resource "aws_lb_target_group" "ec2_load_balancer_pfm_target_group" {
   vpc_id    = var.vpc_id
 }
 
-resource "aws_lb_target_group_attachment" "ec2_load_balancer_pdf_api_instance_1_attachment" {
+resource "aws_lb_target_group_attachment" "ec2_load_balancer_pfm_api_instance_1_attachment" {
   target_group_arn  = aws_lb_target_group.ec2_load_balancer_pfm_target_group.arn
-  target_id         = aws_instance.pdf_api_instance_1.id
+  target_id         = aws_instance.pfm_api_instance_1.id
   port              = 80
 }

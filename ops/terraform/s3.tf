@@ -31,7 +31,7 @@ resource "aws_s3_bucket" "s3_bucket_pfm" {
   }
 }
 
-resource "aws_s3_bucket_public_access_block" "s3_bucket_public_access_block_pdf_processing" {
+resource "aws_s3_bucket_public_access_block" "s3_bucket_public_access_block_pfm" {
   count  = var.buckets_count
   bucket = aws_s3_bucket.s3_bucket_pfm[count.index].id
 

@@ -1,7 +1,7 @@
 variable "rds_kms_key_alias_names_pfm" {
   type = list(string)
   description = "Name of keys that will be used for encryption of rds and performance for pdf processing."
-  default = ["pdf-processing-rds-key", "pdf-processing-rds-key"]
+  default = ["pfm-rds-key", "pfm-rds-key"]
 }
 
 variable "enc_key_deletion_in_days" {

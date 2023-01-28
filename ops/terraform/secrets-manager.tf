@@ -12,7 +12,7 @@ resource "aws_secretsmanager_secret" "db_credentials_secret" {
 
 resource "aws_secretsmanager_secret_version" "pfm_admin_api_secret_version" {
   secret_id = aws_secretsmanager_secret.pfm_admin_api_secret.id
-  secret_string = jsonencode(local.pdf_processing_api_credentials_secret)
+  secret_string = jsonencode(local.pfm_api_credentials_secret)
 }
 
 resource "aws_secretsmanager_secret_version" "db_credentials_secret_version" {
