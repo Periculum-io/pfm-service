@@ -31,7 +31,7 @@ resource "aws_alb_listener" "alb_listener_https" {
   tags = merge(
     local.common_tags,
     {
-      Name = "${local.resource_name_prefix}-insights-alb-listener"
+      Name = "${local.resource_name_prefix}-pfm-alb-listener"
     },
   )
 
@@ -51,7 +51,7 @@ resource "aws_alb_listener_certificate" "alb_pfm_api_certificate" {
 # for pfm platform
 resource "aws_alb_listener_rule" "alb_listener_rule_pfm_admin" {
   listener_arn = aws_alb_listener.alb_listener_https.arn
-  priority     = 200
+  priority     = 100
 
   action {
     type             = "forward"
@@ -65,18 +65,18 @@ resource "aws_alb_listener_rule" "alb_listener_rule_pfm_admin" {
   }
 }
 
-resource "aws_alb_listener_rule" "alb_listener_rule_pfm_api" {
+resource "aws_alb_listener_rule" "alb_listener_rule_pfm_admin_api" {
   listener_arn = aws_alb_listener.alb_listener_https.arn
-  priority     = 100
+  priority     = 200
 
   action {
     type             = "forward"
-    target_group_arn = module.insights_consumer_frontend.target_group_id
+    target_group_arn = module.pfm-service.target_group_id
   }
 
   condition {
     host_header {
-      values = [var.alb_listener_routing_host_pfm_api]
+      values = [var.ec2_lb_domain_name]
     }
   }
 }

@@ -120,6 +120,23 @@ resource "aws_alb_listener" "alb_listener_https" {
   }
 }
 
+resource "aws_alb_listener_rule" "alb_listener_rule_pfm_api" {
+  listener_arn = aws_alb_listener.alb_listener_https.arn
+  priority     = 300
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.ec2_load_balancer_pfm_target_group.arn
+  }
+
+  condition {
+    host_header {
+      values = [var.ec2_lb_domain_name]
+    }
+  }
+}
+
+
 resource "aws_lb_target_group" "ec2_load_balancer_pfm_target_group" {
   name      = "${local.resource_name_prefix}-ec2-tg"
   port      = 80

@@ -1,4 +1,5 @@
 aws_region                    = "us-east-1"
+availability_zones            = ["us-east-1a", "us-east-1b"] 
 dynamodb_table_name           = "pfm-state"
 dynamodb_table_read_capacity  = 20
 dynamodb_table_write_capacity = 20
@@ -41,5 +42,9 @@ bucket_enc_key_rotation_enabled = true
 
 ec2_lb_hosted_zone_domain = "periculum-models.link"
 ec2_lb_domain_name = "pfm.dev.periculum-models.link"
+ 
+r53_target_domain_pfm_admin_frontend = "pfm.dev.periculum-models.link"
+r53_target_domain_pfm_admin_api = "admin-api.pfm.dev.periculum-models.link"
+alb_listener_routing_host_pfm_api = "api.pfm.dev.periculum-models.link"
 
 secrets_manager_vm_github_personal_access_token_arn = "arn:aws:secretsmanager:us-east-1:962374658537:secret:pdf-parser/prod/ec2/github-Ef5lEy"
