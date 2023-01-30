@@ -3,6 +3,16 @@ variable "ecs_cluster_name" {
   type = string
 }
 
+variable "aws_region" {
+  description = "AWS Region"
+  type = string
+}
+
+variable "environment" {
+  description = "Current environment"
+  type = string
+}
+
 variable "ecs_cluster_capacity_providers" {
   description = "List of short names of one or more capacity providers to associate with the cluster."
   type = list(string)
@@ -48,6 +58,11 @@ variable "r53_hosted_zone_id" {
   description = "ID of the zone that will be manipulated"
 }
 
+variable "r53_hosted_zone_name" {
+  type = string
+  description = "Name of the zone that will be manipulated"
+}
+
 variable "r53_target_domain_pfm_admin_api" {
   type = string
   description = "Domain where the application shall be exposed to"
@@ -56,4 +71,9 @@ variable "r53_target_domain_pfm_admin_api" {
 variable "r53_target_domain_pfm_admin_frontend" {
   type = string
   description = "Domain where the application shall be exposed to"
+}
+
+variable "alb_s3_bucket_id" {
+  description = "VPC ID for the environment"
+  type = string
 }

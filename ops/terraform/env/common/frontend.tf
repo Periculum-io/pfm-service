@@ -7,20 +7,20 @@ locals {
   ]
 }
 module "frontend" {
-  source = "../../modules/insights-service"
+  source = "../../modules/pfm-service"
   
-  service_name = "frontend"
+  service_name = "pfm-admin-frontend"
   environment  = var.environment
 
   aws_region                = var.aws_region
-  vpc_id                    = data.aws_vpc.insights_vpc.id
-  subnet_ids                = var.ec2_dev_insights_private_subnets_us_east_1
+  vpc_id                    = var.vpc_id
+  subnet_ids                = var.vpc_pfm_private_subnets
   aws_cloudwatch_logs_group = module.aws_infrastructure.cloudwatch_log_group_name
 
   ecs_cluster_id               = module.aws_infrastructure.ecs_cluster_id
   alb_logs_enabled             = true
-  alb_logs_bucket_id           = module.aws_infrastructure.logs_s3_bucket_alb_id
   alb_logs_prefix              = "alb-frontend"
+  alb_logs_bucket_id           = module.aws_infrastructure.logs_s3_bucket_alb_id
   source_security_group_alb_id = module.aws_infrastructure.alb_security_group_id
   security_group_alb_from_port = var.frontend_container_port
   security_group_alb_to_port   = var.frontend_container_port

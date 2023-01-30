@@ -31,10 +31,6 @@ variable "pfm_admin_api_container_host_port" {
   type = number
 }
 
-variable "pfm_admin_api_secret_manager_arn" {
-  type = string
-}
-
 variable "pfm_admin_api_sensitive_secret_arn" {
   type = string
 }
@@ -49,4 +45,16 @@ variable "pfm_admin_api_auth0_domain" {
 
 variable "pfm_admin_api_auth0_audience" {
   type = string
+}
+
+variable "vpc_id" {
+  type = string
+}
+
+variable "vpc_pfm_private_subnets" {
+  type = list(string)
+}
+
+variable "vpc_pfm_public_subnets" {
+  type = list(string)
 }

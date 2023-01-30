@@ -1,3 +1,8 @@
+locals {
+    secret_string = {
+         
+    }
+}
 data "aws_vpc" "insights_vpc" {
   id = var.vpc_id
 }
@@ -45,20 +50,21 @@ data "aws_elb_service_account" "elb_service_account_insights" {
 #   secret_id = data.aws_secretsmanager_secret.sm_init.id
 # }
 
-data "aws_secretsmanager_secret" "sm_init_ec2_key" {
+resource "aws_secretsmanager_secret" "sm_init_ec2_key" {
   name = var.ec2_ssh_private_key_secret_name
 }
 
-data "aws_secretsmanager_secret_version" "sm_init_ec2_key_current" {
-  secret_id = data.aws_secretsmanager_secret.sm_init_ec2_key.id
+resource "aws_secretsmanager_secret_version" "sm_init_ec2_key_current" {
+  secret_id = aws_secretsmanager_secret.sm_init_ec2_key.id
 }
 
-data "aws_secretsmanager_secret" "sm_init_ec2_key_pub" {
+resource "aws_secretsmanager_secret" "sm_init_ec2_key_pub" {
   name = var.ec2_ssh_public_key_secret_name
 }
 
-data "aws_secretsmanager_secret_version" "sm_init_ec2_key_pub_current" {
-  secret_id = data.aws_secretsmanager_secret.sm_init_ec2_key_pub.id
+resource "aws_secretsmanager_secret_version" "sm_init_ec2_key_pub_current" {
+  secret_id = aws_secretsmanager_secret.sm_init_ec2_key_pub.id
+  secret_string = jsonencode(local.secret_string)
 }
 
 resource "aws_security_group" "security_group_ec2" {
@@ -104,7 +110,7 @@ resource "aws_security_group_rule" "security_group_rule_ec2_egress_all" {
 
 resource "aws_key_pair" "ssh-key" {
   key_name   = "${local.resource_name_prefix}-ec2-ssh-key"
-  public_key = data.aws_secretsmanager_secret_version.sm_init_ec2_key_pub_current.secret_string
+  public_key = aws_secretsmanager_secret_version.sm_init_ec2_key_pub_current.secret_string
 }
 
 resource "aws_instance" "pfm_api_instance_1" {

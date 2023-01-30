@@ -8,8 +8,8 @@ resource "aws_route53_record" "r53_record_a_domain_pfm_admin_api" {
   type    = "A"
 
   alias {
-    name                   = aws_alb.alb.dns_name
-    zone_id                = aws_alb.alb.zone_id
+    name                   = var.r53_hosted_zone_name
+    zone_id                = var.r53_hosted_zone_id
     evaluate_target_health = true
   }
 }
@@ -20,8 +20,8 @@ resource "aws_route53_record" "r53_record_a_domain_pfm_admin_frontend" {
   type    = "A"
 
   alias {
-    name                   = aws_alb.alb.dns_name
-    zone_id                = aws_alb.alb.zone_id
+    name                   = var.r53_hosted_zone_name
+    zone_id                = var.r53_hosted_zone_id
     evaluate_target_health = true
   }
 }
