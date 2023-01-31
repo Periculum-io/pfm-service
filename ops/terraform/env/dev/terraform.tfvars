@@ -1,29 +1,27 @@
 aws_region                    = "us-east-1"
 environment                   = "dev"
 #availability_zones            = ["us-east-1a", "us-east-1b"] 
-vpc_id = "vpc-014bfbd3f00327eef"
-vpc_pfm_public_subnets = [ "subnet-0b9c698432334975f", "subnet-06e82436f3260a957" ]
-vpc_pfm_private_subnets = ["subnet-016820b574afcf03a", "subnet-0a2a871e51f705350"]
+vpc_id                        = "vpc-014bfbd3f00327eef"
+vpc_pfm_public_subnets        = [ "subnet-0b9c698432334975f", "subnet-06e82436f3260a957" ]
+vpc_pfm_private_subnets       = ["subnet-016820b574afcf03a", "subnet-0a2a871e51f705350"]
  
 
 # Infra related
-ecs_cluster_name = "pfm-ecs-cluster"
+ecs_cluster_name               = "pfm-ecs-cluster"
 ecs_cluster_capacity_providers = ["FARGATE", "FARGATE_SPOT"]
 ecs_container_insights_enabled = "disabled"
-vpc_public_subnets_cidr = ["10.0.0.0/24", "10.0.1.0/24"]
-vpc_private_subnets_cidr = ["10.0.2.0/24", "10.0.3.0/24"]
+vpc_public_subnets_cidr        = ["10.0.0.0/24", "10.0.1.0/24"]
+vpc_private_subnets_cidr       = ["10.0.2.0/24", "10.0.3.0/24"]
 
 alb_log_prefix = "alb"
 alb_log_enabled = true
 alb_s3_bucket_acl = "private"
-alb_s3_bucket_id = ""
-
-
+alb_s3_bucket_id = "pfm-logs-s3-bucket"
 
 # Routing related
-r53_hosted_zone_name = "periculum-models.link"
-r53_target_domain_pfm_admin_api = "admin-api.pfm.dev.periculum-models.link"
-r53_hosted_zone_id = "Z05688392G271FHDECHWN"
+r53_hosted_zone_id                   = "Z05688392G271FHDECHWN"
+r53_hosted_zone_name                 = "periculum-models.link"
+r53_target_domain_pfm_admin_api      = "admin-api.pfm.dev.periculum-models.link"
 r53_target_domain_pfm_admin_frontend = "pfm.dev.periculum-models.link"
 
 # Frontend

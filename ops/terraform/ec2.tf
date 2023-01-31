@@ -119,7 +119,6 @@ resource "tls_private_key" "genkey" {
 
 resource "aws_key_pair" "ssh-key" {
   key_name   = "${local.resource_name_prefix}-ec2-ssh-key"
-  #public_key = aws_secretsmanager_secret_version.sm_init_ec2_key_pub_current.secret_string
   public_key = tls_private_key.genkey.public_key_openssh
 }
 

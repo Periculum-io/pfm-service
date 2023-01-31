@@ -15,7 +15,7 @@ resource "aws_acm_certificate" "acm_pfm_admin_api" {
   validation_method = "DNS"
 
   tags = {
-    "Application" = "Insights"
+    "Application" = "PFM Admin API"
   }
 
   lifecycle {
@@ -28,24 +28,13 @@ resource "aws_acm_certificate" "acm_pfm_frontend" {
   validation_method = "DNS"
 
   tags = {
-    "Application" = "Insights"
+    "Application" = "PFM Admin Frontend"
   }
 
   lifecycle {
     create_before_destroy = true
   }
 }
-
-# A valid certificate for given domain must exist in ACM prior creation of the environment
-# data "aws_acm_certificate" "acm_pfm_admin_api" {
-#   domain   = var.r53_target_domain_pfm_admin_api
-#   statuses = ["ISSUED"]
-# }
-
-# data "aws_acm_certificate" "acm_pfm_frontend" {
-#   domain   = var.r53_target_domain_pfm_admin_frontend
-#   statuses = ["ISSUED"]
-# }
 
 resource "aws_alb_listener" "alb_listener_https" {
   load_balancer_arn   = module.aws_infrastructure.alb_id
