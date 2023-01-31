@@ -1,6 +1,6 @@
 aws_region                    = "us-east-1"
 environment                   = "dev"
-availability_zones            = ["us-east-1a", "us-east-1b"] 
+#availability_zones            = ["us-east-1a", "us-east-1b"] 
 vpc_id = "vpc-014bfbd3f00327eef"
 vpc_pfm_public_subnets = [ "subnet-0b9c698432334975f", "subnet-06e82436f3260a957" ]
 vpc_pfm_private_subnets = ["subnet-016820b574afcf03a", "subnet-0a2a871e51f705350"]

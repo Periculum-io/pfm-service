@@ -1,13 +1,13 @@
 resource "aws_kms_key" "kms_key_for_rds_pfm" {
   count                   = length(var.rds_kms_key_alias_names_pfm)
-  description             = "${local.resource_name_prefix}-${var.rds_kms_key_alias_names_pfm[count.index]}"
+  description             = "${local.environment}-${var.rds_kms_key_alias_names_pfm[count.index]}"
   deletion_window_in_days = var.enc_key_deletion_in_days
   enable_key_rotation     = var.enc_key_rotation_enabled
 }
 
 resource "aws_kms_alias" "kms_key_alias_rds_pfm" {
   count         = length(var.rds_kms_key_alias_names_pfm)
-  name          = "alias/${local.resource_name_prefix}-${var.rds_kms_key_alias_names_pfm[count.index]}-key"
+  name          = "alias/${var.rds_kms_key_alias_names_pfm[count.index]}"
   target_key_id = aws_kms_key.kms_key_for_rds_pfm[count.index].key_id
 }
 
@@ -25,7 +25,7 @@ resource "aws_db_parameter_group" "db_parameter_group" {
   }
 }
 
-resource "random_password" "rds_password_pdf_processing" {
+resource "random_password" "rds_password_pfm" {
   length           = 24
   special          = true
   override_special = "_!%^"
@@ -77,7 +77,7 @@ resource "aws_iam_role_policy_attachment" "iam_role_policy_attachment_rds_enhanc
 }
 
 resource "aws_db_instance" "db_instance_pfm" {
-  identifier = "${local.resource_name_prefix}-rds-postgresql"
+  identifier = "${local.environment}-${local.resource_name_prefix}-rds-postgresql"
 
   storage_type            = "gp2"
   allocated_storage       = var.rds_allocated_storage
@@ -114,5 +114,5 @@ resource "aws_db_instance" "db_instance_pfm" {
   parameter_group_name = aws_db_parameter_group.db_parameter_group.name
   vpc_security_group_ids = [aws_security_group.security_group_rds.id]
   username = local.rds_username
-  password = random_password.rds_password_pdf_processing.result
+  password = random_password.rds_password_pfm.result
 }

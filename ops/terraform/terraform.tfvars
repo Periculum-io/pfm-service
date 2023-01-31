@@ -1,5 +1,5 @@
 aws_region                    = "us-east-1"
-availability_zones            = ["us-east-1a", "us-east-1b"] 
+#availability_zones            = ["us-east-1a", "us-east-1b"] 
 dynamodb_table_name           = "pfm-state"
 dynamodb_table_read_capacity  = 20
 dynamodb_table_write_capacity = 20
@@ -10,8 +10,8 @@ vpc_pfm_public_subnets = [ "subnet-0fd50fcff1564b322", "subnet-03f99ef94eed8df92
 ec2_ami_id = "ami-04505e74c0741db8d"
 ec2_instance_type = "t3.micro"
 ec2_prod_insights_private_subnet_us_east_1a = "subnet-09727753b48abb509"
-ec2_ssh_private_key_secret_name = "pfm/dev/ec2/key"
-ec2_ssh_public_key_secret_name = "pfm/dev/ec2/key.pub"
+ec2_ssh_private_key_secret_name = "pfm/prod/ec2/key"
+ec2_ssh_public_key_secret_name = "pfm/prod/ec2/key.pub"
 ec2_lb_log_prefix = "lb"
 ec2_lb_log_enabled = true
 

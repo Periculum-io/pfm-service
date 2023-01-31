@@ -2,6 +2,9 @@ locals {
     secret_string = {
          
     }
+    private_secret_string = {
+         
+    }
 }
 data "aws_vpc" "insights_vpc" {
   id = var.vpc_id
@@ -55,7 +58,8 @@ resource "aws_secretsmanager_secret" "sm_init_ec2_key" {
 }
 
 resource "aws_secretsmanager_secret_version" "sm_init_ec2_key_current" {
-  secret_id = aws_secretsmanager_secret.sm_init_ec2_key.id
+  secret_id = aws_secretsmanager_secret.sm_init_ec2_key.id   
+  secret_string = tls_private_key.genkey.private_key_pem
 }
 
 resource "aws_secretsmanager_secret" "sm_init_ec2_key_pub" {
@@ -64,7 +68,7 @@ resource "aws_secretsmanager_secret" "sm_init_ec2_key_pub" {
 
 resource "aws_secretsmanager_secret_version" "sm_init_ec2_key_pub_current" {
   secret_id = aws_secretsmanager_secret.sm_init_ec2_key_pub.id
-  secret_string = jsonencode(local.secret_string)
+  secret_string = tls_private_key.genkey.public_key_pem
 }
 
 resource "aws_security_group" "security_group_ec2" {
@@ -108,9 +112,15 @@ resource "aws_security_group_rule" "security_group_rule_ec2_egress_all" {
   security_group_id = aws_security_group.security_group_ec2.id
 }
 
+resource "tls_private_key" "genkey" {
+  algorithm = "RSA"
+  rsa_bits = 4096
+}
+
 resource "aws_key_pair" "ssh-key" {
   key_name   = "${local.resource_name_prefix}-ec2-ssh-key"
-  public_key = aws_secretsmanager_secret_version.sm_init_ec2_key_pub_current.secret_string
+  #public_key = aws_secretsmanager_secret_version.sm_init_ec2_key_pub_current.secret_string
+  public_key = tls_private_key.genkey.public_key_openssh
 }
 
 resource "aws_instance" "pfm_api_instance_1" {

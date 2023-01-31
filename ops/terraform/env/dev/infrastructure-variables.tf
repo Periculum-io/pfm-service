@@ -33,10 +33,10 @@ variable "vpc_private_subnets_cidr" {
   description = "List of CIDR ranges for private subnets"
 }
 
-variable "availability_zones" {
-  type = list(string)
-  description = "List of availability zones"
-}
+# variable "availability_zones" {
+#   type = list(string)
+#   description = "List of availability zones"
+# }
 
 variable "alb_log_prefix" {
   description = "The S3 bucket prefix. Logs are stored in the root if not configured"
