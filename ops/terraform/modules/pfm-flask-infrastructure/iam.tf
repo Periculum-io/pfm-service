@@ -1,5 +1,5 @@
 resource "aws_iam_user" "iam_user_pfm" {
-  name  = "${local.resource_name_prefix}-user"
+  name  = "${local.resource_name_prefix}-pfm-user"
 }
 
 resource "aws_iam_access_key" "iam_access_key" {
@@ -50,7 +50,7 @@ resource "aws_iam_policy" "iam_policy_s3_bucket" {
 }
 
 resource "aws_iam_policy" "iam_policy_secrets_manager_read" {
-  name        = "${local.resource_name_prefix}-retrieves-secretsmanager-secrets"
+  name        = "${local.resource_name_prefix}-pfm-retrieves-secretsmanager-secrets"
   path        = "/"
   description = "Allows lambda to receive secrets from secrets manager."
 

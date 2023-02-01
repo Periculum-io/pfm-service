@@ -1,10 +1,11 @@
 variable "buckets_count" {
   type = number
   description = "How many buckets should be created."
+  default = 1
 }
 
 variable "bucket_names" {
-  description = "Bucket names."
+  description = "Bucket names"
   type = list(string)
 }
 

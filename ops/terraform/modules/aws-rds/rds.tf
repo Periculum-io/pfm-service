@@ -16,7 +16,7 @@ data "aws_db_subnet_group" "db_subnet_group_insights" {
 }
 
 resource "aws_db_parameter_group" "db_parameter_group" {
-  name   = "${local.resource_name_prefix}-db-paremeter-group"
+  name   = "${local.environment}-pfm-paremeter-group"
   family = "postgres13"
 
   parameter {
@@ -31,13 +31,13 @@ resource "random_password" "rds_password_pfm" {
   override_special = "_!%^"
 }
 
-resource "aws_security_group" "security_group_rds" {
-  name              = "${local.resource_name_prefix}-rds-security-group"
+resource "aws_security_group" "pfm_security_group_rds" {
+  name              = "${local.resource_name_prefix}-pfm-rds-security-group"
   description       = "RDS security group to allow only inbound traffic from ec2 instances that perform pfm analysis"
   vpc_id            = var.vpc_id
 
   tags = {
-    Name = "${local.resource_name_prefix}-rds-security-group"
+    Name = "${local.resource_name_prefix}-pfm-rds-security-group"
   }
 }
 
@@ -47,7 +47,7 @@ resource "aws_security_group_rule" "security_group_rule_rds_ingress" {
   from_port                 = 5432
   to_port                   = 5432
   protocol                  = "tcp"
-  security_group_id         = aws_security_group.security_group_rds.id
+  security_group_id         = aws_security_group.pfm_security_group_rds.id
   source_security_group_id  = aws_security_group.security_group_ec2.id
 }
 
@@ -67,7 +67,7 @@ data "aws_iam_policy_document" "rds_enhanced_monitoring" {
 }
 
 resource "aws_iam_role" "iam_role_rds_enhanced_monitoring" {
-  name_prefix        = "${local.resource_name_prefix}-rds-em"
+  name_prefix        = "${local.resource_name_prefix}-pfm-rds-em"
   assume_role_policy = data.aws_iam_policy_document.rds_enhanced_monitoring.json
 }
 
@@ -77,7 +77,7 @@ resource "aws_iam_role_policy_attachment" "iam_role_policy_attachment_rds_enhanc
 }
 
 resource "aws_db_instance" "db_instance_pfm" {
-  identifier = "${local.environment}-${local.resource_name_prefix}-rds-postgresql"
+  identifier = "${local.environment}-pfm-rds-postgresql"
 
   storage_type            = "gp2"
   allocated_storage       = var.rds_allocated_storage
@@ -112,7 +112,7 @@ resource "aws_db_instance" "db_instance_pfm" {
   performance_insights_kms_key_id = aws_kms_key.kms_key_for_rds_pfm[1].arn
 
   parameter_group_name = aws_db_parameter_group.db_parameter_group.name
-  vpc_security_group_ids = [aws_security_group.security_group_rds.id]
+  vpc_security_group_ids = [aws_security_group.pfm_security_group_rds.id]
   username = local.rds_username
   password = random_password.rds_password_pfm.result
 }

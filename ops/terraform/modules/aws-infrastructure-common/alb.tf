@@ -91,7 +91,7 @@ resource "aws_alb" "alb_pfm" {
   tags = merge(
     local.common_tags,
     {
-      Name = "${local.resource_name_prefix}-insights-alb"
+      Name = "${local.resource_name_prefix}-pfm-alb"
     },
   )
 }

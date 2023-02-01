@@ -18,6 +18,7 @@ dynamodb_table_write_capacity = 20
 
 vpc_id = "vpc-01c4b586d9b30a704"
 vpc_pfm_public_subnets = [ "subnet-0fd50fcff1564b322", "subnet-03f99ef94eed8df92" ]
+vpc_pfm_private_subnets       = ["subnet-016820b574afcf03a", "subnet-0a2a871e51f705350"]
 
 ec2_ami_id = "ami-052efd3df9dad4825"
 ec2_instance_type = "t3.micro"

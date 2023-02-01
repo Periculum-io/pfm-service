@@ -138,7 +138,7 @@ resource "aws_alb_listener_rule" "alb_listener_rule_pfm_api" {
 
 
 resource "aws_lb_target_group" "ec2_load_balancer_pfm_target_group" {
-  name      = "${local.resource_name_prefix}-ec2-tg"
+  name      = "${local.resource_name_prefix}-pfm-ec2-tg"
   port      = 80
   protocol  = "HTTP"
 
