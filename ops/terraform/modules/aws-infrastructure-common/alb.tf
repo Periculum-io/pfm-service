@@ -5,7 +5,7 @@ resource "aws_cloudwatch_log_group" "cloudwatch_log_group_pfm" {
 data "aws_elb_service_account" "elb_service_account_insights" {
 }
 
-resource "aws_s3_bucket" "s3_bucket_pfm_logs" {
+resource "aws_s3_bucket" "s3_bucket_logs" {
   bucket        = "${local.resource_name_prefix}-pfm-logs-s3-bucket"
   acl           = var.alb_s3_bucket_acl
   force_destroy = true
@@ -41,7 +41,7 @@ resource "aws_s3_bucket" "s3_bucket_pfm_logs" {
 }
 
 resource "aws_s3_bucket_public_access_block" "s3_bucket_public_access_block" {
-  bucket = aws_s3_bucket.s3_bucket_pfm_logs.id
+  bucket = aws_s3_bucket.s3_bucket_logs.id
 
   block_public_acls       = true
   block_public_policy     = true

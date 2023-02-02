@@ -1,22 +1,22 @@
-resource "aws_kms_key" "kms_key_for_rds_pfm" {
-  count                   = length(var.rds_kms_key_alias_names_pfm)
-  description             = "${local.environment}-${var.rds_kms_key_alias_names_pfm[count.index]}"
+resource "aws_kms_key" "kms_key_for_rds" {
+  count                   = length(var.rds_kms_key_alias_names)
+  description             = "${local.environment}-${var.rds_kms_key_alias_names[count.index]}"
   deletion_window_in_days = var.enc_key_deletion_in_days
   enable_key_rotation     = var.enc_key_rotation_enabled
 }
 
-resource "aws_kms_alias" "kms_key_alias_rds_pfm" {
-  count         = length(var.rds_kms_key_alias_names_pfm)
-  name          = "alias/${var.rds_kms_key_alias_names_pfm[count.index]}"
-  target_key_id = aws_kms_key.kms_key_for_rds_pfm[count.index].key_id
+resource "aws_kms_alias" "kms_key_alias_rds" {
+  count         = length(var.rds_kms_key_alias_names)
+  name          = "alias/${var.rds_kms_key_alias_names[count.index]}"
+  target_key_id = aws_kms_key.kms_key_for_rds[count.index].key_id
 }
 
 data "aws_db_subnet_group" "db_subnet_group_insights" {
-  name = var.pfm_aws_db_subnet_group
+  name = var.aws_db_subnet_group
 }
 
 resource "aws_db_parameter_group" "db_parameter_group" {
-  name   = "${local.environment}-pfm-paremeter-group"
+  name   = "${local.environment}-${local.resource_name_prefix}-paremeter-group"
   family = "postgres13"
 
   parameter {
@@ -25,19 +25,19 @@ resource "aws_db_parameter_group" "db_parameter_group" {
   }
 }
 
-resource "random_password" "rds_password_pfm" {
+resource "random_password" "rds_password" {
   length           = 24
   special          = true
   override_special = "_!%^"
 }
 
-resource "aws_security_group" "pfm_security_group_rds" {
-  name              = "${local.resource_name_prefix}-pfm-rds-security-group"
-  description       = "RDS security group to allow only inbound traffic from ec2 instances that perform pfm analysis"
+resource "aws_security_group" "security_group_rds" {
+  name              = "${local.environment}-${local.resource_name_prefix}-rds-security-group"
+  description       = "RDS security group to allow only inbound traffic from ec2 instances that perform ${local.resource_name_prefix} analysis"
   vpc_id            = var.vpc_id
 
   tags = {
-    Name = "${local.resource_name_prefix}-pfm-rds-security-group"
+    Name = "${local.environment}-${local.resource_name_prefix}-rds-security-group"
   }
 }
 
@@ -47,7 +47,7 @@ resource "aws_security_group_rule" "security_group_rule_rds_ingress" {
   from_port                 = 5432
   to_port                   = 5432
   protocol                  = "tcp"
-  security_group_id         = aws_security_group.pfm_security_group_rds.id
+  security_group_id         = aws_security_group.security_group_rds.id
   source_security_group_id  = aws_security_group.security_group_ec2.id
 }
 
@@ -67,7 +67,7 @@ data "aws_iam_policy_document" "rds_enhanced_monitoring" {
 }
 
 resource "aws_iam_role" "iam_role_rds_enhanced_monitoring" {
-  name_prefix        = "${local.resource_name_prefix}-pfm-rds-em"
+  name_prefix        = "${local.environment}-${local.resource_name_prefix}-rds-em"
   assume_role_policy = data.aws_iam_policy_document.rds_enhanced_monitoring.json
 }
 
@@ -76,8 +76,8 @@ resource "aws_iam_role_policy_attachment" "iam_role_policy_attachment_rds_enhanc
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonRDSEnhancedMonitoringRole"
 }
 
-resource "aws_db_instance" "db_instance_pfm" {
-  identifier = "${local.environment}-pfm-rds-postgresql"
+resource "aws_db_instance" "db_instance" {
+  identifier = "${local.environment}-${local.resource_name_prefix}-rds-postgresql"
 
   storage_type            = "gp2"
   allocated_storage       = var.rds_allocated_storage
@@ -102,17 +102,17 @@ resource "aws_db_instance" "db_instance_pfm" {
 
   iam_database_authentication_enabled = true
   storage_encrypted = true
-  kms_key_id = aws_kms_key.kms_key_for_rds_pfm[0].arn
+  kms_key_id = aws_kms_key.kms_key_for_rds[0].arn
 
   publicly_accessible = false
   skip_final_snapshot = var.rds_skip_final_snapshot
   monitoring_interval = 10
   monitoring_role_arn = aws_iam_role.iam_role_rds_enhanced_monitoring.arn
   performance_insights_enabled = var.rds_performance_insights_enabled
-  performance_insights_kms_key_id = aws_kms_key.kms_key_for_rds_pfm[1].arn
+  performance_insights_kms_key_id = aws_kms_key.kms_key_for_rds[1].arn
 
   parameter_group_name = aws_db_parameter_group.db_parameter_group.name
-  vpc_security_group_ids = [aws_security_group.pfm_security_group_rds.id]
+  vpc_security_group_ids = [aws_security_group.security_group_rds.id]
   username = local.rds_username
-  password = random_password.rds_password_pfm.result
+  password = random_password.rds_password.result
 }

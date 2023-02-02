@@ -1,5 +1,5 @@
 output "instance_1_host_address" {
-  value = aws_instance.pfm_api_instance_1.public_dns
+  value = aws_instance.ec2_api_instance.public_dns
 }
 
 output "github_username" {

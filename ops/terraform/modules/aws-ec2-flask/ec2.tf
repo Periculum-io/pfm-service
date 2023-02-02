@@ -18,15 +18,15 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-data "aws_subnets" "pfm_public_subnets" {
+data "aws_subnets" "ec2_public_subnets" {
   filter {
     name    = "subnet-id"
-    values  = var.vpc_pfm_public_subnets
+    values  = var.vpc_public_subnets
   }
 }
 
-data "aws_subnet" "pfm_public_subnet" {
-  for_each  = toset(data.aws_subnets.pfm_public_subnets.ids)
+data "aws_subnet" "ec2_public_subnet" {
+  for_each  = toset(data.aws_subnets.ec2_public_subnets.ids)
   id        = each.value
 }
 
@@ -56,12 +56,12 @@ resource "aws_secretsmanager_secret_version" "sm_init_ec2_key_pub_current" {
 }
 
 resource "aws_security_group" "security_group_ec2" {
-  name              = "${local.resource_name_prefix}-ec2-security-group"
-  description       = "SG for ec2 instance that hosts pfm flask api"
+  name              = "${local.environment}-${local.resource_name_prefix}-ec2-security-group"
+  description       = "SG for ec2 instance that hosts ${local.resource_name_prefix} flask api"
   vpc_id            = var.vpc_id
 
   tags = {
-    Name = "${local.resource_name_prefix}-ec2-security-group"
+    Name = "${local.environment}-${local.resource_name_prefix}-ec2-security-group"
   }
 }
 
@@ -72,7 +72,7 @@ resource "aws_security_group_rule" "security_group_rule_ec2_http_ingress" {
   to_port                   = 80
   protocol                  = "tcp"
   security_group_id         = aws_security_group.security_group_ec2.id
-  source_security_group_id  = aws_security_group.security_group_pfm_alb.id
+  source_security_group_id  = aws_security_group.security_group_ec2_alb.id
 }
 
 # Allow any ingress to EC2 via SSH
@@ -101,11 +101,11 @@ resource "tls_private_key" "genkey" {
 }
 
 resource "aws_key_pair" "ssh-key" {
-  key_name   = "${local.resource_name_prefix}-pfm-ec2-ssh-key"
+  key_name   = "${local.environment}-${local.resource_name_prefix}-ec2-ssh-key"
   public_key = tls_private_key.genkey.public_key_openssh
 }
 
-resource "aws_instance" "pfm_api_instance_1" {
+resource "aws_instance" "ec2_api_instance" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.ec2_instance_type
   key_name      = aws_key_pair.ssh-key.key_name
@@ -117,7 +117,7 @@ resource "aws_instance" "pfm_api_instance_1" {
   vpc_security_group_ids = [aws_security_group.security_group_ec2.id]
 
   tags = {
-    Name = "${local.resource_name_prefix}-pfm-ec2-instance-1"
+    Name = "${local.environment}-${local.resource_name_prefix}-ec2-instance-1"
   }
 }
 

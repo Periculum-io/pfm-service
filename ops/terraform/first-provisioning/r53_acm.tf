@@ -7,13 +7,13 @@ locals {
     "admin-api.pfm.periculum-models.link",
     "admin-api.pfm.dev.periculum-models.link",
     "admin-api.pfm.staging.periculum-models.link",
-    "pfm.periculum-models.link",
-    "pfm.dev.periculum-models.link",
-    "pfm.staging.periculum-models.link"
+    "*.pfm.periculum-models.link",
+    "*.pfm.dev.periculum-models.link",
+    "*.pfm.staging.periculum-models.link"
     ]
 }
 
-data "aws_route53_zone" "route53_zone_pfm" {
+data "aws_route53_zone" "route53_zone_name" {
   name = local.dns_zone
 
   tags = {

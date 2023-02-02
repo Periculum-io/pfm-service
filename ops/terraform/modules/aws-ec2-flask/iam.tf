@@ -1,13 +1,13 @@
-resource "aws_iam_user" "iam_user_pfm" {
-  name  = "${local.resource_name_prefix}-pfm-user"
+resource "aws_iam_user" "iam_user" {
+  name  = "${local.environment}-${local.resource_name_prefix}-user"
 }
 
 resource "aws_iam_access_key" "iam_access_key" {
-  user  = aws_iam_user.iam_user_pfm.name
+  user  = aws_iam_user.iam_user.name
 }
 
 resource "aws_iam_policy" "iam_policy_s3_bucket" {
-  name        = "${local.resource_name_prefix}-${var.bucket_names[0]}-all"
+  name        = "${local.environment}-${local.resource_name_prefix}-${var.bucket_names[0]}-all"
   path        = "/"
   description = "A specific policy to control and restrict access to ${local.resource_name_prefix}-${var.bucket_names[0]}"
 
@@ -20,8 +20,8 @@ resource "aws_iam_policy" "iam_policy_s3_bucket" {
           "s3:ListBucket"
         ],
         "Resource": [
-          "${aws_s3_bucket.s3_bucket_pfm[0].arn}",
-          "${aws_s3_bucket.s3_bucket_pfm[0].arn}/*"
+          "${aws_s3_bucket.s3_bucket[0].arn}",
+          "${aws_s3_bucket.s3_bucket[0].arn}/*"
         ]
       },
       {
@@ -34,7 +34,7 @@ resource "aws_iam_policy" "iam_policy_s3_bucket" {
           "s3:GetObject",
           "s3:DeleteObject"
         ],
-        "Resource": "${aws_s3_bucket.s3_bucket_pfm[0].arn}/*"
+        "Resource": "${aws_s3_bucket.s3_bucket[0].arn}/*"
       },
       {
         "Effect":"Allow",
@@ -50,7 +50,7 @@ resource "aws_iam_policy" "iam_policy_s3_bucket" {
 }
 
 resource "aws_iam_policy" "iam_policy_secrets_manager_read" {
-  name        = "${local.resource_name_prefix}-pfm-retrieves-secretsmanager-secrets"
+  name        = "${local.environment}-${local.resource_name_prefix}-retrieves-secretsmanager-secrets"
   path        = "/"
   description = "Allows lambda to receive secrets from secrets manager."
 
@@ -74,11 +74,11 @@ resource "aws_iam_policy" "iam_policy_secrets_manager_read" {
 }
 
 resource "aws_iam_user_policy_attachment" "iam_user_policy_attachment_s3_bucket" {
-  user       = aws_iam_user.iam_user_pfm.name
+  user       = aws_iam_user.iam_user.name
   policy_arn = aws_iam_policy.iam_policy_s3_bucket.arn
 }
 
 resource "aws_iam_user_policy_attachment" "iam_user_policy_secrets_manager_read" {
-  user       = aws_iam_user.iam_user_pfm.name
+  user       = aws_iam_user.iam_user.name
   policy_arn = aws_iam_policy.iam_policy_secrets_manager_read.arn
 }

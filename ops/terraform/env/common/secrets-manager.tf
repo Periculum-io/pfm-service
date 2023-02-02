@@ -2,7 +2,7 @@ local {
   rds_username = "masteruser"
   rds_secret_string_pfm_integration = {
     username = local.rds_username
-    password = random_password.rds_password_pfm.result
+    password = random_password.rds_password.result
   }
   pfm_api_credentials_secret = {
     s3_bucket_name = "${local.resource_name_prefix}-${var.bucket_names[0]}"

@@ -1,5 +1,6 @@
 aws_region                    = "us-east-1"
 environment                   = "dev"
+resource_name_prefix          = "pfm"
 
 vpc_id                        = "vpc-014bfbd3f00327eef"
 vpc_pfm_public_subnets        = [ "subnet-0b9c698432334975f", "subnet-06e82436f3260a957" ]

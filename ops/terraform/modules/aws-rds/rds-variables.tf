@@ -1,4 +1,4 @@
-variable "rds_kms_key_alias_names_pfm" {
+variable "rds_kms_key_alias_names" {
   type = list(string)
   description = "Name of keys that will be used for encryption of rds and performance for pdf processing."
   default = ["pfm-rds-key", "pfm-rds-key"]
@@ -16,7 +16,7 @@ variable "enc_key_rotation_enabled" {
   default = true
 }
 
-variable "pfm_aws_db_subnet_group" {
+variable "aws_db_subnet_group" {
   description = "The Insights DB subnet group"
   type = string
   default = null

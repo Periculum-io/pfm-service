@@ -11,7 +11,7 @@ resource "aws_kms_alias" "kms_key_alias" {
   target_key_id = aws_kms_key.kms_key_for_s3_bucket[count.index].key_id
 }
 
-resource "aws_s3_bucket" "s3_bucket_pfm" {
+resource "aws_s3_bucket" "s3_bucket" {
   count         = var.buckets_count
   bucket        = "${local.resource_name_prefix}-${var.bucket_names[count.index]}"
   acl           = "private"
@@ -33,7 +33,7 @@ resource "aws_s3_bucket" "s3_bucket_pfm" {
 
 resource "aws_s3_bucket_public_access_block" "s3_bucket_public_access_block_pfm" {
   count  = var.buckets_count
-  bucket = aws_s3_bucket.s3_bucket_pfm[count.index].id
+  bucket = aws_s3_bucket.s3_bucket[count.index].id
 
   block_public_acls       = true
   block_public_policy     = true

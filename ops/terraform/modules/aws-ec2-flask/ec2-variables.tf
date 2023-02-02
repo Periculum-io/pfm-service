@@ -10,7 +10,7 @@ variable "vpc_id" {
   type        = string
 }
 
-variable "vpc_pfm_public_subnets" {
+variable "vpc_public_subnets" {
   description = "The public subnet ids of the insights vpc"
   default     = null
   type        = list(string)

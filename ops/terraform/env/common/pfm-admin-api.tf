@@ -3,7 +3,7 @@ locals {
 }
 
 module "pfm_admin_api" {
-  source = "../../modules/pfm-service"
+  source = "../../modules/aws-ecs"
 
   service_name = "pfm-admin-api"
   environment  = var.environment
