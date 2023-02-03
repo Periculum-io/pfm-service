@@ -5,7 +5,7 @@ locals {
 module "pfm_admin_api" {
   source = "../../modules/aws-ecs"
 
-  service_name = "pfm-admin-api"
+  service_name = "${var.environment}-pfm-admin-api"
   environment  = var.environment
 
   aws_region   = var.aws_region
@@ -15,7 +15,7 @@ module "pfm_admin_api" {
 
   ecs_cluster_id               = module.aws_infrastructure.ecs_cluster_id
   alb_logs_enabled             = true
-  alb_logs_prefix              = "alb-pfm-admin-api"
+  alb_logs_prefix              = "${var.environment}-alb-pfm-admin-api"
   alb_logs_bucket_id           = module.aws_infrastructure.logs_s3_bucket_alb_id
   source_security_group_alb_id = module.aws_infrastructure.alb_security_group_id
   security_group_alb_from_port = var.pfm_admin_api_container_port

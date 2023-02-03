@@ -31,23 +31,23 @@ data "aws_subnet" "ec2_public_subnet" {
 }
 
 data "aws_subnet" "insights_private_subnet_us_east_1a" {
-  id = var.ec2_prod_insights_private_subnet_us_east_1a
+  id = var.ec2_insights_private_subnet_us_east_1a
 }
 
 data "aws_elb_service_account" "elb_service_account_insights" {
 } 
 
+# Secrets
 resource "aws_secretsmanager_secret" "sm_init_ec2_key" {
   name = var.ec2_ssh_private_key_secret_name
 }
 
-resource "aws_secretsmanager_secret_version" "sm_init_ec2_key_current" {
-  secret_id = aws_secretsmanager_secret.sm_init_ec2_key.id   
-  secret_string = tls_private_key.genkey.private_key_pem
-}
-
 resource "aws_secretsmanager_secret" "sm_init_ec2_key_pub" {
   name = var.ec2_ssh_public_key_secret_name
+}
+
+data "aws_secretsmanager_secret" "vm_github_personal_access_token_secret" {
+  arn = var.secrets_manager_vm_github_personal_access_token_arn
 }
 
 resource "aws_secretsmanager_secret_version" "sm_init_ec2_key_pub_current" {
@@ -55,6 +55,18 @@ resource "aws_secretsmanager_secret_version" "sm_init_ec2_key_pub_current" {
   secret_string = tls_private_key.genkey.public_key_pem
 }
 
+resource "aws_secretsmanager_secret_version" "sm_init_ec2_key_current" {
+  secret_id = aws_secretsmanager_secret.sm_init_ec2_key.id   
+  secret_string = tls_private_key.genkey.private_key_pem
+}
+
+data "aws_secretsmanager_secret_version" "vm_github_personal_access_token_secret_version" {
+  secret_id = data.aws_secretsmanager_secret.vm_github_personal_access_token_secret.id
+}
+
+#
+# Networking
+#
 resource "aws_security_group" "security_group_ec2" {
   name              = "${local.environment}-${local.resource_name_prefix}-ec2-security-group"
   description       = "SG for ec2 instance that hosts ${local.resource_name_prefix} flask api"
@@ -95,6 +107,7 @@ resource "aws_security_group_rule" "security_group_rule_ec2_egress_all" {
   security_group_id = aws_security_group.security_group_ec2.id
 }
 
+# EC Server
 resource "tls_private_key" "genkey" {
   algorithm = "RSA"
   rsa_bits = 4096
@@ -110,7 +123,7 @@ resource "aws_instance" "ec2_api_instance" {
   instance_type = var.ec2_instance_type
   key_name      = aws_key_pair.ssh-key.key_name
 
-  user_data     = base64encode(templatefile("init.sh", local.template_file_vars))
+  user_data     = base64encode(templatefile("${path.module}/init.sh", local.template_file_vars))
   
   subnet_id     = local.public_subnet_ids[0]
 

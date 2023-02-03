@@ -3,14 +3,15 @@ variable "aws_region" {
   type = string
 }
 
-variable "availability_zones" {
-  type = list(string)
-  description = "List of availability zones"
-}
-
 variable "environment" {
   description = "Name of the environment"
   type = string
+}
+
+variable "vpc_id" {
+  description = "The id of the vpc where all things for this project will be hosted in"
+  default     = null
+  type        = string
 }
 
 variable "resource_name_prefix" {

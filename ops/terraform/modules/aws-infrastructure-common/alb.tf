@@ -1,12 +1,12 @@
 resource "aws_cloudwatch_log_group" "cloudwatch_log_group_pfm" {
-  name = "/ecs/${local.resource_name_prefix}-pfm-cloudwatch-log-group"
+  name = "/ecs/${local.environment}-${local.resource_name_prefix}-cloudwatch-log-group"
 }
 
 data "aws_elb_service_account" "elb_service_account_insights" {
 }
 
 resource "aws_s3_bucket" "s3_bucket_logs" {
-  bucket        = "${local.resource_name_prefix}-pfm-logs-s3-bucket"
+  bucket        = "${local.environment}-${local.resource_name_prefix}-logs-s3-bucket"
   acl           = var.alb_s3_bucket_acl
   force_destroy = true
 
@@ -28,7 +28,7 @@ resource "aws_s3_bucket" "s3_bucket_logs" {
           "s3:PutObject"
         ],
         "Effect": "Allow",
-        "Resource": "arn:aws:s3:::${local.resource_name_prefix}-pfm-logs-s3-bucket/*/*",
+        "Resource": "arn:aws:s3:::${local.environment}-${local.resource_name_prefix}-logs-s3-bucket/*/*",
         "Principal": {
           "AWS": [
             "${data.aws_elb_service_account.elb_service_account_insights.arn}"
@@ -78,7 +78,7 @@ resource "aws_security_group" "security_group_pfm_alb" {
 }
 
 resource "aws_alb" "alb_pfm" {
-  name            = "${local.resource_name_prefix}-pfm-alb"
+  name            = "${local.environment}-${local.resource_name_prefix}-alb"
   subnets         = var.vpc_pfm_private_subnets
   security_groups = [aws_security_group.security_group_pfm_alb.id]
 
@@ -91,7 +91,7 @@ resource "aws_alb" "alb_pfm" {
   tags = merge(
     local.common_tags,
     {
-      Name = "${local.resource_name_prefix}-pfm-alb"
+      Name = "${local.environment}-${local.resource_name_prefix}-alb"
     },
   )
 }

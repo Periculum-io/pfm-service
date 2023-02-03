@@ -9,3 +9,8 @@ variable "environment" {
   type = string
   default = "test"
 }
+
+variable "resource_name_prefix" {
+  description = "Name of the resource name prefix"
+  type = string
+}

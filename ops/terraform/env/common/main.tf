@@ -2,13 +2,16 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.68"
+      version = "~> 4.12"
+    }
+    random = {
+      source = "hashicorp/random"
+      version = "~> 3.0"
     }
   }
 
   backend "s3" {
     bucket = "pfm-terraform-backend-bucket"
-    key    = "production/terraform.tfstate"
     region = "us-east-1"
   }
 }

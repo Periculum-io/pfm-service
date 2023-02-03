@@ -1,3 +1,10 @@
+resource "random_password" "rds_password" {
+  length           = 24
+  special          = true
+  override_special = "_!%^"
+}
+
+# Keys
 resource "aws_kms_key" "kms_key_for_rds" {
   count                   = length(var.rds_kms_key_alias_names)
   description             = "${local.environment}-${var.rds_kms_key_alias_names[count.index]}"
@@ -7,28 +14,23 @@ resource "aws_kms_key" "kms_key_for_rds" {
 
 resource "aws_kms_alias" "kms_key_alias_rds" {
   count         = length(var.rds_kms_key_alias_names)
-  name          = "alias/${var.rds_kms_key_alias_names[count.index]}"
+  name          = "alias/${local.environment}-${var.rds_kms_key_alias_names[count.index]}"
   target_key_id = aws_kms_key.kms_key_for_rds[count.index].key_id
 }
 
+# Networking
 data "aws_db_subnet_group" "db_subnet_group_insights" {
   name = var.aws_db_subnet_group
 }
 
 resource "aws_db_parameter_group" "db_parameter_group" {
-  name   = "${local.environment}-${local.resource_name_prefix}-paremeter-group"
+  name   = "${local.environment}-${local.resource_name_prefix}-parameter-group"
   family = "postgres13"
 
   parameter {
     name  = "log_connections"
     value = "1"
   }
-}
-
-resource "random_password" "rds_password" {
-  length           = 24
-  special          = true
-  override_special = "_!%^"
 }
 
 resource "aws_security_group" "security_group_rds" {
@@ -113,6 +115,15 @@ resource "aws_db_instance" "db_instance" {
 
   parameter_group_name = aws_db_parameter_group.db_parameter_group.name
   vpc_security_group_ids = [aws_security_group.security_group_rds.id]
-  username = local.rds_username
+  username = var.rds_username
   password = random_password.rds_password.result
+}
+
+resource "aws_secretsmanager_secret" "db_credentials_secret" {
+  name = "pfm/${var.environment}/rds"
+}
+
+resource "aws_secretsmanager_secret_version" "db_credentials_secret_version" {
+  secret_id = aws_secretsmanager_secret.db_credentials_secret.id
+  secret_string = jsonencode(local.rds_secret_string_pfm_integration)
 }

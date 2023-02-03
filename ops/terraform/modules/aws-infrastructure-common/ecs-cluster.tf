@@ -1,5 +1,5 @@
 resource "aws_ecs_cluster" "ecs_cluster" {
-  name = "${local.resource_name_prefix}-${var.ecs_cluster_name}"
+  name = "${local.environment}-${var.ecs_cluster_name}"
   capacity_providers = var.ecs_cluster_capacity_providers
 
   setting {

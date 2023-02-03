@@ -7,9 +7,9 @@ locals {
   ]
 }
 module "frontend" {
-  source = "../../modules/pfm-service"
+  source = "../../modules/aws-ecs"
   
-  service_name = "pfm-admin-frontend"
+  service_name = "${var.environment}-pfm-admin-frontend"
   environment  = var.environment
 
   aws_region                = var.aws_region
@@ -19,7 +19,7 @@ module "frontend" {
 
   ecs_cluster_id               = module.aws_infrastructure.ecs_cluster_id
   alb_logs_enabled             = true
-  alb_logs_prefix              = "alb-frontend"
+  alb_logs_prefix              = "${var.environment}-alb-frontend"
   alb_logs_bucket_id           = module.aws_infrastructure.logs_s3_bucket_alb_id
   source_security_group_alb_id = module.aws_infrastructure.alb_security_group_id
   security_group_alb_from_port = var.frontend_container_port

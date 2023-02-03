@@ -6,10 +6,19 @@ resource "aws_iam_access_key" "iam_access_key" {
   user  = aws_iam_user.iam_user.name
 }
 
+resource "aws_secretsmanager_secret" "pfm_admin_api_secret" {
+  name = "pfm/${var.environment}/api"
+}
+
+resource "aws_secretsmanager_secret_version" "pfm_admin_api_secret_version" {
+  secret_id = aws_secretsmanager_secret.pfm_admin_api_secret.id
+  secret_string = jsonencode(local.pfm_api_credentials_secret)
+}
+
 resource "aws_iam_policy" "iam_policy_s3_bucket" {
-  name        = "${local.environment}-${local.resource_name_prefix}-${var.bucket_names[0]}-all"
+  name        = "${local.environment}-${var.bucket_names[0]}-all"
   path        = "/"
-  description = "A specific policy to control and restrict access to ${local.resource_name_prefix}-${var.bucket_names[0]}"
+  description = "A specific policy to control and restrict access to ${local.environment}-${var.bucket_names[0]}"
 
   policy      = jsonencode({
     "Version":"2012-10-17",

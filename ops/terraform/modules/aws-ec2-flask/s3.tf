@@ -7,13 +7,13 @@ resource "aws_kms_key" "kms_key_for_s3_bucket" {
 
 resource "aws_kms_alias" "kms_key_alias" {
   count         = var.buckets_count
-  name          = "alias/${local.resource_name_prefix}-${var.bucket_names[count.index]}-key"
+  name          = "alias/${local.environment}-${var.bucket_names[count.index]}-key"
   target_key_id = aws_kms_key.kms_key_for_s3_bucket[count.index].key_id
 }
 
 resource "aws_s3_bucket" "s3_bucket" {
   count         = var.buckets_count
-  bucket        = "${local.resource_name_prefix}-${var.bucket_names[count.index]}"
+  bucket        = "${local.environment}-${var.bucket_names[count.index]}"
   acl           = "private"
   force_destroy = true
 

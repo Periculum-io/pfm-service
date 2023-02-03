@@ -1,3 +1,13 @@
+variable "environment" {
+  description = "Name of the environment"
+  type = string
+}
+
+variable "resource_name_prefix" {
+  description = "Name of the resource_name_prefix"
+  type = string
+}
+
 variable "aws_region" {
   description = "The AWS region where everything will be deployed"
   type = string
@@ -28,7 +38,7 @@ variable "ec2_instance_type" {
   type        = string
 }
 
-variable "ec2_prod_insights_private_subnet_us_east_1a" {
+variable "ec2_insights_private_subnet_us_east_1a" {
   description = "The private subnet to launch all ec2 instances in"
   default     = null
   type        = string
@@ -42,6 +52,12 @@ variable "ec2_ssh_private_key_secret_name" {
 
 variable "ec2_ssh_public_key_secret_name" {
   description = "The secret name that holds the public key"
+  default     = null
+  type        = string
+}
+
+variable "secrets_manager_vm_github_personal_access_token_arn" {
+  description = "The secret github personal access token"
   default     = null
   type        = string
 }

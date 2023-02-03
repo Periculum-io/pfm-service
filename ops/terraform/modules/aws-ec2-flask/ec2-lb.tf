@@ -1,3 +1,26 @@
+data "aws_route53_zone" "route53_zone_name" {
+  name = var.ec2_lb_hosted_zone_domain
+  private_zone = false
+}
+
+resource "aws_acm_certificate" "acm_certificate_pfm" {
+  domain_name       = var.ec2_lb_domain_name
+  validation_method = "DNS"  
+
+  validation_option {
+    domain_name       = var.ec2_lb_domain_name
+    validation_domain = var.ec2_lb_hosted_zone_domain
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  tags = {
+    "Application" = "PFM"
+  }
+}
+
 resource "aws_route53_record" "r53_record_a_domain" {
   zone_id = data.aws_route53_zone.route53_zone_name.zone_id
   name    = var.ec2_lb_domain_name
@@ -88,7 +111,7 @@ resource "aws_security_group" "security_group_ec2_alb" {
 
 resource "aws_alb" "alb" {
   name            = "${local.environment}-${local.resource_name_prefix}-alb"
-  subnets         = [for subnet in data.aws_subnet.pfm_public_subnet : subnet.id]
+  subnets         = [for subnet in data.aws_subnet.ec2_public_subnet : subnet.id]
   security_groups = [aws_security_group.security_group_ec2_alb.id]
 
   access_logs {
@@ -98,7 +121,7 @@ resource "aws_alb" "alb" {
   }
 
   tags = {
-    Name = "${local.resource_name_prefix}-alb"
+    Name = "${local.environment}-${local.resource_name_prefix}-alb"
   }
 }
 
@@ -122,7 +145,7 @@ resource "aws_alb_listener" "alb_listener_https" {
 
 resource "aws_alb_listener_rule" "alb_listener_rule_ec2" {
   listener_arn = aws_alb_listener.alb_listener_https.arn
-  priority     = 300
+  priority     = 100
 
   action {
     type             = "forward"
@@ -135,7 +158,6 @@ resource "aws_alb_listener_rule" "alb_listener_rule_ec2" {
     }
   }
 }
-
 
 resource "aws_lb_target_group" "ec2_load_balancer_target_group" {
   name      = "${local.environment}-${local.resource_name_prefix}-ec2-tg"

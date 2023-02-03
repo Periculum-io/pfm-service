@@ -1,7 +1,13 @@
-variable "rds_kms_key_alias_names" {
-  type = list(string)
-  description = "Name of keys that will be used for encryption of rds and performance for pdf processing."
-  default = ["pfm-rds-key", "pfm-rds-key"]
+variable "rds_username" {
+  description = "The PFM DB username"
+  type = string
+  default = null
+}
+
+variable "aws_db_subnet_group" {
+  description = "The Insights DB subnet group"
+  type = string
+  default = null
 }
 
 variable "enc_key_deletion_in_days" {
@@ -16,10 +22,10 @@ variable "enc_key_rotation_enabled" {
   default = true
 }
 
-variable "aws_db_subnet_group" {
-  description = "The Insights DB subnet group"
-  type = string
-  default = null
+variable "rds_kms_key_alias_names" {
+  type = list(string)
+  description = "Name of keys that will be used for encryption of rds and performance for pdf processing."
+  default = ["pfm-rds-key", "pfm-rds-key"]
 }
 
 variable "rds_allocated_storage" {

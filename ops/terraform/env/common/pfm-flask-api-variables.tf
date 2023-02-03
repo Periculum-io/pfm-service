@@ -1,19 +1,7 @@
-variable "aws_region" {
-  description = "The AWS region where everything will be deployed"
+variable "rds_username" {
+  description = "The PFM DB username"
   type = string
-  default = "us-east-1"
-}
-
-variable "vpc_id" {
-  description = "The id of the vpc where all things for this project will be hosted in"
-  default     = null
-  type        = string
-}
-
-variable "vpc_pfm_public_subnets" {
-  description = "The public subnet ids of the insights vpc"
-  default     = null
-  type        = list(string)
+  default = null
 }
 
 variable "ec2_instance_type" {
@@ -28,7 +16,7 @@ variable "ec2_ami_id" {
   type        = string
 }
 
-variable "ec2_prod_insights_private_subnet_us_east_1a" {
+variable "ec2_insights_private_subnet_us_east_1a" {
   description = "The private subnet to launch all ec2 instances in"
   default     = null
   type        = string
@@ -46,9 +34,24 @@ variable "ec2_ssh_public_key_secret_name" {
   type        = string
 }
 
+variable "ec2_lb_domain_name" {
+  description = "The flask server domain" 
+  type        = string
+}
+
+variable "ec2_lb_hosted_zone_domain" {
+  description = "The EC2 hosted domain zone" 
+  type        = string
+}
+
 variable "bucket_names" {
   description = "Bucket names."
   type = list(string)
+}
+
+variable "pfm_aws_db_subnet_group" {  
+  description = "The database subnet group"
+  type = string
 }
 
 variable "rds_allocated_storage" {
@@ -74,3 +77,31 @@ variable "rds_backup_retention_period" {
   type = number
   description = "The days to retain backups for."
 }
+
+variable "rds_multi_az_enabled" {
+  type = bool
+  default = false
+}
+
+variable "rds_allow_minor_version_upgrade" {
+  type = bool
+  description = "Indicates that minor version upgrades are allowed"
+  default = true
+}
+
+variable "rds_cloudwatch_logs_exports" {
+  type = set(string)
+  description = "Set of log types to enable for exporting to CloudWatch logs."   
+}
+
+variable "rds_kms_key_alias_names_pfm" {
+  type = list(string)
+  description = "Name of keys that will be used for encryption of rds and performance for pdf processing."   
+}
+
+variable "secrets_manager_vm_github_personal_access_token_arn" {
+  description = "The secret github personal access token"
+  default     = null
+  type        = string
+}
+

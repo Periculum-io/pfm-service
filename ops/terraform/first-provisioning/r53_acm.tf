@@ -1,12 +1,6 @@
 locals {
   dns_zone = "periculum-models.link"
   certificate_domain_names = [
-    "api.pfm.periculum-models.link",
-    "api.pfm.dev.periculum-models.link",
-    "api.pfm.staging.periculum-models.link",
-    "admin-api.pfm.periculum-models.link",
-    "admin-api.pfm.dev.periculum-models.link",
-    "admin-api.pfm.staging.periculum-models.link",
     "*.pfm.periculum-models.link",
     "*.pfm.dev.periculum-models.link",
     "*.pfm.staging.periculum-models.link"
@@ -15,10 +9,7 @@ locals {
 
 data "aws_route53_zone" "route53_zone_name" {
   name = local.dns_zone
-
-  tags = {
-    Application = "pfm-periculum"
-  }
+  private_zone = false
 }
 
 resource "aws_acm_certificate" "acm_certificate_pfm" {
@@ -35,3 +26,24 @@ resource "aws_acm_certificate" "acm_certificate_pfm" {
   }
 }
 
+resource "aws_route53_record" "certificate_validation_record" {
+  for_each = {
+    for dvo in aws_acm_certificate.acm_certificate_pfm.domain_validation_options : dvo.domain_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    }
+  }
+
+  allow_overwrite = true
+  name            = each.value.name
+  records         = [each.value.record]
+  ttl             = 60
+  type            = each.value.type
+  zone_id         = data.aws_route53_zone.route53_zone_name.zone_id
+}
+
+resource "aws_acm_certificate_validation" "ec2_certificate_validation" {
+  certificate_arn         = data.aws_acm_certificate.acm_certificate_pfm.arn
+  validation_record_fqdns = [for record in aws_route53_record.certificate_validation_record : record.fqdn]
+}
