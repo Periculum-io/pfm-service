@@ -20,4 +20,5 @@ module "aws_infrastructure" {
   r53_hosted_zone_name                 = var.r53_hosted_zone_name
   r53_target_domain_pfm_admin_api      = var.r53_target_domain_pfm_admin_api
   r53_target_domain_pfm_admin_frontend = var.r53_target_domain_pfm_admin_frontend
+  r53_target_domain_pfm_flask_api      = var.r53_target_domain_pfm_flask_api
 }

@@ -17,3 +17,9 @@ variable "r53_target_domain_pfm_admin_frontend" {
   type = string
   description = "Domain where the application shall be exposed to"
 }
+
+variable "r53_target_domain_pfm_flask_api" {
+  type = string
+  description = "Domain where the flask API shall be exposed to"
+}
+

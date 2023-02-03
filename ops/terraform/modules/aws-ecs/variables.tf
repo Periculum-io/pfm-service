@@ -3,6 +3,11 @@ variable "service_name" {
   type = string
 }
 
+variable "resource_name_prefix" {
+  description = "Resouce name prefix of service"
+  type = string
+}
+
 variable "aws_region" {
   description = "Region in which AWS resources will be created"
   type = string

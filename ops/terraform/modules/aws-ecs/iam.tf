@@ -11,7 +11,7 @@ data "aws_iam_policy_document" "iam_policy_assume_role_ecs" {
 
 ## Execution Task Role
 resource "aws_iam_role" "iam_role_ecs_task_execution_role" {
-  name               = "${local.environment}-${local.resource_name_prefix}-ecs-task-execution-role"
+  name               = "${local.service_name}-ecs-task-execution-role"
   path               = "/system/"
   assume_role_policy = data.aws_iam_policy_document.iam_policy_assume_role_ecs.json
 }
@@ -63,7 +63,7 @@ data "aws_iam_policy_document" "iam_policy_cloudwatch_log_publishing" {
 }
 
 resource "aws_iam_policy" "iam_policy_cloudwatch_log_publishing" {
-  name        = "${local.environment}-${local.resource_name_prefix}-cloudwatch-logs-publishing-iam-policy"
+  name        = "${local.service_name}-cloudwatch-logs-publishing-iam-policy"
   path        = "/"
   description = "Allow publishing to cloudwach"
 
@@ -71,7 +71,7 @@ resource "aws_iam_policy" "iam_policy_cloudwatch_log_publishing" {
 }
 
 resource "aws_iam_role" "iam_role_ecs_task_role" {
-  name               = "${local.environment}-${local.resource_name_prefix}-ecs-task-role"
+  name               = "${local.service_name}-ecs-task-role"
   path               = "/system/"
   assume_role_policy = data.aws_iam_policy_document.iam_policy_assume_role_ecs.json
 }

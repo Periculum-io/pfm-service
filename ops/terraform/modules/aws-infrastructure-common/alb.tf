@@ -50,7 +50,7 @@ resource "aws_s3_bucket_public_access_block" "s3_bucket_public_access_block" {
 }
 
 resource "aws_security_group" "security_group_pfm_alb" {
-  name              = "${local.resource_name_prefix}-pfm-alb-security-group"
+  name              = "${local.environment}-${local.resource_name_prefix}-alb-security-group"
   description       = "ALB security group to allow all inbound/outbound"
   vpc_id            = var.vpc_id 
 
@@ -72,7 +72,7 @@ resource "aws_security_group" "security_group_pfm_alb" {
   tags = merge(
     local.common_tags,
     {
-      Name = "${local.resource_name_prefix}-pfm-alb-security-group"
+      Name = "${local.environment}-${local.resource_name_prefix}-alb-security-group"
     },
   )
 }

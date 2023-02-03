@@ -26,9 +26,9 @@ resource "aws_route53_record" "r53_record_a_domain_pfm_admin_frontend" {
   }
 }
 
-resource "aws_route53_record" "r53_record_a_domain_pfm_admin_frontend" {
+resource "aws_route53_record" "r53_record_a_domain_pfm_flask_api" {
   zone_id = data.aws_route53_zone.r53_zone_pfm_hosted_zone.zone_id
-  name    = var.r53_target_domain_pfm_admin_frontend
+  name    = var.r53_target_domain_pfm_flask_api
   type    = "A"
 
   alias {

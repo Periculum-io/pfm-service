@@ -1,7 +1,7 @@
 locals {
   environment = var.environment
   service_name = var.service_name
-  resource_name_prefix = "${var.service_name}"
+  resource_name_prefix = "${var.resource_name_prefix}"
   common_tags = {
     environment = local.environment
   }
