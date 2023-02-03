@@ -11,8 +11,8 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "pfm-terraform-backend-bucket"
-    region = "us-east-1"
+    bucket  = "pfm-terraform-backend-bucket"
+    region  = "us-east-1"
   }
 }
 

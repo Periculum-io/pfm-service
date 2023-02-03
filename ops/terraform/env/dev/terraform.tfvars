@@ -4,7 +4,7 @@ resource_name_prefix          = "pfm"
 
 vpc_id                        = "vpc-014bfbd3f00327eef"
 vpc_pfm_public_subnets        = [ "subnet-0b9c698432334975f", "subnet-06e82436f3260a957" ]
-vpc_pfm_private_subnets       = ["subnet-016820b574afcf03a", "subnet-0a2a871e51f705350"]
+vpc_pfm_private_subnets       = [ "subnet-016820b574afcf03a", "subnet-0a2a871e51f705350" ]
 
 # Infra related
 ecs_cluster_name               = "pfm-ecs-cluster"
@@ -19,10 +19,11 @@ alb_s3_bucket_acl              = "private"
 alb_s3_bucket_id               = "dev-pfm-logs-s3-bucket"
 
 # Routing related
-r53_hosted_zone_id                   = "Z05688392G271FHDECHWN"
-r53_hosted_zone_name                 = "periculum-models.link"
-r53_target_domain_pfm_admin_api      = "admin-api.pfm.dev.periculum-models.link"
-r53_target_domain_pfm_admin_frontend = "pfm.dev.periculum-models.link"
+r53_hosted_zone_id                    = "Z05688392G271FHDECHWN"
+r53_hosted_zone_name                  = "periculum-models.link"
+r53_target_domain_pfm_admin_api       = "admin-api.pfm.dev.periculum-models.link"
+r53_target_domain_pfm_admin_frontend  = "*.pfm.dev.periculum-models.link"
+r53_target_domain_pfm_flask_api        = "api.pfm.dev.periculum-models.link"
 
 # Frontend
 frontend_cpu_units              = 512

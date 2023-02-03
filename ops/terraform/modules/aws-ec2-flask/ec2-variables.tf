@@ -61,3 +61,9 @@ variable "secrets_manager_vm_github_personal_access_token_arn" {
   default     = null
   type        = string
 }
+
+variable "alb_security_group_id" {
+  description = "The security group id of the alb that the ec2 instance relies on"
+  default     = null
+  type        = string
+}

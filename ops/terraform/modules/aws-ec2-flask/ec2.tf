@@ -18,16 +18,12 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-data "aws_subnets" "ec2_public_subnets" {
-  filter {
-    name    = "subnet-id"
-    values  = var.vpc_public_subnets
-  }
+data "aws_subnet" "ec2_public_subnet_1" {
+  id = var.vpc_public_subnets[0]
 }
 
-data "aws_subnet" "ec2_public_subnet" {
-  for_each  = toset(data.aws_subnets.ec2_public_subnets.ids)
-  id        = each.value
+data "aws_subnet" "ec2_public_subnet_2" {
+  id = var.vpc_public_subnets[1]
 }
 
 data "aws_subnet" "insights_private_subnet_us_east_1a" {
@@ -84,7 +80,7 @@ resource "aws_security_group_rule" "security_group_rule_ec2_http_ingress" {
   to_port                   = 80
   protocol                  = "tcp"
   security_group_id         = aws_security_group.security_group_ec2.id
-  source_security_group_id  = aws_security_group.security_group_ec2_alb.id
+  source_security_group_id  = var.alb_security_group_id
 }
 
 # Allow any ingress to EC2 via SSH
@@ -125,7 +121,7 @@ resource "aws_instance" "ec2_api_instance" {
 
   user_data     = base64encode(templatefile("${path.module}/init.sh", local.template_file_vars))
   
-  subnet_id     = local.public_subnet_ids[0]
+  subnet_id     = data.aws_subnet.ec2_public_subnet_1.id
 
   vpc_security_group_ids = [aws_security_group.security_group_ec2.id]
 

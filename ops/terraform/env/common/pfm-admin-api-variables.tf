@@ -46,11 +46,3 @@ variable "pfm_admin_api_auth0_domain" {
 variable "pfm_admin_api_auth0_audience" {
   type = string
 }
-
-variable "vpc_pfm_private_subnets" {
-  type = list(string)
-}
-
-variable "vpc_pfm_public_subnets" {
-  type = list(string)
-}

@@ -11,8 +11,6 @@ module "pfm_flask_api" {
 
   ec2_ami_id = var.ec2_ami_id
   ec2_instance_type = var.ec2_instance_type
-  ec2_lb_domain_name = var.ec2_lb_domain_name
-  ec2_lb_hosted_zone_domain = var.ec2_lb_hosted_zone_domain
 
   ec2_insights_private_subnet_us_east_1a = var.ec2_insights_private_subnet_us_east_1a
   ec2_ssh_private_key_secret_name = var.ec2_ssh_private_key_secret_name
@@ -35,4 +33,10 @@ module "pfm_flask_api" {
   aws_db_subnet_group             = var.pfm_aws_db_subnet_group
 
   secrets_manager_vm_github_personal_access_token_arn = var.secrets_manager_vm_github_personal_access_token_arn
+
+  alb_security_group_id           = module.aws_infrastructure.aws_alb_security_group_id
+
+  depends_on = [
+    module.aws_infrastructure
+  ]
 }

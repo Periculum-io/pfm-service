@@ -1,3 +1,17 @@
+variable "vpc_id" {
+  description = "The id of the vpc where all things for this project will be hosted in"
+  default     = null
+  type        = string
+}
+
+variable "vpc_pfm_private_subnets" {
+  type = list(string)
+}
+
+variable "vpc_pfm_public_subnets" {
+  type = list(string)
+}
+
 variable "ecs_cluster_name" {
   description = "ECS Cluster name"
   type = string
@@ -50,12 +64,17 @@ variable "r53_hosted_zone_name" {
 
 variable "r53_target_domain_pfm_admin_api" {
   type = string
-  description = "Domain where the application shall be exposed to"
+  description = "Domain where the pfm admin api application shall be exposed to"
 }
 
 variable "r53_target_domain_pfm_admin_frontend" {
   type = string
-  description = "Domain where the application shall be exposed to"
+  description = "Domain where the pfm admin ui application shall be exposed to"
+}
+
+variable "r53_target_domain_pfm_flask_api" {
+  type = string
+  description = "Domain where the flask api application shall be exposed to"
 }
 
 variable "alb_s3_bucket_id" {
