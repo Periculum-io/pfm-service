@@ -1,5 +1,5 @@
 resource "aws_security_group" "security_group_ecs_service" {
-  name              = "${local.resource_name_prefix}-ecs-service-security-group"
+  name              = "${local.environment}-${local.resource_name_prefix}-ecs-service-security-group"
   description       = "Allow inbound access from the public ALB only"
   vpc_id            = var.vpc_id
 
@@ -19,7 +19,7 @@ resource "aws_security_group" "security_group_ecs_service" {
   tags = merge(
     local.common_tags,
     {
-      Name = "${local.resource_name_prefix}-ecs-service-security-group"
+      Name = "${local.environment}-${local.resource_name_prefix}-ecs-service-security-group"
     },
   )
 }
@@ -34,7 +34,7 @@ resource "aws_security_group_rule" "security_group_rule" {
 }
 
 resource "aws_alb_target_group" "alb_target_group" {
-  name = "${local.resource_name_prefix}-tg"
+  name = "${local.environment}-${local.resource_name_prefix}-ecs-tg"
   port        = var.container_port
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
@@ -50,7 +50,7 @@ resource "aws_alb_target_group" "alb_target_group" {
   tags = merge(
     local.common_tags,
     {
-      Name = "${local.resource_name_prefix}-target-group"
+      Name = "${local.environment}-${local.resource_name_prefix}-ecs-tg"
     },
   )
 }

@@ -53,6 +53,7 @@ resource "aws_alb_listener" "alb_listener_https" {
   load_balancer_arn   = module.aws_infrastructure.alb_id
   port                = "443"
   protocol            = "HTTPS"
+  #certificate_arn     = aws_acm_certificate.acm_pfm_frontend.arn
 
   # If URL does not match any rule, it is currently being forwarded to UI
   default_action {
@@ -71,19 +72,19 @@ resource "aws_alb_listener" "alb_listener_https" {
 }
 
 resource "aws_alb_listener_certificate" "alb_pfm_admin_frontend_certificate" {
-  listener_arn = aws_alb_listener.alb_listener_https.arn
+  listener_arn    = aws_alb_listener.alb_listener_https.arn
   certificate_arn = aws_acm_certificate.acm_pfm_frontend.arn
 }
 
 resource "aws_alb_listener_certificate" "alb_pfm_api_certificate" {
-  listener_arn = aws_alb_listener.alb_listener_https.arn
+  listener_arn    = aws_alb_listener.alb_listener_https.arn
   certificate_arn = aws_acm_certificate.acm_pfm_admin_api.arn
 }
 
 resource "aws_alb_listener_certificate" "alb_pfm_flask_api_certificate" {
-  listener_arn = aws_alb_listener.alb_listener_https.arn
+  listener_arn    = aws_alb_listener.alb_listener_https.arn
   certificate_arn = aws_acm_certificate.acm_pfm_flask_api.arn
-} 
+}
 
 resource "aws_lb_target_group" "ec2_load_balancer_target_group" {
   name      = "${local.environment}-${local.resource_name_prefix}-ec2-tg"

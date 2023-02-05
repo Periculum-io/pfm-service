@@ -23,7 +23,7 @@ r53_hosted_zone_id                    = "Z05688392G271FHDECHWN"
 r53_hosted_zone_name                  = "periculum-models.link"
 r53_target_domain_pfm_admin_api       = "admin-api.pfm.dev.periculum-models.link"
 r53_target_domain_pfm_admin_frontend  = "*.pfm.dev.periculum-models.link"
-r53_target_domain_pfm_flask_api        = "api.pfm.dev.periculum-models.link"
+r53_target_domain_pfm_flask_api       = "api.pfm.dev.periculum-models.link"
 
 # Frontend
 frontend_cpu_units              = 512

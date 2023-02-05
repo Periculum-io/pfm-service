@@ -51,10 +51,10 @@ def token_required(f):
    return decorator
 
 @app.route('/health', methods = ['GET'])
-@oidc.accept_token(require_token=True)
-@token_required
+#@oidc.accept_token(require_token=True)
+#@token_required
 def health():
     return jsonify(
-      application='Prod Periculum PFM API',
+      application='Prod Periculum PFM Flask API',
       version='1.0.0'
     )
