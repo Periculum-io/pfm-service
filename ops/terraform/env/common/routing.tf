@@ -71,19 +71,27 @@ resource "aws_alb_listener" "alb_listener_https" {
   depends_on = [module.aws_infrastructure]
 }
 
-resource "aws_alb_listener_certificate" "alb_pfm_admin_frontend_certificate" {
-  listener_arn    = aws_alb_listener.alb_listener_https.arn
-  certificate_arn = aws_acm_certificate.acm_pfm_frontend.arn
-}
+# resource "aws_alb_listener_certificate" "alb_pfm_admin_frontend_certificate" {
+#   listener_arn    = aws_alb_listener.alb_listener_https.arn
+#   certificate_arn = aws_acm_certificate.acm_pfm_frontend.arn
+# }
 
 resource "aws_alb_listener_certificate" "alb_pfm_api_certificate" {
   listener_arn    = aws_alb_listener.alb_listener_https.arn
   certificate_arn = aws_acm_certificate.acm_pfm_admin_api.arn
+
+  depends_on = [
+    aws_alb_listener.alb_listener_https
+  ]
 }
 
 resource "aws_alb_listener_certificate" "alb_pfm_flask_api_certificate" {
   listener_arn    = aws_alb_listener.alb_listener_https.arn
   certificate_arn = aws_acm_certificate.acm_pfm_flask_api.arn
+
+  depends_on = [
+    aws_alb_listener.alb_listener_https
+  ]
 }
 
 resource "aws_lb_target_group" "ec2_load_balancer_target_group" {
