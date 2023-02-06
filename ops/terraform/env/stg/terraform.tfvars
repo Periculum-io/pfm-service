@@ -1,5 +1,5 @@
 aws_region                    = "us-east-1"
-environment                   = "staging"
+environment                   = "stag"
 resource_name_prefix          = "pfm"
 
 vpc_id                        = "vpc-0fd17cb32f91348df"
@@ -16,7 +16,7 @@ vpc_private_subnets_cidr       = ["10.0.2.0/24", "10.0.3.0/24"]
 alb_log_prefix                 = "alb"
 alb_log_enabled                = true
 alb_s3_bucket_acl              = "private"
-alb_s3_bucket_id               = "staging-pfm-logs-s3-bucket"
+alb_s3_bucket_id               = "stag-pfm-logs-s3-bucket"
 
 # Routing related
 r53_hosted_zone_id                    = "Z05688392G271FHDECHWN"
@@ -61,7 +61,7 @@ ec2_lb_log_enabled                      = true
 
 rds_kms_key_alias_names_pfm             = ["pfm-rds-key", "pfm-rds-performance-key"]
 
-pfm_aws_db_subnet_group                 = "staging-insights-private"
+pfm_aws_db_subnet_group                 = "stag-insights-private"
 rds_allocated_storage                   = 10
 rds_max_allocated_storage               = 40
 rds_instance_class                      = "db.t3.small"

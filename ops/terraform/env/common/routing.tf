@@ -53,7 +53,7 @@ resource "aws_alb_listener" "alb_listener_https" {
   load_balancer_arn   = module.aws_infrastructure.alb_id
   port                = "443"
   protocol            = "HTTPS"
-  #certificate_arn     = aws_acm_certificate.acm_pfm_frontend.arn
+  certificate_arn     = aws_acm_certificate.acm_pfm_frontend.arn
 
   # If URL does not match any rule, it is currently being forwarded to UI
   default_action {
