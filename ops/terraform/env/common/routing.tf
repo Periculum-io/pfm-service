@@ -21,6 +21,11 @@ resource "aws_acm_certificate" "acm_pfm_admin_api" {
   lifecycle {
     create_before_destroy = true
   }
+
+  validation_option {
+    domain_name       = var.r53_target_domain_pfm_admin_api
+    validation_domain = var.r53_hosted_zone_name
+  }
 }
 
 resource "aws_acm_certificate" "acm_pfm_frontend" {
@@ -34,6 +39,11 @@ resource "aws_acm_certificate" "acm_pfm_frontend" {
   lifecycle {
     create_before_destroy = true
   }
+
+  validation_option {
+    domain_name       = var.r53_target_domain_pfm_admin_frontend
+    validation_domain = var.r53_hosted_zone_name
+  }
 }
 
 resource "aws_acm_certificate" "acm_pfm_flask_api" {
@@ -46,6 +56,11 @@ resource "aws_acm_certificate" "acm_pfm_flask_api" {
 
   lifecycle {
     create_before_destroy = true
+  }
+
+  validation_option {
+    domain_name       = var.r53_target_domain_pfm_flask_api
+    validation_domain = var.r53_hosted_zone_name
   }
 }
 
@@ -78,7 +93,7 @@ resource "aws_alb_listener" "alb_listener_https" {
 
 resource "aws_alb_listener_certificate" "alb_pfm_api_certificate" {
   listener_arn    = aws_alb_listener.alb_listener_https.arn
-  certificate_arn = aws_acm_certificate.acm_pfm_admin_api.arn
+  certificate_arn = aws_acm_certificate.acm_pfm_admin_api.arn 
 
   depends_on = [
     aws_alb_listener.alb_listener_https

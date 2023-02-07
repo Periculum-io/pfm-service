@@ -13,7 +13,6 @@ del /f routing.tf
 del /f routing-variables.tf
 del /f infrastructure.tf
 del /f infrastructure-variables.tf
-del /f main.tf
 
 MKLINK frontend.tf ..\common\frontend.tf
 MKLINK frontend-variables.tf ..\common\frontend-variables.tf
@@ -28,7 +27,6 @@ MKLINK routing.tf ..\common\routing.tf
 MKLINK routing-variables.tf ..\common\routing-variables.tf
 MKLINK infrastructure.tf ..\common\infrastructure.tf
 MKLINK infrastructure-variables.tf ..\common\infrastructure-variables.tf
-MKLINK main.tf ..\common\main.tf
 
 PAUSE
 EXIT

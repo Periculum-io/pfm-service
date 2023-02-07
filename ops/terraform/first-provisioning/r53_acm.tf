@@ -24,6 +24,11 @@ resource "aws_acm_certificate" "acm_certificate_pfm" {
   lifecycle {
     create_before_destroy = true
   }
+
+  # validation_option {
+  #   domain_name       = toset(local.certificate_domain_names)
+  #   validation_domain = local.dns_zone
+  # }
 }
 
 resource "aws_route53_record" "certificate_validation_record" {

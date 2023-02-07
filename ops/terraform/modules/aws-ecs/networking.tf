@@ -1,5 +1,5 @@
 resource "aws_security_group" "security_group_ecs_service" {
-  name              = "${local.environment}-${local.resource_name_prefix}-ecs-service-security-group"
+  name              = "${local.environment}-${local.resource_name_prefix}-ecs-security-grp"
   description       = "Allow inbound access from the public ALB only"
   vpc_id            = var.vpc_id
 
@@ -19,7 +19,7 @@ resource "aws_security_group" "security_group_ecs_service" {
   tags = merge(
     local.common_tags,
     {
-      Name = "${local.environment}-${local.resource_name_prefix}-ecs-service-security-group"
+      Name = "${local.environment}-${local.resource_name_prefix}-ecs-security-grp"
     },
   )
 }
@@ -34,7 +34,7 @@ resource "aws_security_group_rule" "security_group_rule" {
 }
 
 resource "aws_alb_target_group" "alb_target_group" {
-  name = "${local.environment}-${local.resource_name_prefix}-ecs-tg"
+  name = "${local.environment}-${local.resource_name_prefix}-ecs-target-grp"
   port        = var.container_port
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
@@ -44,13 +44,12 @@ resource "aws_alb_target_group" "alb_target_group" {
     path      = "/healthz"
     port      = var.container_port
     protocol  = "HTTP"
-
   }
 
   tags = merge(
     local.common_tags,
     {
-      Name = "${local.environment}-${local.resource_name_prefix}-ecs-tg"
+      Name = "${local.environment}-${local.resource_name_prefix}-ecs-target-grp"
     },
   )
 }
