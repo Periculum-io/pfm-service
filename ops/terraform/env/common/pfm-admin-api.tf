@@ -5,7 +5,7 @@ locals {
 module "pfm_admin_api" {
   source = "../../modules/aws-ecs"
 
-  service_name = "${var.environment}-pfm-admin-api"
+  service_name = "pfm-admin-api"
   environment  = var.environment
   resource_name_prefix = var.resource_name_prefix
   

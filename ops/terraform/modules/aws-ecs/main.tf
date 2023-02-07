@@ -1,5 +1,5 @@
 resource "aws_ecs_task_definition" "ecs_task_definition" {
-  family                   = local.resource_name_prefix
+  family                   = "${local.environment}-${local.service_name}"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   cpu                      = var.task_cpu_units
@@ -17,7 +17,7 @@ resource "aws_ecs_service" "ecs_service" {
     aws_alb_target_group.alb_target_group,
   ]
 
-  name                = "${local.environment}-${local.resource_name_prefix}-service"
+  name                = "${local.environment}-${local.service_name}-service"
   cluster             = var.ecs_cluster_id
   task_definition     = aws_ecs_task_definition.ecs_task_definition.arn
   desired_count       = var.ecs_service_task_count

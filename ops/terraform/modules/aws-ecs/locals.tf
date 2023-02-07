@@ -11,7 +11,7 @@ locals {
   ecs_container_definitions = [
     {
       image       = "${var.container_image}:${var.container_tag}"
-      name        = var.service_name,
+      name        = "${local.environment}-${var.service_name}",
       networkMode = "awsvpc",
       portMappings = [
         {
@@ -26,7 +26,7 @@ locals {
         options = {
           awslogs-group         = var.aws_cloudwatch_logs_group,
           awslogs-region        = var.aws_region,
-          awslogs-stream-prefix = "ecs-${var.service_name}"
+          awslogs-stream-prefix = "${local.environment}-${var.service_name}"
         }
       }
     }

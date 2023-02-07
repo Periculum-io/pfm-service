@@ -9,7 +9,7 @@ locals {
 module "frontend" {
   source = "../../modules/aws-ecs"
   
-  service_name          = "${var.environment}-pfm-admin-frontend"
+  service_name          = "pfm-admin-frontend"
   environment           = var.environment
   resource_name_prefix  = var.resource_name_prefix
 
