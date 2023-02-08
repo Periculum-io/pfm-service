@@ -1,0 +1,1 @@
+../common/routing-variables.tf
