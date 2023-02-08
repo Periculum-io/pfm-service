@@ -63,14 +63,7 @@ def token_required(f):
       return f(*args, **kwargs)
    return decorator
 
-@app.route("/", methods=["GET"])
-def index():
-    return jsonify({"status": "success", "message": "API Running"})
-
-
 @app.route('/healthz', methods = ['GET'])
-#@oidc.accept_token(require_token=True)
-#@token_required
 def health():
     return jsonify(
       application='Prod Periculum PFM API',
@@ -79,6 +72,8 @@ def health():
 
 
 @app.route("/analytics", methods=["POST"])
+@oidc.accept_token(require_token=True)
+@token_required
 def process():
 
     # get data
