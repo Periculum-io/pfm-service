@@ -1,0 +1,1 @@
+../common/secrets-manager.tf

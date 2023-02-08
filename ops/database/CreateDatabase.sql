@@ -1,0 +1,53 @@
+CREATE SCHEMA IF NOT EXISTS Pfm;
+CREATE TABLE IF NOT EXISTS Pfm.Endpoints
+(
+    key INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    endpoint_name TEXT NOT NULL,
+    price NUMERIC(20, 2) NOT NULL,
+    status BOOLEAN NOT NULL,
+    date_created TIMESTAMP(3) WITH TIME ZONE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Pfm.Client
+(
+    key INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name TEXT NOT NULL,
+    api_token TEXT NOT NULL,
+    realm TEXT NOT NULL,
+    api_id TEXT NOT NULL,
+    api_secret TEXT NOT NULL,    
+    is_active BOOLEAN NOT NULL,
+    date_created TIMESTAMP(3) WITH TIME ZONE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Pfm.EndpointCallHistory
+(
+    key INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    client_key INT REFERENCES(Pfm.Client) NOT NULL,
+    endpoint_key INT REFERENCES(Pfm.Endpoints) NOT NULL,    
+    price NUMERIC(20, 2) NOT NULL,
+    response_status TEXT NOT NULL,
+    date_created TIMESTAMP(3) WITH TIME ZONE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Pfm.Users
+(
+  key INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  email TEXT NOT NULL,  
+  auth_user_id TEXT NOT NULL,
+  is_active BOOLEAN NOT NULL,
+  date_created TIMESTAMP(3) WITH TIME ZONE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Pfm.Subscription
+(
+  key INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  client_key INT REFERENCES(Pfm.Client) NOT NULL,
+  subscription_type TEXT NOT NULL,
+  description TEXT NOT NULL,
+  is_active BOOLEAN NOT NULL,
+  start_date TIMESTAMP(3) WITH TIME ZONE NOT NULL,
+  end_date TIMESTAMP(3) WITH TIME ZONE NOT NULL
+);
