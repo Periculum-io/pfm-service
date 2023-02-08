@@ -1,1 +1,0 @@
-../common/frontend-variables.tf

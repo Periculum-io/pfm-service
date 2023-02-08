@@ -1,1 +1,0 @@
-../common/pfm-admin-api-variables.tf
