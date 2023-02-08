@@ -66,7 +66,7 @@ def token_required(f):
 @app.route('/healthz', methods = ['GET'])
 def health():
     return jsonify(
-      application='Prod Periculum PFM API',
+      application='Prod Periculum PFM Flask API',
       version='1.0.0'
     )
 
