@@ -23,13 +23,13 @@ variable "ec2_insights_private_subnet_us_east_1a" {
 }
 
 variable "ec2_ssh_private_key_secret_name" {
-  description = "The secret name that holds the private key"
+  description = "The Private key used to ssh into ec2 instance that host the pfm flask api"
   default     = null
   type        = string
 }
 
 variable "ec2_ssh_public_key_secret_name" {
-  description = "The secret name that holds the public key"
+  description = "Public key used for ssh authentication for ec2 instances that host the pfm flask api."
   default     = null
   type        = string
 }
