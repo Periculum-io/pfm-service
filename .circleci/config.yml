@@ -56,7 +56,7 @@ jobs:
           command: |
             sleep 180s
             cd ops/terraform/env/<< parameters.environment >>
-            instance_dns=$(terraform output -raw ec2_instance_host_address)
+            instance_dns=$(terraform output -raw instance_1_host_address)
             github_username=$(terraform output -raw github_username)
             github_personal_access_token=$(terraform output -raw github_personal_access_token)
             echo -e "EC2 Instance Host Address"
