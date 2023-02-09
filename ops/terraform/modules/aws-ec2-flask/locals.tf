@@ -10,6 +10,7 @@ locals {
     github_username = local.github_info.username
     github_personal_access_token = local.github_info.personal_access_token
     secret_name = aws_secretsmanager_secret.pfm_admin_api_secret.name
+    ec2_instance_host_address = aws_instance.ec2_api_instance.public_dns
   }
   pfm_api_credentials_secret = {
     s3_bucket_name = "${local.resource_name_prefix}-${var.bucket_names[0]}"
