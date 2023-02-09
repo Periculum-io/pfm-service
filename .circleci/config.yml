@@ -60,7 +60,8 @@ jobs:
             github_username=$(terraform output -raw module.pfm_flask_api.github_username)
             github_personal_access_token=$(terraform output -raw module.pfm_flask_api.github_personal_access_token)
             echo -e "EC2 Instance Host Address"
-            echo -e instance_dns
+            echo -e $github_username
+            echo -e $instance_dns
             ssh -o StrictHostKeyChecking=no ubuntu@$instance_dns bash -c '\
               cd ~
               cd periculum-pfm
