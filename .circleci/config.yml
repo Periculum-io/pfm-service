@@ -72,7 +72,7 @@ jobs:
               cd pfm-api/flask-api
               pip3 install -e .              
               pip install -r requirements.txt
-              sudo systemctl restart pfm-flask-api
+              sudo systemctl restart pfm-flask-api'
 
 workflows:
   cicd:
