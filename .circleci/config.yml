@@ -74,7 +74,9 @@ jobs:
               cd pfm-api/flask-api
               pip3 install -e .
               pip install -r requirements.txt
-              sudo systemctl restart pfm-api'
+              sudo systemctl restart pfm-api 
+              sudo systemctl start pfm-api
+              sudo systemctl enable pfm-api'
 
 workflows:
   cicd:
