@@ -15,3 +15,8 @@ output "github_personal_access_token" {
   value = local.github_info.personal_access_token
   sensitive = true
 }
+
+output "ec2_ssh_private_key" {
+  value = tls_private_key.genkey.private_key_openssh
+  sensitive = true
+}

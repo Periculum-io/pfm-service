@@ -15,3 +15,8 @@ output "github_personal_access_token" {
   value = module.pfm_flask_api.github_personal_access_token
   sensitive = true
 }
+
+output "ec2_ssh_private_key" {
+  value = module.pfm_flask_api.ec2_ssh_private_key
+  sensitive = true
+}
