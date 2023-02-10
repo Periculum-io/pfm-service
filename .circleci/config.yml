@@ -60,9 +60,7 @@ jobs:
             github_personal_access_token=$(terraform output -raw github_personal_access_token)
             private_key=$(terraform output -raw ec2_ssh_private_key)
             terraform output -raw ec2_ssh_private_key > pfm_private_key.pem
-            cat pfm_private_key.pem
             chmod 400 pfm_private_key.pem
-            echo -e $instance_dns
             ssh -i "pfm_private_key.pem" -o StrictHostKeyChecking=no ubuntu@$instance_dns bash -c '\
               cd ~
               cd periculum-pfm
@@ -76,7 +74,7 @@ jobs:
               cd pfm-api/flask-api
               pip3 install -e .
               pip install -r requirements.txt
-              systemctl restart pfm-flask-api'
+              sudo systemctl restart pfm-flask-api'
 
 workflows:
   cicd:
