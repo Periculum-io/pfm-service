@@ -52,7 +52,7 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: pull latest and restart pfm-flask-api vm 1
+          name: pull latest and restart pfm flask api vm 1
           command: | 
             cd ops/terraform/env/<< parameters.environment >>
             instance_dns=$(terraform output -raw instance_1_host_address)
@@ -74,7 +74,7 @@ jobs:
               cd pfm-api/flask-api
               pip3 install -e .
               pip install -r requirements.txt
-              sudo systemctl restart pfm-flask-api'
+              sudo systemctl restart pfm-api'
 
 workflows:
   cicd:
