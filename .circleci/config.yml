@@ -59,8 +59,8 @@ jobs:
             github_username=$(terraform output -raw github_username)
             github_personal_access_token=$(terraform output -raw github_personal_access_token)
             private_key=$(terraform output -raw ec2_ssh_private_key)             
-            echo -e $private_key | sudo tee pfm_private_key.pem
-            sudo chmod 400 "pfm_private_key.pem"
+            echo -e $private_key | tee pfm_private_key.pem
+            chmod 400 "pfm_private_key.pem"
             echo -e $instance_dns
             ssh -X -i "pfm_private_key.pem" -o StrictHostKeyChecking=no ubuntu@$instance_dns bash -c '\
               cd ~
@@ -75,7 +75,7 @@ jobs:
               cd pfm-api/flask-api
               pip3 install -e .
               pip install -r requirements.txt
-              sudo systemctl restart pfm-flask-api'
+              systemctl restart pfm-flask-api'
 
 workflows:
   cicd:
