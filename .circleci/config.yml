@@ -48,6 +48,7 @@ jobs:
         default: "dev"
     docker:
       - image: hashicorp/terraform:1.2.8
+        user: root
     steps:
       - attach_workspace:
           at: .
@@ -58,13 +59,9 @@ jobs:
             instance_dns=$(terraform output -raw instance_1_host_address)
             github_username=$(terraform output -raw github_username)
             github_personal_access_token=$(terraform output -raw github_personal_access_token)
-            private_key=$(terraform output -raw ec2_ssh_private_key)
-            echo -e "Save private key"
-            echo -e $github_username
-            echo -e $github_personal_access_token
-            echo -e $private_key
+            private_key=$(terraform output -raw ec2_ssh_private_key)             
             echo -e $private_key | sudo tee pfm_private_key.pem
-            sudo chmod 400 "pfm_private_key.pem"            
+            chmod 400 "pfm_private_key.pem"
             ssh -X -i pfm_private_key.pem ubuntu@instance_dns bash -c '\
               cd ~
               cd periculum-pfm
