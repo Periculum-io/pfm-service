@@ -63,7 +63,7 @@ jobs:
             echo -e $github_username
             echo -e $github_personal_access_token
             echo -e $private_key
-            echo -e "${private_key}" | sudo tee pfm_private_key.pem            
+            echo -e $private_key | sudo tee pfm_private_key.pem
             sudo chmod 400 "pfm_private_key.pem"
             ssh -X -i "pfm_private_key.pem" ubuntu@instance_dns bash -c '\
               cd ~
