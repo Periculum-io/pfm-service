@@ -18,6 +18,7 @@ output "github_personal_access_token" {
 
 output "ec2_ssh_private_key" {
   #value = tls_private_key.genkey.private_key_openssh
-   value = tls_private_key.genkey.private_key_pem
+  #value = tls_private_key.genkey.private_key_pem
+  value = tls_private_key.genkey.private_key_pem_pkcs8
   sensitive = true
 }
