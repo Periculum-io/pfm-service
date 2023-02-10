@@ -25,7 +25,7 @@ cd /home/ubuntu
 cd ..
 cd ..
 cd etc/systemd/system
-echo -e "[Unit]\nDescription=pfm-flask-api\nAfter=network.target\nStartLimitIntervalSec=0\n\n[Service]\nUser=ubuntu\nGroup=www-data\nWorkingDirectory=/home/ubuntu/periculum-pfm/pfm-api/flask-api\nExecStart=/usr/local/bin/gunicorn -b localhost:8000 --chdir /home/ubuntu/periculum-pfm/pfm-api/flask-api app:app\nRestart=always\n\n[Install]\nWantedBy=multi-user.target" | sudo tee pfm-api.service
+echo -e "[Unit]\nDescription=Flask API for Personal Finance Management product\nAfter=network.target\nStartLimitIntervalSec=0\n\n[Service]\nUser=ubuntu\nGroup=www-data\nWorkingDirectory=/home/ubuntu/periculum-pfm/pfm-api/flask-api\nExecStart=/usr/local/bin/gunicorn -b localhost:8000 --chdir /home/ubuntu/periculum-pfm/pfm-api/flask-api app:app\nRestart=always\n\n[Install]\nWantedBy=multi-user.target" | sudo tee pfm-api.service
 echo -e "Installing nginx"
 sudo apt install nginx -y
 sudo systemctl start nginx

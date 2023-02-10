@@ -16,19 +16,19 @@ from flask_oidc  import OpenIDConnect
 app = Flask("periculum-pfm-api")
 app.debug = True
 
-app.config.update({
-    'SECRET_KEY': 'my_secret',
-    'TESTING': True,
-    'DEBUG': True,
-    'OIDC_CLIENT_SECRETS': 'client_secrets.json',
-    'OIDC_OPENID_REALM': 'local',
-    'OIDC_INTROSPECTION_AUTH_METHOD': 'bearer',
-    'OIDC-SCOPES': ['openid'],
-    'OIDC_INTROSPECTION_AUTH_METHOD': 'client_secret_post',
-    'OIDC_TOKEN_TYPE_HINT': 'access_token'
-})
+# app.config.update({
+#     'SECRET_KEY': 'my_secret',
+#     'TESTING': True,
+#     'DEBUG': True,
+#     'OIDC_CLIENT_SECRETS': 'client_secrets.json',
+#     'OIDC_OPENID_REALM': 'local',
+#     'OIDC_INTROSPECTION_AUTH_METHOD': 'bearer',
+#     'OIDC-SCOPES': ['openid'],
+#     'OIDC_INTROSPECTION_AUTH_METHOD': 'client_secret_post',
+#     'OIDC_TOKEN_TYPE_HINT': 'access_token'
+# })
 
-oidc = OpenIDConnect(app)
+# oidc = OpenIDConnect(app)
 
 def bad_request(message):
     response = {
@@ -73,15 +73,19 @@ def health():
 def process():
 
     # get data
-    query = request.json
-    account_name = query['account_name']
+    # query = request.json
+    # account_name = query['account_name']
 
-    df = pd.DataFrame(query['transactions'])
-    data = df.copy()
+    # df = pd.DataFrame(query['transactions'])
+    # data = df.copy()
  
-    output = analyse_transctions(data, salary_variables=salary_variables, other_income_variables=other_income_variables, account_name=account_name)
+    # output = analyse_transctions(data, salary_variables=salary_variables, other_income_variables=other_income_variables, account_name=account_name)
 
-    return output
+    #return output
+    return jsonify(
+      status='200',
+      output='Success'
+    )
 
 if __name__ == "__main__":
     print("starting pfm flask app")
