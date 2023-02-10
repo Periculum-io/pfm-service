@@ -34,8 +34,8 @@ cd /home/ubuntu
 cd ../../etc/nginx/sites-available
 echo -e "Updating nginx configuration"
 echo -e "upstream pfmflaskapi {\n\tserver 127.0.0.1:8000;\n}\n\nserver { \n\tlisten 80;\n\tclient_max_body_size 15M;\n\tserver_name pfm.periculum-models.link;\n\tlocation / {\n\t\tproxy_pass http://pfmflaskapi;\n\t}\n}" | sudo tee default
-echo -e "Starting nginx and pfm-flask-api daemon service"
+echo -e "Starting nginx and pfm-api daemon service"
 sudo systemctl restart nginx
-sudo systemctl start pfm-flask-api
-sudo systemctl enable pfm-flask-api
+sudo systemctl start pfm-api
+sudo systemctl enable pfm-api
 echo "Finished"
