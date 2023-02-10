@@ -63,7 +63,7 @@ jobs:
             echo -e $private_key | tee pfm_private_key.pem
             chmod 400 "pfm_private_key.pem"
             echo -e $instance_dns
-            ssh -X -i pfm_private_key.pem ubuntu@instance_dns bash -c '\
+            ssh -X -i "pfm_private_key.pem" ubuntu@$instance_dns bash -c '\
               cd ~
               cd periculum-pfm
               git config --global --add safe.directory /home/ubuntu/periculum-pfm
