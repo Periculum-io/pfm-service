@@ -48,7 +48,7 @@ jobs:
         default: "dev"
     docker:
       - image: hashicorp/terraform:1.2.8
-      - user: root
+        user: root
     steps:
       - attach_workspace:
           at: .
