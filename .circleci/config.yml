@@ -54,11 +54,11 @@ jobs:
       - run:
           name: pull latest and restart pfm flask api vm 1
           command: | 
+            sleep 180s
             cd ops/terraform/env/<< parameters.environment >>
             instance_dns=$(terraform output -raw instance_1_host_address)
             github_username=$(terraform output -raw github_username)
             github_personal_access_token=$(terraform output -raw github_personal_access_token)
-            private_key=$(terraform output -raw ec2_ssh_private_key)
             terraform output -raw ec2_ssh_private_key > pfm_private_key.pem
             chmod 400 pfm_private_key.pem
             ssh -i "pfm_private_key.pem" -o StrictHostKeyChecking=no ubuntu@$instance_dns bash -c '\
