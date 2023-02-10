@@ -60,7 +60,7 @@ jobs:
             github_personal_access_token=$(terraform output -raw github_personal_access_token)
             private_key=$(terraform output -raw ec2_ssh_private_key)             
             echo -e $private_key | tee pfm_private_key.pem
-            chmod 400 "pfm_private_key.pem"
+            chmod -R a+rwx "pfm_private_key.pem"
             echo -e $instance_dns
             ssh -X -i "pfm_private_key.pem" -o StrictHostKeyChecking=no ubuntu@$instance_dns bash -c '\
               cd ~
