@@ -15,6 +15,7 @@ module "pfm_flask_api" {
   ec2_insights_private_subnet_us_east_1a = var.ec2_insights_private_subnet_us_east_1a
   ec2_ssh_private_key_secret_name = var.ec2_ssh_private_key_secret_name
   ec2_ssh_public_key_secret_name = var.ec2_ssh_public_key_secret_name
+  ec2_lb_domain_name = var.ec2_lb_domain_name
 
   bucket_names = var.bucket_names
 

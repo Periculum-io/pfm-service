@@ -17,11 +17,11 @@ app = Flask("periculum-pfm-api")
 app.debug = True
 
 # app.config.update({
-#     'SECRET_KEY': 'my_secret',
+#     'SECRET_KEY': '',
 #     'TESTING': True,
 #     'DEBUG': True,
-#     'OIDC_CLIENT_SECRETS': 'client_secrets.json',
-#     'OIDC_OPENID_REALM': 'local',
+#     'OIDC_CLIENT_SECRETS': 'client_secrets.json', 
+#     'OIDC_OPENID_REALM': 'dev',
 #     'OIDC_INTROSPECTION_AUTH_METHOD': 'bearer',
 #     'OIDC-SCOPES': ['openid'],
 #     'OIDC_INTROSPECTION_AUTH_METHOD': 'client_secret_post',
@@ -53,6 +53,7 @@ def token_required(f):
         data2 = jwt.decode(token, verify=False)
         print(data2['clientId'])
         print(data2['tenant'])
+        # Do tenant verification here
       except:
         return bad_request("Token does not have reqiured claims")
       return f(*args, **kwargs)
@@ -65,7 +66,6 @@ def health():
       application='Prod Periculum PFM Flask API',
       version='1.0.0'
     )
-
 
 @app.route("/analytics", methods=["POST"])
 # @oidc.accept_token(require_token=True)

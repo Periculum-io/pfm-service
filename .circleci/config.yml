@@ -63,6 +63,7 @@ jobs:
             chmod 400 pfm_private_key.pem
             ssh -i "pfm_private_key.pem" -o StrictHostKeyChecking=no ubuntu@$instance_dns bash -c '\
               cd ~
+              cat credentials.csv
               cd periculum-pfm
               git config --global --add safe.directory /home/ubuntu/periculum-pfm
               git config --global credential.helper store
