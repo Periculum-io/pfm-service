@@ -56,6 +56,11 @@ variable "ec2_ssh_public_key_secret_name" {
   type        = string
 }
 
+variable "ec2_lb_domain_name" {
+  description = "The flask server domain" 
+  type        = string
+}
+
 variable "secrets_manager_vm_github_personal_access_token_arn" {
   description = "The secret github personal access token"
   default     = null

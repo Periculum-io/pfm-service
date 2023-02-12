@@ -5,13 +5,13 @@ locals {
 module "pfm_admin_api" {
   source = "../../modules/aws-ecs"
 
-  service_name = "pfm-admin-api"
-  environment  = var.environment
-  resource_name_prefix = var.resource_name_prefix
+  service_name          = "pfm-admin-api"
+  environment           = var.environment
+  resource_name_prefix  = var.resource_name_prefix
   
-  aws_region   = var.aws_region
-  vpc_id       = var.vpc_id
-  subnet_ids   = var.vpc_pfm_private_subnets
+  aws_region                = var.aws_region
+  vpc_id                    = var.vpc_id
+  subnet_ids                = var.vpc_pfm_private_subnets
   aws_cloudwatch_logs_group = module.aws_infrastructure.cloudwatch_log_group_name
 
   ecs_cluster_id               = module.aws_infrastructure.ecs_cluster_id
