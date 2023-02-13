@@ -2,7 +2,7 @@ module "aws_infrastructure" {
   source = "../../modules/aws-infrastructure-common"
 
   vpc_id = var.vpc_id
-  vpc_pfm_private_subnets = var.vpc_pfm_private_subnets
+  vpc_pfm_public_subnets  = var.vpc_pfm_public_subnets
   aws_region              = var.aws_region
   environment             = var.environment
   resource_name_prefix    = var.resource_name_prefix
