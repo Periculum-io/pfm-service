@@ -21,22 +21,22 @@ import csv
 from shared_logic.database import DatabaseClient
 from shared_logic.secretsmanager import SecretsManagerSecret
 
-app = Flask("periculum-pfm-api")
+app = Flask("pfm-api")
 app.debug = True
 
 # app.config.update({
-#     'SECRET_KEY': '',
+#     'SECRET_KEY': 'wOAFNElyseRvFKI0TV63VyqzJYOA6KXP',
 #     'TESTING': True,
 #     'DEBUG': True,
 #     'OIDC_CLIENT_SECRETS': 'client_secrets.json', 
-#     'OIDC_OPENID_REALM': 'dev',
+#     'OIDC_OPENID_REALM': 'local',
 #     'OIDC_INTROSPECTION_AUTH_METHOD': 'bearer',
 #     'OIDC-SCOPES': ['openid'],
 #     'OIDC_INTROSPECTION_AUTH_METHOD': 'client_secret_post',
 #     'OIDC_TOKEN_TYPE_HINT': 'access_token'
 # })
 
-# oidc = OpenIDConnect(app)
+#oidc = OpenIDConnect(app)
 
 config = {
   'aws_iam_access_key': None,
@@ -117,19 +117,15 @@ def health():
 def process():
 
     # get data
-    # query = request.json
-    # account_name = query['account_name']
+    query = request.json
+    account_name = query['account_name']
 
-    # df = pd.DataFrame(query['transactions'])
-    # data = df.copy()
+    df = pd.DataFrame(query['transactions'])
+    data = df.copy()
  
-    # output = analyse_transctions(data, salary_variables=salary_variables, other_income_variables=other_income_variables, account_name=account_name)
-
-    #return output
-    return jsonify(
-      status='200',
-      output='Success'
-    )
+    output = analyse_transctions(data, salary_variables=salary_variables, other_income_variables=other_income_variables, account_name=account_name)
+ 
+    return output
 
 if __name__ == "__main__":
     print("starting pfm flask app")
