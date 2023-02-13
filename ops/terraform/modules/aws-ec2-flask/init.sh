@@ -18,8 +18,15 @@ cd periculum-pfm
 cd pfm-api
 echo -e "Need to Install Local Modules"
 pip3 install -e .
+cd shared_logic 
+pip3 install -e .
+cd ..
 cd flask-api
 pip3 install -r requirements.txt
+pip3 install gunicorn
+pip3 install greenlet
+pip3 install eventlet
+pip3 install gevent
 echo -e "Creating daemon service"
 cd /home/ubuntu
 cd ..
