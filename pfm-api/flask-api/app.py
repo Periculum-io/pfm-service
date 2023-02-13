@@ -112,8 +112,8 @@ def health():
     )
 
 @app.route("/analytics", methods=["POST"])
-@oidc.accept_token(require_token=True)
-@token_required
+# @oidc.accept_token(require_token=True)
+# @token_required
 def process():
 
     # get data
