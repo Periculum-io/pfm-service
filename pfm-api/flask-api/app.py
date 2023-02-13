@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 import json
+from glob import escape
+from http.client import UNAUTHORIZED
 from flask import Flask, make_response
 from flask import jsonify
 from flask import request
@@ -12,6 +14,12 @@ import jwt
 import datetime
 from functools import wraps
 from flask_oidc  import OpenIDConnect
+
+# AWS
+import boto3
+import csv
+from shared_logic.database import DatabaseClient
+from shared_logic.secretsmanager import SecretsManagerSecret
 
 app = Flask("periculum-pfm-api")
 app.debug = True
@@ -29,6 +37,42 @@ app.debug = True
 # })
 
 # oidc = OpenIDConnect(app)
+
+config = {
+  'aws_iam_access_key': None,
+  'aws_iam_secret_access_key': None,
+  'aws_secrets_manager_secret_name': None,
+}
+
+boto3_session = None
+secrets_manager_secret = None
+secret = None
+database_client = None
+
+with open('../../../credentials.csv', newline='') as credentials_file:
+  reader = csv.reader(credentials_file)
+  items = list(reader)[0]
+  config['aws_iam_access_key'] = items[0]
+  config['aws_iam_secret_access_key'] = items[1]
+  config['aws_secrets_manager_secret_name'] = items[2]
+
+session = boto3.Session(
+  aws_access_key_id = config['aws_iam_access_key'],
+  aws_secret_access_key = config['aws_iam_secret_access_key'],
+  region_name='us-east-1'
+)
+secrets_manager_secret = SecretsManagerSecret(
+  session.client('secretsmanager'),
+  config['aws_secrets_manager_secret_name']
+)
+secret = json.loads(secrets_manager_secret.get_value())
+
+database_client = DatabaseClient(
+  server = secret['database_connection_string'],
+  dbname = 'Pfm',
+  username = secret['database_username'],
+  password = secret['database_password']
+)
 
 def bad_request(message):
     response = {

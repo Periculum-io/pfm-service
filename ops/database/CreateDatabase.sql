@@ -20,16 +20,6 @@ CREATE TABLE IF NOT EXISTS Pfm.Client
     date_created TIMESTAMP(3) WITH TIME ZONE NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Pfm.EndpointCallHistory
-(
-    key INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    client_key INT REFERENCES(Pfm.Client) NOT NULL,
-    endpoint_key INT REFERENCES(Pfm.Endpoints) NOT NULL,    
-    price NUMERIC(20, 2) NOT NULL,
-    response_status TEXT NOT NULL,
-    date_created TIMESTAMP(3) WITH TIME ZONE NOT NULL
-);
-
 CREATE TABLE IF NOT EXISTS Pfm.Users
 (
   key INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -41,10 +31,20 @@ CREATE TABLE IF NOT EXISTS Pfm.Users
   date_created TIMESTAMP(3) WITH TIME ZONE NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS Pfm.EndpointCallHistory
+(
+    key INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    client_key INT REFERENCES Pfm.Client(key) NOT NULL,
+    endpoint_key INT REFERENCES Pfm.Endpoints(key) NOT NULL,    
+    price NUMERIC(20, 2) NOT NULL,
+    response_status TEXT NOT NULL,
+    date_created TIMESTAMP(3) WITH TIME ZONE NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS Pfm.Subscription
 (
   key INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  client_key INT REFERENCES(Pfm.Client) NOT NULL,
+  client_key INT REFERENCES Pfm.Client(key) NOT NULL,
   subscription_type TEXT NOT NULL,
   description TEXT NOT NULL,
   is_active BOOLEAN NOT NULL,
