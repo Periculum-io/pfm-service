@@ -39,6 +39,11 @@ variable "ec2_lb_domain_name" {
   type        = string
 }
 
+variable "ec2_keycloak_authority" {
+  description = "The keycloak base url"
+  type        = string
+}
+
 variable "ec2_lb_hosted_zone_domain" {
   description = "The EC2 hosted domain zone" 
   type        = string

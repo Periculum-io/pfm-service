@@ -63,7 +63,6 @@ jobs:
             chmod 400 pfm_private_key.pem
             ssh -i "pfm_private_key.pem" -o StrictHostKeyChecking=no ubuntu@$instance_dns bash -c '\
               cd ~
-              cat credentials.csv
               cd periculum-pfm
               git config --global --add safe.directory /home/ubuntu/periculum-pfm
               git config --global credential.helper store
@@ -72,7 +71,10 @@ jobs:
               git checkout main
               git reset --hard
               git pull
-              cd pfm-api/flask-api
+              cd pfm-api/shared_logic
+              pip3 install -e .
+              cd ..
+              flask-api
               pip3 install -e .
               pip install -r requirements.txt
               sudo systemctl restart pfm-api 

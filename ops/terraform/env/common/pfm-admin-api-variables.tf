@@ -39,7 +39,7 @@ variable "pfm_admin_api_allowed_cors_origin" {
   type = string
 }
 
-variable "pfm_admin_api_auth0_domain" {
+variable "pfm_admin_api_auth0_authority" {
   type = string
 }
 

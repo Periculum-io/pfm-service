@@ -369,3 +369,6 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+# Ignore .egg-info
+shared_logic.egg-info/

@@ -61,6 +61,11 @@ variable "ec2_lb_domain_name" {
   type        = string
 }
 
+variable "ec2_keycloak_authority" {
+  description = "The keycloak authority"
+  type        = string
+}
+
 variable "secrets_manager_vm_github_personal_access_token_arn" {
   description = "The secret github personal access token"
   default     = null
