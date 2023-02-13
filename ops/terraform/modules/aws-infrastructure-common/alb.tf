@@ -79,7 +79,7 @@ resource "aws_security_group" "security_group_pfm_alb" {
 
 resource "aws_alb" "alb_pfm" {
   name            = "${local.environment}-${local.resource_name_prefix}-alb"
-  subnets         = var.vpc_pfm_private_subnets
+  subnets         = var.vpc_pfm_public_subnets
   security_groups = [aws_security_group.security_group_pfm_alb.id]
 
   access_logs {

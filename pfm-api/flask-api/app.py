@@ -25,7 +25,7 @@ app = Flask("pfm-api")
 app.debug = True
 
 # app.config.update({
-#     'SECRET_KEY': 'wOAFNElyseRvFKI0TV63VyqzJYOA6KXP',
+#     'SECRET_KEY': '',
 #     'TESTING': True,
 #     'DEBUG': True,
 #     'OIDC_CLIENT_SECRETS': 'client_secrets.json', 
@@ -36,7 +36,7 @@ app.debug = True
 #     'OIDC_TOKEN_TYPE_HINT': 'access_token'
 # })
 
-#oidc = OpenIDConnect(app)
+# oidc = OpenIDConnect(app)
 
 config = {
   'aws_iam_access_key': None,
@@ -124,7 +124,7 @@ def process():
     data = df.copy()
  
     output = analyse_transctions(data, salary_variables=salary_variables, other_income_variables=other_income_variables, account_name=account_name)
- 
+
     return output
 
 if __name__ == "__main__":

@@ -21,10 +21,11 @@ variable "vpc_id" {
   type = string
 }
 
-variable "vpc_pfm_private_subnets" {
+variable "vpc_pfm_public_subnets" {
   description = "The private subnets for the VPC"
   type = list(string)
 }
+
 variable "alb_s3_bucket_id" {
   description = "VPC ID for the environment"
   type = string
