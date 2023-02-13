@@ -74,7 +74,7 @@ jobs:
               cd pfm-api/shared_logic
               pip3 install -e .
               cd ..
-              flask-api
+              cd flask-api
               pip3 install -e .
               pip install -r requirements.txt
               sudo systemctl restart pfm-api 
