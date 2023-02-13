@@ -7,7 +7,7 @@ vpc_pfm_public_subnets        = [ "subnet-03f99ef94eed8df92", "subnet-0fd50fcff1
 vpc_pfm_private_subnets       = ["subnet-09727753b48abb509", "subnet-0b70e5735b271404c"]
 
 # Infra related
-ecs_cluster_name               = "prod-pfm-ecs-cluster"
+ecs_cluster_name               = "pfm-ecs-cluster"
 ecs_cluster_capacity_providers = ["FARGATE", "FARGATE_SPOT"]
 ecs_container_insights_enabled = "disabled"
 vpc_public_subnets_cidr        = ["10.0.0.0/24", "10.0.1.0/24"]
@@ -19,10 +19,11 @@ alb_s3_bucket_acl              = "private"
 alb_s3_bucket_id               = "prod-pfm-logs-s3-bucket"
 
 # Routing related
-r53_hosted_zone_id                   = "Z05688392G271FHDECHWN"
-r53_hosted_zone_name                 = "periculum-models.link"
-r53_target_domain_pfm_admin_api      = "admin-api.pfm.periculum-models.link"
-r53_target_domain_pfm_admin_frontend = "pfm.periculum-models.link"
+r53_hosted_zone_id                    = "Z05688392G271FHDECHWN"
+r53_hosted_zone_name                  = "periculum-models.link"
+r53_target_domain_pfm_admin_api       = "admin-api.pfm.periculum-models.link"
+r53_target_domain_pfm_admin_frontend  = "*.pfm.periculum-models.link"
+r53_target_domain_pfm_flask_api       = "api.pfm.periculum-models.link"
 
 # Frontend
 frontend_cpu_units              = 512
@@ -57,6 +58,7 @@ ec2_ssh_private_key_secret_name         = "pfm/prod/ec2/key"
 ec2_ssh_public_key_secret_name          = "pfm/prod/ec2/key.pub"
 ec2_lb_log_prefix                       = "lb"
 ec2_lb_log_enabled                      = true
+ec2_keycloak_authority                  = "https://pfm.auth-periculum.com/realms/production"
 
 rds_kms_key_alias_names_pfm             = ["pfm-rds-key", "pfm-rds-performance-key"]
 pfm_aws_db_subnet_group                 = "prod-insights-private"
