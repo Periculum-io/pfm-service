@@ -28,6 +28,9 @@ namespace Pfm.Api.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+
+            var tenant = Request.HttpContext.User.FindFirst(t => t.Type == CustomClaimTypes.Tenant)?.Value;
+
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
@@ -37,5 +40,11 @@ namespace Pfm.Api.Controllers
             })
             .ToArray();
         }
+    }
+
+    public static class CustomClaimTypes
+    {
+        public const string Uid = "uid";
+        public const string Tenant = "tenant";
     }
 }

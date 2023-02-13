@@ -1,0 +1,116 @@
+version: 2.1
+
+orbs:
+  aws-s3: circleci/aws-cli@3.1.1
+  aws-ecr: circleci/aws-ecr@7.3.0
+
+jobs:
+  tf-plan:
+    parameters:
+      environment:
+        type: string
+        default: "dev"
+    docker:
+      - image: hashicorp/terraform:1.2.8
+    steps:
+      - checkout
+      - run:
+          name: terraform init & plan
+          command: |
+            cd ops/terraform/env/<< parameters.environment >>
+            terraform init -input=false
+            terraform plan -out tf-apply-<< parameters.environment >> -lock-timeout=180s
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  tf-apply:
+    parameters:
+      environment:
+        type: string
+        default: "dev"
+    docker:
+      - image: hashicorp/terraform:1.2.8
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: terraform apply
+          command: |
+            cd ops/terraform/env/<< parameters.environment >>
+            terraform apply -lock-timeout=180s -auto-approve tf-apply-<< parameters.environment >>
+
+  pull-latest-and-restart-pfm-flask-api:
+    parameters:
+      environment:
+        type: string
+        default: "dev"
+    docker:
+      - image: hashicorp/terraform:1.2.8
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: pull latest and restart pfm flask api vm 1
+          command: | 
+            sleep 180s
+            cd ops/terraform/env/<< parameters.environment >>
+            instance_dns=$(terraform output -raw instance_1_host_address)
+            github_username=$(terraform output -raw github_username)
+            github_personal_access_token=$(terraform output -raw github_personal_access_token)
+            terraform output -raw ec2_ssh_private_key > pfm_private_key.pem
+            chmod 400 pfm_private_key.pem
+            ssh -i "pfm_private_key.pem" -o StrictHostKeyChecking=no ubuntu@$instance_dns bash -c '\
+              cd ~
+              cd periculum-pfm
+              git config --global --add safe.directory /home/ubuntu/periculum-pfm
+              git config --global credential.helper store
+              git config --global user.name $github_username
+              git config --global user.password $github_personal_access_token
+              git checkout main
+              git reset --hard
+              git pull
+              cd pfm-api
+              pip3 install -e .
+              cd shared_logic
+              pip3 install -e .
+              cd ..
+              cd flask-api
+              pip install -r requirements.txt
+              sudo systemctl restart pfm-api 
+              sudo systemctl start pfm-api
+              sudo systemctl enable pfm-api'
+
+workflows:
+  cicd:
+    jobs:
+      - tf-plan:
+          filters:
+            branches:
+              only:
+                - main
+          name: tf-plan
+          environment: dev
+          context: circleci
+      - tf-apply:
+          filters:
+            branches:
+              only:
+                - main
+          name: tf-apply
+          environment: dev
+          context: circleci
+          requires:
+            - tf-plan
+      - pull-latest-and-restart-pfm-flask-api:
+          filters:
+            branches:
+              only:
+                - main
+          name: pull-latest-and-restart-pfm-flask-api
+          environment: dev
+          context: circleci
+          requires:
+            - tf-plan
+            - tf-apply

@@ -1,4 +1,3 @@
-
 import numpy as np
 import pandas as pd
 import json
@@ -13,7 +12,7 @@ import stop_words
 from collections import Counter
 
 
-app = Flask("periculum-pfm-api")
+app = Flask("pfm-api")
 app.debug = True
 
 
