@@ -66,6 +66,11 @@ variable "ec2_keycloak_authority" {
   type        = string
 }
 
+variable "ec2_keycloak_clientsecret" {
+  description = "Client Secret for Keycloak authentication"
+  type        = string
+}
+
 variable "secrets_manager_vm_github_personal_access_token_arn" {
   description = "The secret github personal access token"
   default     = null
