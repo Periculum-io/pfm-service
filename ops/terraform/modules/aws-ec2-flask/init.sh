@@ -28,7 +28,7 @@ pip3 install greenlet
 pip3 install eventlet
 pip3 install gevent
 echo "Create Keycloak Auth Json config file"
-echo -e "{'web':{'issuer':'${keycloak_authority}','auth_uri':'${keycloak_authority}/protocol/openid-connect/auth','client_id':'pfm-flask-api','client_secret':'${keycloak_clientsecret}','redirect_uris':['http://localhost:5000/*'],'userinfo_uri':'${keycloak_authority}/protocol/openid-connect/userinfo','token_uri':'${keycloak_authority}/protocol/openid-connect/token','token_introspection_uri':'${keycloak_authority}/protocol/openid-connect/token/introspect'}}" | sudo tee client_secrets.json
+echo -e "{\"web\": {\"issuer\": \"${keycloak_authority}\", \"auth_uri\": \"${keycloak_authority}/protocol/openid-connect/auth\", \"client_id\": \"pfm-flask-api\", \"client_secret\": \"${keycloak_clientsecret}\", \"redirect_uris\": [\"http://localhost:5000/*\"], \"userinfo_uri\": \"${keycloak_authority}/protocol/openid-connect/userinfo\", \"token_uri\": \"${keycloak_authority}/protocol/openid-connect/token\", \"token_introspection_uri\": \"${keycloak_authority}/protocol/openid-connect/token/introspect\"} }" | sudo tee client_secrets.json
 echo -e "Creating daemon service"
 cd /home/ubuntu
 cd ..
@@ -42,7 +42,7 @@ sudo systemctl enable nginx
 cd /home/ubuntu
 cd ../../etc/nginx/sites-available
 echo -e "Updating nginx configuration"
-echo -e "upstream pfmflaskapi {\n\tserver 127.0.0.1:8000;\n}\n\nserver { \n\tlisten 80;\n\tclient_max_body_size 15M;\n\tserver_name *.pfm.dev.periculum-models.link;\n\tlocation / {\n\t\tproxy_pass http://pfmflaskapi;\n\t}\n}" | sudo tee default
+echo -e "upstream pfmflaskapi {\n\tserver 127.0.0.1:8000;\n}\n\nserver { \n\tlisten 80;\n\tclient_max_body_size 15M;\n\tserver_name ${server_domain};\n\tlocation / {\n\t\tproxy_pass http://pfmflaskapi;\n\t}\n}" | sudo tee default
 echo -e "Starting nginx and pfm-api daemon service"
 sudo systemctl restart nginx
 sudo systemctl start pfm-api

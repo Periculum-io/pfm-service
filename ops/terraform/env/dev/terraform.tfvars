@@ -60,6 +60,7 @@ ec2_lb_log_prefix                       = "lb"
 ec2_lb_log_enabled                      = true
 ec2_keycloak_authority                  = "https://pfm.auth-periculum.com/realms/dev"
 ec2_keycloak_clientsecret               = "wOAFNElyseRvFKI0TV63VyqzJYOA6KXP"
+ec2_target_domain_certificate           = "*.pfm.dev.periculum-models.link"
 
 rds_kms_key_alias_names_pfm             = ["pfm-rds-key", "pfm-rds-performance-key"]
 pfm_aws_db_subnet_group                 = "dev-insights-private"

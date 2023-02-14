@@ -49,6 +49,11 @@ variable "ec2_keycloak_clientsecret" {
   type        = string
 }
 
+variable "ec2_target_domain_certificate" {
+  description = "Domain certificate for Flask Api EC2 Instance"
+  type        = string
+}
+
 variable "ec2_lb_hosted_zone_domain" {
   description = "The EC2 hosted domain zone" 
   type        = string

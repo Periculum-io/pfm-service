@@ -10,7 +10,7 @@ locals {
     github_username               = local.github_info.username
     github_personal_access_token  = local.github_info.personal_access_token
     secret_name                   = aws_secretsmanager_secret.pfm_admin_api_secret.name
-    server_domain                 = var.ec2_lb_domain_name
+    server_domain                 = var.ec2_target_domain_certificate
     keycloak_authority            = var.ec2_keycloak_authority
     keycloak_clientsecret         = var.ec2_keycloak_clientsecret
   }

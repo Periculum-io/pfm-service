@@ -137,7 +137,7 @@ def process():
     data = df.copy()
 
     output = analyse_transctions(data, salary_variables=salary_variables, other_income_variables=other_income_variables, account_name=account_name)
-    
+
     # Log DB Call
     #database_client.save_endpoint_call(decoded['tenant'], 1, 'SUCCESS')
 
