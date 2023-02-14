@@ -27,4 +27,5 @@ output "keycloak_authority"{
 
 output "keycloak_clientsecret" {
   value = module.pfm_flask_api.keycloak_clientsecret
+  sensitive = true
 }
