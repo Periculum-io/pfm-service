@@ -24,19 +24,19 @@ from shared_logic.secretsmanager import SecretsManagerSecret
 app = Flask("pfm-api")
 app.debug = True
 
-# app.config.update({
-#     'SECRET_KEY': '',
-#     'TESTING': True,
-#     'DEBUG': True,
-#     'OIDC_CLIENT_SECRETS': 'client_secrets.json', 
-#     'OIDC_OPENID_REALM': 'local',
-#     'OIDC_INTROSPECTION_AUTH_METHOD': 'bearer',
-#     'OIDC-SCOPES': ['openid'],
-#     'OIDC_INTROSPECTION_AUTH_METHOD': 'client_secret_post',
-#     'OIDC_TOKEN_TYPE_HINT': 'access_token'
-# })
+app.config.update({
+    'SECRET_KEY': 'SECRET',
+    'TESTING': True,
+    'DEBUG': True,
+    'OIDC_CLIENT_SECRETS': 'client_secrets.json', 
+    'OIDC_OPENID_REALM': 'local',
+    'OIDC_INTROSPECTION_AUTH_METHOD': 'bearer',
+    'OIDC-SCOPES': ['openid'],
+    'OIDC_INTROSPECTION_AUTH_METHOD': 'client_secret_post',
+    'OIDC_TOKEN_TYPE_HINT': 'access_token'
+})
 
-# oidc = OpenIDConnect(app)
+oidc = OpenIDConnect(app)
 
 config = {
   'aws_iam_access_key': None,
@@ -48,6 +48,7 @@ boto3_session = None
 secrets_manager_secret = None
 secret = None
 database_client = None
+tenant = None
 
 with open('../../../credentials.csv', newline='') as credentials_file:
   reader = csv.reader(credentials_file)
@@ -61,10 +62,12 @@ session = boto3.Session(
   aws_secret_access_key = config['aws_iam_secret_access_key'],
   region_name='us-east-1'
 )
+
 secrets_manager_secret = SecretsManagerSecret(
   session.client('secretsmanager'),
   config['aws_secrets_manager_secret_name']
 )
+
 secret = json.loads(secrets_manager_secret.get_value())
 
 database_client = DatabaseClient(
@@ -73,6 +76,7 @@ database_client = DatabaseClient(
   username = secret['database_username'],
   password = secret['database_password']
 )
+
 
 def bad_request(message):
     response = {
@@ -92,15 +96,18 @@ def token_required(f):
          data = request.headers['Authorization']
          token = str.replace(str(data), 'Bearer ', '')
       if not token:
-         return jsonify({'message': 'a valid token is missing'})
+         return jsonify({'message': 'a valid token is missing'})           
+      
       try:
-        data2 = jwt.decode(token, verify=False)
-        print(data2['clientId'])
-        print(data2['tenant'])
-        # Do tenant verification here
+        decoded = jwt.decode(token, key=None, options={"verify_signature":False})
+        if(len(decoded['clientId']) == 0 or len(decoded['tenant']) ==0):
+            return bad_request("Token does not have reqiured claims")
+
       except:
-        return bad_request("Token does not have reqiured claims")
+        return bad_request("An error occured during authentication - Please try again later")
+      
       return f(*args, **kwargs)
+
    return decorator
 
 
@@ -112,18 +119,27 @@ def health():
     )
 
 @app.route("/analytics", methods=["POST"])
-# @oidc.accept_token(require_token=True)
-# @token_required
+@oidc.accept_token(require_token=True)
+@token_required
 def process():
 
     # get data
+    token = str.replace(str(request.headers['Authorization']), 'Bearer ', '')
+    decoded = jwt.decode(token, key=None, options={"verify_signature":False})
+    
+    print("Decoded Tenant")
+    print(decoded['tenant'])
+
     query = request.json
     account_name = query['account_name']
 
     df = pd.DataFrame(query['transactions'])
     data = df.copy()
- 
+
     output = analyse_transctions(data, salary_variables=salary_variables, other_income_variables=other_income_variables, account_name=account_name)
+    
+    # Log DB Call
+    #database_client.save_endpoint_call(decoded['tenant'], 1, 'SUCCESS')
 
     return output
 

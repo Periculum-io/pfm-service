@@ -44,6 +44,11 @@ variable "ec2_keycloak_authority" {
   type        = string
 }
 
+variable "ec2_keycloak_clientsecret" {
+  description = "Client Secret for Keycloak authentication"
+  type        = string
+}
+
 variable "ec2_lb_hosted_zone_domain" {
   description = "The EC2 hosted domain zone" 
   type        = string

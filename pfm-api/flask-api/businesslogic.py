@@ -165,7 +165,7 @@ def analyse_transctions(data, salary_variables, other_income_variables, account_
         electricity = debit_transactions[debit_transactions['description'].str.contains(electricity_keywords)]
         summary['count_of_electricity_transactions'] = len(electricity)
         summary["electricity"] = round(float(electricity.groupby(pd.Grouper(key='date', freq="M")).sum()["amount"].sum()), 2)
-        summary['elecctricity_transactions'] = electricity[['date', 'amount', 'description']].to_dict(orient='records')
+        summary['electricity_transactions'] = electricity[['date', 'amount', 'description']].to_dict(orient='records')
 
         insurance = debit_transactions[debit_transactions['description'].str.contains(insurance_keywords)]
         summary['count_of_insurance_transactions'] = len(insurance)
