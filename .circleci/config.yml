@@ -77,9 +77,11 @@ jobs:
               pip3 install -e .
               cd ..
               cd flask-api
+              echo -e "{\"web\": {\"issuer\": \"${keycloak_authority}\", \"auth_uri\": \"${keycloak_authority}/protocol/openid-connect/auth\", \"client_id\": \"pfm-flask-api\", \"client_secret\": \"${keycloak_clientsecret}\", \"redirect_uris\": [\"http://localhost:5000/*\"], \"userinfo_uri\": \"${keycloak_authority}/protocol/openid-connect/userinfo\", \"token_uri\": \"${keycloak_authority}/protocol/openid-connect/token\", \"token_introspection_uri\": \"${keycloak_authority}/protocol/openid-connect/token/introspect\"} }" | sudo tee client_secrets.json
+              sudo chmod a+rwx client_secrets.json
               pip install -r requirements.txt
               cat client_secrets.json
-              sudo systemctl restart pfm-api 
+              sudo systemctl restart pfm-api
               sudo systemctl start pfm-api
               sudo systemctl enable pfm-api'
 
