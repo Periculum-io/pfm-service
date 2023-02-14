@@ -100,8 +100,8 @@ def token_required(f):
       
       try:
         decoded = jwt.decode(token, key=None, options={"verify_signature":False})
-        if(len(decoded['clientId']) == 0 or len(decoded['tenant']) ==0):
-            return bad_request("Token does not have reqiured claims")
+        if(len(decoded['clientId']) == 0 or len(decoded['tenant']) == 0):
+            return bad_request("Token does not have reqiured claims - clientId and tenant")
 
       except:
         return bad_request("An error occured during authentication - Please try again later")
