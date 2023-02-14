@@ -27,9 +27,6 @@ pip3 install gunicorn
 pip3 install greenlet
 pip3 install eventlet
 pip3 install gevent
-echo "Create Keycloak Auth Json config file"
-echo -e "{\"web\": {\"issuer\": \"${keycloak_authority}\", \"auth_uri\": \"${keycloak_authority}/protocol/openid-connect/auth\", \"client_id\": \"pfm-flask-api\", \"client_secret\": \"${keycloak_clientsecret}\", \"redirect_uris\": [\"http://localhost:5000/*\"], \"userinfo_uri\": \"${keycloak_authority}/protocol/openid-connect/userinfo\", \"token_uri\": \"${keycloak_authority}/protocol/openid-connect/token\", \"token_introspection_uri\": \"${keycloak_authority}/protocol/openid-connect/token/introspect\"} }" | sudo tee client_secrets.json
-sudo chmod a+rwx client_secrets.json
 echo -e "Creating daemon service"
 cd /home/ubuntu
 cd ..
