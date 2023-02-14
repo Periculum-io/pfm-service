@@ -59,6 +59,8 @@ jobs:
             instance_dns=$(terraform output -raw instance_1_host_address)
             github_username=$(terraform output -raw github_username)
             github_personal_access_token=$(terraform output -raw github_personal_access_token)
+            keycloak_authority=$(terraform output -raw keycloak_authority)
+            keycloak_clientsecret=$(terraform output -raw keycloak_clientsecret)
             terraform output -raw ec2_ssh_private_key > pfm_private_key.pem
             chmod 400 pfm_private_key.pem
             ssh -i "pfm_private_key.pem" -o StrictHostKeyChecking=no ubuntu@$instance_dns bash -c '\

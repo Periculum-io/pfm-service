@@ -20,3 +20,11 @@ output "ec2_ssh_private_key" {
   value = module.pfm_flask_api.ec2_ssh_private_key
   sensitive = true
 }
+
+output "keycloak_authority"{
+  value = module.pfm_flask_api.keycloak_authority
+}
+
+output "keycloak_clientsecret" {
+  value = module.pfm_flask_api.keycloak_clientsecret
+}
