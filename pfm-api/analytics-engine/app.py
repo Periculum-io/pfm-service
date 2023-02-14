@@ -198,7 +198,7 @@ def process():
             summary['religious_transactions'] = religious[['date', 'amount', 'description']].to_dict(orient='records')
 
             
-            total_transactions = round(float(debit_transactions.groupby(pd.Grouper(key='date', freq="M")).sum()["amount"].sum()), 2)
+            total_transactions = round(float(data.groupby(pd.Grouper(key='date', freq="M")).sum()["amount"].sum()), 2)
             summary['count_of_total_transactions'] = len(data)
             summary['total_transactions'] = total_transactions
 
