@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import json
+import uuid
 from glob import escape
 from http.client import UNAUTHORIZED
 from flask import Flask, make_response
@@ -20,23 +21,6 @@ import boto3
 import csv
 from shared_logic.database import DatabaseClient
 from shared_logic.secretsmanager import SecretsManagerSecret
-
-app = Flask("pfm-api")
-app.debug = True
-
-# app.config.update({
-#     'SECRET_KEY': 'SECRET',
-#     'TESTING': True,
-#     'DEBUG': True,
-#     'OIDC_CLIENT_SECRETS': 'client_secrets.json', 
-#     'OIDC_OPENID_REALM': 'local',
-#     'OIDC_INTROSPECTION_AUTH_METHOD': 'bearer',
-#     'OIDC-SCOPES': ['openid'],
-#     'OIDC_INTROSPECTION_AUTH_METHOD': 'client_secret_post',
-#     'OIDC_TOKEN_TYPE_HINT': 'access_token'
-# })
-
-# oidc = OpenIDConnect(app)
 
 config = {
   'aws_iam_access_key': None,
@@ -77,6 +61,39 @@ database_client = DatabaseClient(
   password = secret['database_password']
 )
 
+client_secrets_dictionary = {
+  "web":{
+    "issuer": secret['keycloak_authority'],
+    "auth_uri": str(secret['keycloak_authority'])+"/protocol/openid-connect/auth",
+    "client_id": "pfm-flask-api",
+    "client_secret": secret['keycloak_clientsecret'], 
+    "userinfo_uri": str(secret['keycloak_authority'])+"/protocol/openid-connect/userinfo",
+    "token_uri": str(secret['keycloak_authority'])+"/protocol/openid-connect/token",
+    "token_introspection_uri": str(secret['keycloak_authority'])+"/protocol/openid-connect/token/introspect"
+  }
+}
+client_secrets = json.dumps(client_secrets_dictionary)
+
+# Writin secrets to a json file
+with open("../../../client_secrets.json", "w") as outfile:
+    outfile.write(client_secrets)
+
+# Flask App Setup
+app = Flask("pfm-api")
+app.debug = True
+app.config.update({
+    'SECRET_KEY': str(uuid.uuid4()),
+    'TESTING': True,
+    'DEBUG': True,
+    'OIDC_CLIENT_SECRETS': '../../../client_secrets.json',
+    'OIDC_OPENID_REALM': secret['keycloak_realm'],
+    'OIDC_INTROSPECTION_AUTH_METHOD': 'bearer',
+    'OIDC-SCOPES': ['openid'],
+    'OIDC_INTROSPECTION_AUTH_METHOD': 'client_secret_post',
+    'OIDC_TOKEN_TYPE_HINT': 'access_token'
+})
+
+oidc = OpenIDConnect(app)
 
 def bad_request(message):
     response = {
@@ -119,12 +136,12 @@ def health():
     )
 
 @app.route("/analytics", methods=["POST"])
-# @oidc.accept_token(require_token=True)
-# @token_required
+@oidc.accept_token(require_token=True)
+@token_required
 def process():
     
-    # token = str.replace(str(request.headers['Authorization']), 'Bearer ', '')
-    # decoded = jwt.decode(token, key=None, options={"verify_signature":False})
+    token = str.replace(str(request.headers['Authorization']), 'Bearer ', '')
+    decoded = jwt.decode(token, key=None, options={"verify_signature":False})
     
     # print("Decoded Tenant")
     # print(decoded['tenant'])

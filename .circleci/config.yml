@@ -58,9 +58,7 @@ jobs:
             cd ops/terraform/env/<< parameters.environment >>
             instance_dns=$(terraform output -raw instance_1_host_address)
             github_username=$(terraform output -raw github_username)
-            github_personal_access_token=$(terraform output -raw github_personal_access_token)
-            keycloak_authority=$(terraform output -raw keycloak_authority)
-            keycloak_clientsecret=$(terraform output -raw keycloak_clientsecret)
+            github_personal_access_token=$(terraform output -raw github_personal_access_token)             
             terraform output -raw ec2_ssh_private_key > pfm_private_key.pem
             chmod 400 pfm_private_key.pem
             ssh -i "pfm_private_key.pem" -o StrictHostKeyChecking=no ubuntu@$instance_dns bash -c '\
@@ -78,9 +76,7 @@ jobs:
               cd shared_logic
               pip3 install -e .
               cd ..
-              cd flask-api
-              echo -e "{\"web\": {\"issuer\": \"${keycloak_authority}\", \"auth_uri\": \"${keycloak_authority}/protocol/openid-connect/auth\", \"client_id\": \"pfm-flask-api\", \"client_secret\": \"${keycloak_clientsecret}\", \"redirect_uris\": [\"http://localhost:5000/*\"], \"userinfo_uri\": \"${keycloak_authority}/protocol/openid-connect/userinfo\", \"token_uri\": \"${keycloak_authority}/protocol/openid-connect/token\", \"token_introspection_uri\": \"${keycloak_authority}/protocol/openid-connect/token/introspect\"} }" | sudo tee client_secrets.json
-              sudo chmod a+rwx client_secrets.json
+              cd flask-api              
               pip install -r requirements.txt
               cat client_secrets.json
               sudo systemctl restart pfm-api
