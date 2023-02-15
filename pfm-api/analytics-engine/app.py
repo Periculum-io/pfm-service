@@ -1,7 +1,9 @@
 import numpy as np
 import pandas as pd
 import json
+# from flask_oidc  import OpenIDConnect
 from flask import Flask, jsonify, request
+from sympy import lowergamma
 from preprocessing import preprocessing_layer
 from helpers import compute_number_of_transacting_month
 from keywords import *
@@ -26,7 +28,7 @@ def process():
 
     # get data
     query = request.json
-    account_name = query['account_name']
+    account_name = query['account_name'].lower()
 
     df = pd.DataFrame(query['transactions'])
     data = df.copy()
