@@ -78,6 +78,11 @@ client_secrets = json.dumps(client_secrets_dictionary)
 with open("../../../client_secrets.json", "w") as outfile:
     outfile.write(client_secrets)
 
+print("PFM Config Settings!!")
+print(client_secrets)
+print(config)
+print(secret['keycloak_realm'])
+
 # Flask App Setup
 app = Flask("pfm-api")
 app.debug = True
@@ -120,8 +125,9 @@ def token_required(f):
         if(len(decoded['clientId']) == 0 or len(decoded['tenant']) == 0):
             return bad_request("Token does not have reqiured claims - clientId and tenant")
 
-      except:
-        return bad_request("An error occured during authentication - Please try again later")
+      except Exception as e: 
+        print(e)
+        return bad_request("An error occured during authentication - Please try again later: " + str(e))
       
       return f(*args, **kwargs)
 
