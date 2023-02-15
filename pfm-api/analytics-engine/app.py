@@ -28,7 +28,7 @@ def process():
 
     # get data
     query = request.json
-    account_name = query['account_name'].lower()
+    account_name = query['account_name']
 
     df = pd.DataFrame(query['transactions'])
     data = df.copy()
