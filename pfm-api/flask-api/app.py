@@ -121,7 +121,7 @@ def token_required(f):
          return jsonify({'message': 'a valid token is missing'})           
       
       try:
-        decoded = jwt.decode(token, key=None, options={"verify_signature":False})
+        decoded = jwt.decode(token, key=None, options={"verify_signature":False, "verify_aud": False})
         if(len(decoded['clientId']) == 0 or len(decoded['tenant']) == 0):
             return bad_request("Token does not have reqiured claims - clientId and tenant")
 
