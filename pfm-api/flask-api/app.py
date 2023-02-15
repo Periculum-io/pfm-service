@@ -24,19 +24,19 @@ from shared_logic.secretsmanager import SecretsManagerSecret
 app = Flask("pfm-api")
 app.debug = True
 
-app.config.update({
-    'SECRET_KEY': 'SECRET',
-    'TESTING': True,
-    'DEBUG': True,
-    'OIDC_CLIENT_SECRETS': 'client_secrets.json', 
-    'OIDC_OPENID_REALM': 'local',
-    'OIDC_INTROSPECTION_AUTH_METHOD': 'bearer',
-    'OIDC-SCOPES': ['openid'],
-    'OIDC_INTROSPECTION_AUTH_METHOD': 'client_secret_post',
-    'OIDC_TOKEN_TYPE_HINT': 'access_token'
-})
+# app.config.update({
+#     'SECRET_KEY': 'SECRET',
+#     'TESTING': True,
+#     'DEBUG': True,
+#     'OIDC_CLIENT_SECRETS': 'client_secrets.json', 
+#     'OIDC_OPENID_REALM': 'local',
+#     'OIDC_INTROSPECTION_AUTH_METHOD': 'bearer',
+#     'OIDC-SCOPES': ['openid'],
+#     'OIDC_INTROSPECTION_AUTH_METHOD': 'client_secret_post',
+#     'OIDC_TOKEN_TYPE_HINT': 'access_token'
+# })
 
-oidc = OpenIDConnect(app)
+# oidc = OpenIDConnect(app)
 
 config = {
   'aws_iam_access_key': None,
@@ -119,17 +119,17 @@ def health():
     )
 
 @app.route("/analytics", methods=["POST"])
-@oidc.accept_token(require_token=True)
-@token_required
+# @oidc.accept_token(require_token=True)
+# @token_required
 def process():
-
-    # get data
-    token = str.replace(str(request.headers['Authorization']), 'Bearer ', '')
-    decoded = jwt.decode(token, key=None, options={"verify_signature":False})
     
-    print("Decoded Tenant")
-    print(decoded['tenant'])
-
+    # token = str.replace(str(request.headers['Authorization']), 'Bearer ', '')
+    # decoded = jwt.decode(token, key=None, options={"verify_signature":False})
+    
+    # print("Decoded Tenant")
+    # print(decoded['tenant'])
+    
+    # get data
     query = request.json
     account_name = query['account_name']
 
