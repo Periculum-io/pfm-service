@@ -147,7 +147,7 @@ def health():
 def process():
     
     token = str.replace(str(request.headers['Authorization']), 'Bearer ', '')
-    decoded = jwt.decode(token, key=None, options={"verify_signature":False})
+    decoded = jwt.decode(token, key=None, options={"verify_signature":False, "verify_aud": False})
     
     # print("Decoded Tenant")
     # print(decoded['tenant'])
