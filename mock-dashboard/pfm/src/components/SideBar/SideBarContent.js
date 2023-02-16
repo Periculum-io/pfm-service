@@ -14,14 +14,14 @@ function SideBarContent() {
           <img src="/assets/icons/home-hashtag.svg" alt="" />
           <p>Categories</p>
         </NavLink>
-        <NavLink exact to={"/budgets"} className="sidebar-link-row">
+        {/* <NavLink exact to={"/budgets"} className="sidebar-link-row">
           <img src="/assets/icons/graph.svg" alt="" />
           <p>Budgets</p>
         </NavLink>
         <NavLink exact to={"/financial"} className="sidebar-link-row">
           <img src="/assets/icons/card.svg" alt="" />
           <p>Finance Goals</p>
-        </NavLink>
+        </NavLink> */}
       </div>
       <Link to={"/"} className="sidebar-link-logout sidebar-link-row">
         <img src="/assets/icons/logout.svg" alt="" />
