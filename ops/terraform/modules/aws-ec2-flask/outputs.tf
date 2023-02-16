@@ -20,13 +20,3 @@ output "ec2_ssh_private_key" {
   value = tls_private_key.genkey.private_key_pem
   sensitive = true
 }
-
-output "keycloak_authority"{
-  # pull from secret manager
-  value = local.template_file_vars.keycloak_authority
-}
-
-output "keycloak_clientsecret" {
-  value = local.template_file_vars.keycloak_clientsecret
-  sensitive = true
-}

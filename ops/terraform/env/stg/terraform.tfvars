@@ -45,7 +45,7 @@ pfm_admin_api_container_port            = 8001
 pfm_admin_api_container_host_port       = 8001
 pfm_admin_api_sensitive_secret_arn      = "arn:aws:secretsmanager:us-east-1:962374658537:secret:Insights/staging/sensitive-secrets-2xBY1q"
 pfm_admin_api_allowed_cors_origin       = "https://pfm.staging.periculum-models.link"
-pfm_admin_api_auth0_domain              = "https://periculum-insights-dev.us.auth0.com/"
+pfm_admin_api_auth0_authority           = "https://pfm.auth-periculum.com/realms/staging"
 pfm_admin_api_auth0_audience            = "https://api.staging.insights-periculum.com"
 
 # Flask Infrastructure 
@@ -58,7 +58,7 @@ ec2_ssh_private_key_secret_name         = "pfm/staging/ec2/key"
 ec2_ssh_public_key_secret_name          = "pfm/staging/ec2/key.pub"
 ec2_lb_log_prefix                       = "lb"
 ec2_lb_log_enabled                      = true
-ec2_keycloak_authority                  = "https://pfm.auth-periculum.com/realms/staging"
+ec2_target_domain_certificate           = "*.pfm.staging.periculum-models.link"
 
 rds_kms_key_alias_names_pfm             = ["pfm-rds-key", "pfm-rds-performance-key"]
 
@@ -75,7 +75,6 @@ rds_backup_window                       = "00:00-01:00"
 rds_maintenance_window                  = "Sat:00:00-Sat:06:00"
 rds_delete_backups                      = false
 rds_deletion_protection                 = true
-rds_skip_final_snapshot                 = false
 rds_cloudwatch_logs_exports             = ["postgresql", "upgrade"]
 rds_username                            = "masteruser"
 

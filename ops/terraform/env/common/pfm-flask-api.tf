@@ -16,8 +16,6 @@ module "pfm_flask_api" {
   ec2_ssh_private_key_secret_name         = var.ec2_ssh_private_key_secret_name
   ec2_ssh_public_key_secret_name          = var.ec2_ssh_public_key_secret_name
   ec2_target_domain_certificate           = var.ec2_target_domain_certificate
-  ec2_keycloak_authority                  = var.ec2_keycloak_authority
-  ec2_keycloak_clientsecret               = var.ec2_keycloak_clientsecret
 
   bucket_names                    = var.bucket_names
 

@@ -56,16 +56,6 @@ variable "ec2_ssh_public_key_secret_name" {
   type        = string
 }
 
-variable "ec2_keycloak_authority" {
-  description = "The keycloak authority"
-  type        = string
-}
-
-variable "ec2_keycloak_clientsecret" {
-  description = "Client Secret for Keycloak authentication"
-  type        = string
-}
-
 variable "ec2_target_domain_certificate" {
   description = "Domain certificate for Flask Api EC2 Instance"
   type        = string

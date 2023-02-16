@@ -78,11 +78,6 @@ client_secrets = json.dumps(client_secrets_dictionary)
 with open("../../../client_secrets.json", "w") as outfile:
     outfile.write(client_secrets)
 
-print("PFM Config Settings!!")
-print(client_secrets)
-print(config)
-print(secret['keycloak_realm'])
-
 # Flask App Setup
 app = Flask("pfm-api")
 app.debug = True
