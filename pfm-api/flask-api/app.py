@@ -87,7 +87,7 @@ print(secret['keycloak_realm'])
 app = Flask("pfm-api")
 app.debug = True
 app.config.update({
-    'SECRET_KEY': str(uuid.uuid4()),
+    'SECRET_KEY': secret['keycloak_clientsecret'],
     'TESTING': True,
     'DEBUG': True,
     'OIDC_CLIENT_SECRETS': '../../../client_secrets.json',
