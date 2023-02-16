@@ -90,7 +90,7 @@ workflows:
             branches:
               only:
                 - main
-          name: tf-plan
+          name: tf-plan-dev
           environment: dev
           context: circleci
       - tf-apply:
@@ -98,19 +98,54 @@ workflows:
             branches:
               only:
                 - main
-          name: tf-apply
+          name: tf-apply-dev
           environment: dev
           context: circleci
           requires:
-            - tf-plan
+            - tf-plan-dev
       - pull-latest-and-restart-pfm-flask-api:
           filters:
             branches:
               only:
                 - main
-          name: pull-latest-and-restart-pfm-flask-api
+          name: pull-latest-and-restart-pfm-flask-api-dev
           environment: dev
           context: circleci
           requires:
-            - tf-plan
-            - tf-apply
+            - tf-plan-dev
+            - tf-apply-dev
+      #
+      # TODO: Run tests to validate DEV env here
+      #
+      
+      - tf-plan:
+          filters:
+            branches:
+              only:
+                - main
+          name: tf-plan-staging
+          environment: stg
+          context: terraform
+          requires:
+            - tf-apply-dev
+      - tf-apply:
+          filters:
+            branches:
+              only:
+                - main
+          name: tf-apply-staging
+          environment: stg
+          context: terraform
+          requires:
+            - tf-plan-staging
+      - pull-latest-and-restart-pfm-flask-api:
+          filters:
+            branches:
+              only:
+                - main
+          name: pull-latest-and-restart-pfm-flask-api-staging
+          environment: stg
+          context: circleci
+          requires:
+            - tf-plan-staging
+            - tf-apply-staging
