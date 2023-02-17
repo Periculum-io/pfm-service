@@ -93,6 +93,10 @@ app.config.update({
     'OIDC_TOKEN_TYPE_HINT': 'access_token'
 })
 
+print("Config Settings...")
+print(client_secrets_dictionary)
+print(app.config)
+
 oidc = OpenIDConnect(app)
 
 def bad_request(message):
