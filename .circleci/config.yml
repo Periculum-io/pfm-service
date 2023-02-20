@@ -109,7 +109,6 @@ workflows:
           environment: dev
           context: circleci
           requires:
-            - tf-plan-dev
             - tf-apply-dev
       #
       # TODO: Run tests to validate DEV env here
@@ -144,7 +143,6 @@ workflows:
           environment: stg
           context: circleci
           requires:
-            - tf-plan-staging
             - tf-apply-staging
 
       #
@@ -190,5 +188,4 @@ workflows:
           environment: prod
           context: circleci
           requires:
-            - tf-plan-production
-            - deploy-prod-approval
+            - tf-apply-production
