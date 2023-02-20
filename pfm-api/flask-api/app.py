@@ -1,12 +1,14 @@
 import numpy as np
 import pandas as pd
 import json
-import uuid
+import csv
 from glob import escape
 from http.client import UNAUTHORIZED
 from flask import Flask, make_response
 from flask import jsonify
 from flask import request
+from database import DatabaseClient
+from secretsmanager import SecretsManagerSecret
 from helpers import salary_variables, other_income_variables
 from businesslogic import analyse_transctions
 
@@ -18,9 +20,6 @@ from flask_oidc  import OpenIDConnect
 
 # AWS
 import boto3
-import csv
-from shared_logic.database import DatabaseClient
-from shared_logic.secretsmanager import SecretsManagerSecret
 
 config = {
   'aws_iam_access_key': None,

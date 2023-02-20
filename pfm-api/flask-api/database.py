@@ -31,7 +31,7 @@ class DatabaseClient:
     """Log endpoint call to the db"""
     def save_endpoint_call(self, tenant, endpoint_key, response_status):
       """
-      :param client_key: The id of the client 
+      :param tenant: The id of the client 
       :param endpoint_key: The id of the endpoint call 
       :param response_status: response status from ml model
       """
@@ -40,17 +40,19 @@ class DatabaseClient:
         dt = datetime.datetime.utcnow()
         date_created = dt.strftime('%Y-%m-%d %H:%M:%S')
 
+        print("In the database client...")
+
         # Get client_key from tenant name
         client_key = 2
 
         self.db.run(
           """
-          INSERT INTO Pfm.EndpointCallHistory
+          INSERT INTO Pfm.endpointcallhistory
           (client_key, endpoint_key, response_status, date_created)
           VALUES (%(client_key)s, %(endpoint_key)s, %(response_status)s);
           """,
           {
-            'job_id': client_key,
+            'client_key': client_key,
             'endpoint_key': endpoint_key,
             'response_status': response_status, 
             'date_created': date_created
