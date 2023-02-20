@@ -73,9 +73,6 @@ jobs:
               git pull
               cd pfm-api
               pip3 install -e .
-              cd shared_logic
-              pip3 install -e .
-              cd ..
               cd flask-api
               pip install -r requirements.txt
               sudo systemctl restart pfm-api
@@ -149,3 +146,49 @@ workflows:
           requires:
             - tf-plan-staging
             - tf-apply-staging
+
+      #
+      # TODO: Run tests to validate STAGING env here
+      #
+
+      - tf-plan:
+          filters:
+            branches:
+              only:
+                - main
+          name: tf-plan-production
+          environment: prod
+          context: circleci
+          requires:
+            - tf-apply-staging
+      - hold:
+          filters:
+            branches:
+              only:
+                - main
+          name: deploy-prod-approval
+          type: approval
+          requires:
+            - tf-plan-production
+      - tf-apply:
+          filters:
+            branches:
+              only:
+                - main
+          name: tf-apply-production
+          environment: prod
+          context: circleci
+          requires:
+            - tf-plan-production
+            - deploy-prod-approval
+      - pull-latest-and-restart-pfm-flask-api:
+          filters:
+            branches:
+              only:
+                - main
+          name: pull-latest-and-restart-pfm-flask-api-prod
+          environment: prod
+          context: circleci
+          requires:
+            - tf-plan-production
+            - deploy-prod-approval
