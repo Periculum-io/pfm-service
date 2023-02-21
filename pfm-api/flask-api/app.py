@@ -1,3 +1,4 @@
+import traceback
 import numpy as np
 import pandas as pd
 import json
@@ -94,7 +95,6 @@ app.config.update({
 
 print("Config Settings...")
 print(client_secrets_dictionary)
-print(app.config)
 
 oidc = OpenIDConnect(app)
 
@@ -142,27 +142,34 @@ def health():
 @app.route("/analytics", methods=["POST"])
 @oidc.accept_token(require_token=True)
 @token_required
-def process():
+def process(): 
     
-    token = str.replace(str(request.headers['Authorization']), 'Bearer ', '')
-    decoded = jwt.decode(token, key=None, options={"verify_signature":False, "verify_aud": False})
-    
-    # print("Decoded Tenant")
-    # print(decoded['tenant'])
-    
-    # get data
-    query = request.json
-    account_name = query['account_name'].lower()
+    try:
+      token = str.replace(str(request.headers['Authorization']), 'Bearer ', '')
+      decoded = jwt.decode(token, key=None, options={"verify_signature":False, "verify_aud": False})
+      tenant = decoded['tenant']
 
-    df = pd.DataFrame(query['transactions'])
-    data = df.copy()
+      # get data
+      query = request.json
+      account_name = query['account_name'].lower()
 
-    output = analyse_transctions(data, salary_variables=salary_variables, other_income_variables=other_income_variables, account_name=account_name)
+      df = pd.DataFrame(query['transactions'])
+      data = df.copy()
 
-    # Log DB Call
-    #database_client.save_endpoint_call(decoded['tenant'], 1, 'SUCCESS')
+      output = analyse_transctions(data, salary_variables=salary_variables, other_income_variables=other_income_variables, account_name=account_name)
+      
+      # Log DB Call
+      client = database_client.get_client_by_tenant_name(tenant)
+      if client is None:
+        return bad_request("Invalid Tenant")
+      else:
+        database_client.save_endpoint_call(client['client_key'], 1, output['status'])
 
-    return output
+      return output
+      
+    except:
+        traceback.print_exc()
+        raise    
 
 if __name__ == "__main__":
     print("starting pfm flask app")
