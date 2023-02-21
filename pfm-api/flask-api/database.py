@@ -28,10 +28,45 @@ class DatabaseClient:
           readonly=False
         )
         
+    """Gets Client information by tenant name"""
+    def get_client_by_tenant_name(self, tenant):
+        """
+        :param tenant: Tenant name
+        """
+        try:
+          print("Tenant>>>>")
+          print(tenant)
+
+          record = self.db.one("""
+            SELECT
+              key as client_key,
+              name,
+              api_id,
+              is_active,
+              date_created
+            FROM Pfm.Client
+            WHERE name=%(name)s
+              AND is_active=true;""", { 'name': tenant })
+
+          if record is None:
+            raise Exception('CLIENT')          
+          
+          return {
+            'client_key': record.client_key,
+            'name': record.name,
+            'api_id': record.api_id,
+            'is_active': record.is_active,
+            'date_created': record.date_created
+          }
+        except:
+          traceback.print_exc()           
+          raise
+
+
     """Log endpoint call to the db"""
-    def save_endpoint_call(self, tenant, endpoint_key, response_status):
+    def save_endpoint_call(self, client_key, endpoint_key, response_status):
       """
-      :param tenant: The id of the client 
+      :param client_key: The client_key of the client 
       :param endpoint_key: The id of the endpoint call 
       :param response_status: response status from ml model
       """
@@ -39,25 +74,21 @@ class DatabaseClient:
       try:
         dt = datetime.datetime.utcnow()
         date_created = dt.strftime('%Y-%m-%d %H:%M:%S')
-
-        print("In the database client...")
-
-        # Get client_key from tenant name
-        client_key = 2
-
+        
         self.db.run(
           """
           INSERT INTO Pfm.endpointcallhistory
-          (client_key, endpoint_key, response_status, date_created)
-          VALUES (%(client_key)s, %(endpoint_key)s, %(response_status)s);
+          (client_key, endpoint_key, price, response_status, date_created)
+          VALUES (%(client_key)s, %(endpoint_key)s, 1, %(response_status)s, %(date_created)s);
           """,
           {
             'client_key': client_key,
             'endpoint_key': endpoint_key,
-            'response_status': response_status, 
+            'response_status': response_status,
             'date_created': date_created
           }
         )
+      
       except:
-        traceback.print_exc()         
+        traceback.print_exc()
         raise

@@ -144,7 +144,6 @@ workflows:
           context: circleci
           requires:
             - tf-apply-staging
-
       #
       # TODO: Run tests to validate STAGING env here
       #
