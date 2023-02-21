@@ -64,7 +64,6 @@ variable "sensitive_secrets_arn" {
 variable "container_image" {
   description = "Image to be deployed in task"
   type = string
-  default = "962374658537.dkr.ecr.us-east-1.amazonaws.com/insights-frontend"
 }
 
 variable "container_tag" {

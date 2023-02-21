@@ -1,12 +1,15 @@
+import traceback
 import numpy as np
 import pandas as pd
 import json
-import uuid
+import csv
 from glob import escape
 from http.client import UNAUTHORIZED
 from flask import Flask, make_response
 from flask import jsonify
 from flask import request
+from database import DatabaseClient
+from secretsmanager import SecretsManagerSecret
 from helpers import salary_variables, other_income_variables
 from businesslogic import analyse_transctions
 
@@ -18,9 +21,6 @@ from flask_oidc  import OpenIDConnect
 
 # AWS
 import boto3
-import csv
-from shared_logic.database import DatabaseClient
-from shared_logic.secretsmanager import SecretsManagerSecret
 
 config = {
   'aws_iam_access_key': None,
@@ -78,16 +78,11 @@ client_secrets = json.dumps(client_secrets_dictionary)
 with open("../../../client_secrets.json", "w") as outfile:
     outfile.write(client_secrets)
 
-print("PFM Config Settings!!")
-print(client_secrets)
-print(config)
-print(secret['keycloak_realm'])
-
 # Flask App Setup
 app = Flask("pfm-api")
 app.debug = True
 app.config.update({
-    'SECRET_KEY': str(uuid.uuid4()),
+    'SECRET_KEY': secret['keycloak_clientsecret'],
     'TESTING': True,
     'DEBUG': True,
     'OIDC_CLIENT_SECRETS': '../../../client_secrets.json',
@@ -97,6 +92,9 @@ app.config.update({
     'OIDC_INTROSPECTION_AUTH_METHOD': 'client_secret_post',
     'OIDC_TOKEN_TYPE_HINT': 'access_token'
 })
+
+print("Config Settings...")
+print(client_secrets_dictionary)
 
 oidc = OpenIDConnect(app)
 
@@ -144,29 +142,29 @@ def health():
 @app.route("/analytics", methods=["POST"])
 @oidc.accept_token(require_token=True)
 @token_required
-def process():
-    
-    token = str.replace(str(request.headers['Authorization']), 'Bearer ', '')
-    decoded = jwt.decode(token, key=None, options={"verify_signature":False})
-    
-    # print("Decoded Tenant")
-    # print(decoded['tenant'])
-    
-    # get data
-    query = request.json
-    account_name = query['account_name'].lower()
+def process(): 
 
-    
+      # get data
+      query = request.json
+      account_name = query['account_name'].lower()
 
-    df = pd.DataFrame(query['transactions'])
-    data = df.copy()
+      df = pd.DataFrame(query['transactions'])
+      data = df.copy()
 
-    output = analyse_transctions(data, salary_variables=salary_variables, other_income_variables=other_income_variables, account_name=account_name)
+      output = analyse_transctions(data, salary_variables=salary_variables, other_income_variables=other_income_variables, account_name=account_name)
+      
+      # Log DB Call
+      client = database_client.get_client_by_tenant_name(tenant)
+      if client is None:
+        return bad_request("Invalid Tenant")
+      else:
+        database_client.save_endpoint_call(client['client_key'], 1, output['status'])
 
-    # Log DB Call
-    #database_client.save_endpoint_call(decoded['tenant'], 1, 'SUCCESS')
-
-    return output
+      return output
+      
+    except:
+        traceback.print_exc()
+        raise    
 
 if __name__ == "__main__":
     print("starting pfm flask app")

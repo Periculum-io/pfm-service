@@ -177,7 +177,6 @@ def analyse_transctions(data, salary_variables, other_income_variables, account_
         summary["religious"] = round(float(religious.groupby(pd.Grouper(key='date', freq="M")).sum()["amount"].sum()), 2)
         summary['religious_transactions'] = religious[['date', 'amount', 'description']].to_dict(orient='records')
 
-        
         total_transactions = round(float(data.groupby(pd.Grouper(key='date', freq="M")).sum()["amount"].sum()), 2)
         summary['count_of_total_transactions'] = len(data)
         summary['total_transactions'] = total_transactions

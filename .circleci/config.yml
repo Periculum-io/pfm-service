@@ -73,9 +73,6 @@ jobs:
               git pull
               cd pfm-api
               pip3 install -e .
-              cd shared_logic
-              pip3 install -e .
-              cd ..
               cd flask-api
               pip install -r requirements.txt
               sudo systemctl restart pfm-api
@@ -90,7 +87,7 @@ workflows:
             branches:
               only:
                 - main
-          name: tf-plan
+          name: tf-plan-dev
           environment: dev
           context: circleci
       - tf-apply:
@@ -98,19 +95,96 @@ workflows:
             branches:
               only:
                 - main
-          name: tf-apply
+          name: tf-apply-dev
           environment: dev
           context: circleci
           requires:
-            - tf-plan
+            - tf-plan-dev
       - pull-latest-and-restart-pfm-flask-api:
           filters:
             branches:
               only:
                 - main
-          name: pull-latest-and-restart-pfm-flask-api
+          name: pull-latest-and-restart-pfm-flask-api-dev
           environment: dev
           context: circleci
           requires:
-            - tf-plan
-            - tf-apply
+            - tf-apply-dev
+      #
+      # TODO: Run tests to validate DEV env here
+      #
+      
+      - tf-plan:
+          filters:
+            branches:
+              only:
+                - main
+          name: tf-plan-staging
+          environment: stg
+          context: terraform
+          requires:
+            - tf-apply-dev
+      - tf-apply:
+          filters:
+            branches:
+              only:
+                - main
+          name: tf-apply-staging
+          environment: stg
+          context: terraform
+          requires:
+            - tf-plan-staging
+      - pull-latest-and-restart-pfm-flask-api:
+          filters:
+            branches:
+              only:
+                - main
+          name: pull-latest-and-restart-pfm-flask-api-staging
+          environment: stg
+          context: circleci
+          requires:
+            - tf-apply-staging
+      #
+      # TODO: Run tests to validate STAGING env here
+      #
+
+      - tf-plan:
+          filters:
+            branches:
+              only:
+                - main
+          name: tf-plan-production
+          environment: prod
+          context: circleci
+          requires:
+            - tf-apply-staging
+      - hold:
+          filters:
+            branches:
+              only:
+                - main
+          name: deploy-prod-approval
+          type: approval
+          requires:
+            - tf-plan-production
+      - tf-apply:
+          filters:
+            branches:
+              only:
+                - main
+          name: tf-apply-production
+          environment: prod
+          context: circleci
+          requires:
+            - tf-plan-production
+            - deploy-prod-approval
+      - pull-latest-and-restart-pfm-flask-api:
+          filters:
+            branches:
+              only:
+                - main
+          name: pull-latest-and-restart-pfm-flask-api-prod
+          environment: prod
+          context: circleci
+          requires:
+            - tf-apply-production

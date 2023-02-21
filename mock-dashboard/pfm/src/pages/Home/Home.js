@@ -277,7 +277,7 @@ function Home() {
         </div>
         <div className="card top-spending">
           <div className="header-row">
-            <h2 className="text-dark">Top Beneficiaries</h2>
+            <h2 className="text-dark">Top Credits</h2>
             <Link to={""} style={{ pointerEvents: "none" }}>See all</Link>
           </div>
           <List listClass="list-col" listItemClass="list-row-two-colored list-top-bottom-border" listContent={TopBeneficiaries} />

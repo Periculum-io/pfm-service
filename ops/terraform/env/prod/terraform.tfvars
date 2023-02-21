@@ -46,7 +46,7 @@ pfm_admin_api_container_port            = 8001
 pfm_admin_api_container_host_port       = 8001
 pfm_admin_api_sensitive_secret_arn      = "arn:aws:secretsmanager:us-east-1:962374658537:secret:Insights/dev/sensitive-secrets-wVaGKE"
 pfm_admin_api_allowed_cors_origin       = "https://pfm.periculum-models.link"
-pfm_admin_api_auth0_domain              = "https://pfm.auth-periculum.com/realms/production/"
+pfm_admin_api_auth0_authority           = "https://pfm.auth-periculum.com/realms/production/"
 pfm_admin_api_auth0_audience            = "pfm-admin-api"
 
 # Flask Infrastructure 
@@ -58,7 +58,7 @@ ec2_ssh_private_key_secret_name         = "pfm/prod/ec2/key"
 ec2_ssh_public_key_secret_name          = "pfm/prod/ec2/key.pub"
 ec2_lb_log_prefix                       = "lb"
 ec2_lb_log_enabled                      = true
-ec2_keycloak_authority                  = "https://pfm.auth-periculum.com/realms/production"
+ec2_target_domain_certificate           = "*.pfm.periculum-models.link"
 
 rds_kms_key_alias_names_pfm             = ["pfm-rds-key", "pfm-rds-performance-key"]
 pfm_aws_db_subnet_group                 = "prod-insights-private"
@@ -76,7 +76,6 @@ rds_delete_backups                      = false
 rds_deletion_protection                 = true
 rds_skip_final_snapshot                 = false
 rds_cloudwatch_logs_exports             = ["postgresql", "upgrade"]
-rds_performance_insights_enabled        = true
 rds_username                            = "masteruser"
 
 ec2_lb_hosted_zone_domain               = "periculum-models.link"

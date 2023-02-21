@@ -1029,12 +1029,12 @@ export const Subscriptions = [
     "amount": 4500
   },
   {
-    "iconLink": "https://uploads-ssl.webflow.com/63234398452c1a657e1a1678/63c04966283c5e4da76d2ed6_canva.png",
-    "name": "Canva",
-    "date": "2022-01-03",
-    "category": "Tools",
-    "categoryColor": "#00770C",
-    "amount": 4500
+    "iconLink": "https://uploads-ssl.webflow.com/63234398452c1a657e1a1678/63c0496651d7f44d066dfb5f_goTV.png",
+    "name": "GoTV",
+    "date": "2022-01-02",
+    "category": "Media and Entertainment",
+    "categoryColor": "#307DF3",
+    "amount": 4000
   }
 ]
 
@@ -1061,22 +1061,6 @@ export const SubscriptionsAll = [
     "date": "2022-01-02",
     "category": "Media and Entertainment",
     "categoryColor": "#307DF3",
-    "amount": 4500
-  },
-  {
-    "iconLink": "https://uploads-ssl.webflow.com/63234398452c1a657e1a1678/63c04966283c5e4da76d2ed6_canva.png",
-    "name": "Canva",
-    "date": "2022-01-03",
-    "category": "Tools",
-    "categoryColor": "#00770C",
-    "amount": 4500
-  },
-  {
-    "iconLink": "https://uploads-ssl.webflow.com/63234398452c1a657e1a1678/63c04966283c5e4da76d2ed6_canva.png",
-    "name": "Canva",
-    "date": "2022-01-03",
-    "category": "Tools",
-    "categoryColor": "#00770C",
     "amount": 4500
   }
 ]
