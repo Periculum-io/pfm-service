@@ -10,14 +10,15 @@ locals {
     github_username               = local.github_info.username
     github_personal_access_token  = local.github_info.personal_access_token
     secret_name                   = aws_secretsmanager_secret.pfm_admin_api_secret.name
-    server_domain                 = var.ec2_lb_domain_name
+    server_domain                 = var.ec2_target_domain_certificate
+    keycloak_authority            = var.ec2_keycloak_authority
+    keycloak_clientsecret         = var.ec2_keycloak_clientsecret
   }
   pfm_api_credentials_secret = {
     s3_bucket_name              = "${local.environment}-${var.bucket_names[0]}"
     database_connection_string  = aws_db_instance.db_instance.address
     database_username           = local.rds_secret_string_pfm_integration.username
-    database_password           = local.rds_secret_string_pfm_integration.password
-    ec2_keycloak_authority      = var.ec2_keycloak_authority
+    database_password           = local.rds_secret_string_pfm_integration.password    
   }
   rds_secret_string_pfm_integration = {
     username = var.rds_username

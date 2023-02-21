@@ -78,7 +78,7 @@ jobs:
               cd ..
               cd flask-api
               pip install -r requirements.txt
-              sudo systemctl restart pfm-api 
+              sudo systemctl restart pfm-api
               sudo systemctl start pfm-api
               sudo systemctl enable pfm-api'
 
