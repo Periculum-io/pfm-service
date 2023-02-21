@@ -109,7 +109,7 @@ workflows:
           environment: dev
           context: circleci
           requires:
-            - tf-apply-apply
+            - tf-apply-dev
       #
       # TODO: Run tests to validate DEV env here
       #
