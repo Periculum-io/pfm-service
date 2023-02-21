@@ -143,11 +143,6 @@ def health():
 @oidc.accept_token(require_token=True)
 @token_required
 def process(): 
-    
-    try:
-      token = str.replace(str(request.headers['Authorization']), 'Bearer ', '')
-      decoded = jwt.decode(token, key=None, options={"verify_signature":False, "verify_aud": False})
-      tenant = decoded['tenant']
 
       # get data
       query = request.json
