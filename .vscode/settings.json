@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./pfm-api/flask-api"
+    ]
+}

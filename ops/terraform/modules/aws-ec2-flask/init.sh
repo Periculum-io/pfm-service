@@ -1,5 +1,5 @@
 #!/bin/bash
-echo -e "Starting Setup Script"
+echo -e "Starting Setup Script-v1"
 cd /home/ubuntu
 sudo apt-get update
 sudo apt update && sudo apt upgrade -y
@@ -18,9 +18,6 @@ cd periculum-pfm
 cd pfm-api
 echo -e "Need to Install Local Modules"
 pip3 install -e .
-# cd shared_logic
-# pip3 install -e .
-# cd ..
 cd flask-api
 pip3 install -r requirements.txt
 pip3 install gunicorn
