@@ -144,6 +144,7 @@ def health():
 @token_required
 def process(): 
 
+    try:
       # get data
       query = request.json
       account_name = query['account_name'].lower()
@@ -161,7 +162,7 @@ def process():
         database_client.save_endpoint_call(client['client_key'], 1, output['status'])
 
       return output
-      
+
     except:
         traceback.print_exc()
         raise    
