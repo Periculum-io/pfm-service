@@ -165,7 +165,7 @@ def process():
 
     except:
         traceback.print_exc()
-        raise    
+        raise
 
 if __name__ == "__main__":
     print("starting pfm flask app")
