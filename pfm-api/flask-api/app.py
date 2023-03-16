@@ -155,11 +155,11 @@ def process():
       output = analyse_transctions(data, salary_variables=salary_variables, other_income_variables=other_income_variables, account_name=account_name)
       
       # Log DB Call
-      client = database_client.get_client_by_tenant_name(tenant)
-      if client is None:
-        return bad_request("Invalid Tenant")
-      else:
-        database_client.save_endpoint_call(client['client_key'], 1, output['status'])
+      # client = database_client.get_client_by_tenant_name(tenant)
+      # if client is None:
+      #   return bad_request("Invalid Tenant")
+      # else:
+      #   database_client.save_endpoint_call(client['client_key'], 1, output['status'])
 
       return output
 
