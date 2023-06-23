@@ -2,8 +2,7 @@ locals {
   dns_zone = "periculum-models.link"
   certificate_domain_names = [
     "*.pfm.periculum-models.link",
-    "*.pfm.dev.periculum-models.link",
-    "*.pfm.staging.periculum-models.link"
+    "*.pfm.dev.periculum-models.link"
     ]
 }
 
