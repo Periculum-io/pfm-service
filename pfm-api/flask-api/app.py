@@ -136,7 +136,7 @@ def token_required(f):
 def health():
     return jsonify(
       application='Prod Periculum PFM Flask API',
-      version='1.0.0'
+      version='1.1.0'
     )
 
 @app.route("/analytics", methods=["POST"])
