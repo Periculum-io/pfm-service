@@ -31,6 +31,12 @@ resource "aws_db_parameter_group" "db_parameter_group" {
     name  = "log_connections"
     value = "1"
   }
+
+  parameter {
+    name  = "shared_preload_libraries"
+    value = "pglogical"
+    apply_method = "pending-reboot"
+  }
 }
 
 resource "aws_security_group" "security_group_rds" {
@@ -87,7 +93,7 @@ resource "aws_db_instance" "db_instance" {
   backup_retention_period = var.rds_backup_retention_period
 
   engine               = "postgres"
-  engine_version       = "13.7"
+  engine_version       = "13.10"
   instance_class       = var.rds_instance_class
   multi_az             = var.rds_multi_az_enabled
   availability_zone    = var.rds_multi_az_enabled ? null : var.rds_availability_zone
