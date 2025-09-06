@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/pfm-service/static/css/main.cfd44552.css",
+    "main.js": "/pfm-service/static/js/main.350976d6.js",
+    "index.html": "/pfm-service/index.html",
+    "main.cfd44552.css.map": "/pfm-service/static/css/main.cfd44552.css.map",
+    "main.350976d6.js.map": "/pfm-service/static/js/main.350976d6.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.cfd44552.css",
+    "static/js/main.350976d6.js"
+  ]
+}
