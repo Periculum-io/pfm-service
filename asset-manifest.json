@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/pfm-service/static/css/main.cfd44552.css",
-    "main.js": "/pfm-service/static/js/main.2da15c31.js",
+    "main.js": "/pfm-service/static/js/main.177276ad.js",
     "index.html": "/pfm-service/index.html",
     "main.cfd44552.css.map": "/pfm-service/static/css/main.cfd44552.css.map",
-    "main.2da15c31.js.map": "/pfm-service/static/js/main.2da15c31.js.map"
+    "main.177276ad.js.map": "/pfm-service/static/js/main.177276ad.js.map"
   },
   "entrypoints": [
     "static/css/main.cfd44552.css",
-    "static/js/main.2da15c31.js"
+    "static/js/main.177276ad.js"
   ]
 }
