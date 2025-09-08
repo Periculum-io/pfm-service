@@ -7,7 +7,7 @@ import Financial from '../Financial/Financial';
 
 function App() {
   return (
-    <Router>
+    <Router basename='/pfm-service'>
       <Routes>
         <Route path="/" element={
           <div className="parent-body">
