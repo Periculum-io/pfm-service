@@ -13,7 +13,7 @@ function CategoryTransactions(props) {
       id: 'icon',
       Cell: data => {
         return (
-          <img className="category-transaction-icon" src="/assets/icons/arrow-down-solid-red.svg" alt="" />
+          <img className="category-transaction-icon" src={`${process.env.PUBLIC_URL}/assets/icons/arrow-down-solid-red.svg`}  alt="" />
         );
       },
       disableSortBy: true,
@@ -47,7 +47,7 @@ function CategoryTransactions(props) {
   return (
     <div className="modal-dialog category-transactions-dialog">
       <div className="header-row-single-right">
-        <img src="/assets/icons/close-square.svg" alt="Close" onClick={props.close} />
+        <img src={`${process.env.PUBLIC_URL}/assets/icons/close-square.svg`}  alt="Close" onClick={props.close} />
       </div>
       <CategoryCard category={category} />
       <h3 className="text-medium-bold text-dark">Transactions</h3>

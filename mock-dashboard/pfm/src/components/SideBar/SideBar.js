@@ -22,8 +22,8 @@ function SideBar() {
       <div className="burger-container">
         <button onClick={() => setBurger(!burger)} className="burger-button">{
           burger === false 
-          ? <img src={'/assets/icons/open-square.svg'} alt="open" className="burger-icon" /> 
-          : <img src={'/assets/icons/close-square.svg'} alt="close" className="burger-icon" />
+          ? <img src={`${process.env.PUBLIC_URL}/assets/icons/open-square.svg`} alt="open" className="burger-icon" /> 
+          : <img src={`${process.env.PUBLIC_URL}/assets/icons/close-square.svg`}  alt="close" className="burger-icon" />
         }</button>
         {burger === true &&
           <div className="sidebar-burger">

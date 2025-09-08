@@ -46,7 +46,7 @@ function Financial() {
   };
 
   const backButton = <button className="button-back" onClick={() => setView(FinancialViews.INITIAL)}>
-    <img src="/assets/icons/arrow-left.svg" alt="" />
+    <img src={`${process.env.PUBLIC_URL}/assets/icons/arrow-left.svg`}  alt="" />
     Back
   </button>
 
@@ -63,7 +63,7 @@ function Financial() {
       id: 'icon',
       Cell: data => {
         return (
-          <img className="financial-transaction-icon" src="/assets/icons/arrow-up-solid-green.svg" alt="" />
+          <img className="financial-transaction-icon" src={`${process.env.PUBLIC_URL}/assets/icons/arrow-up-solid-green.svg`}  alt="" />
         );
       },
       disableSortBy: true,

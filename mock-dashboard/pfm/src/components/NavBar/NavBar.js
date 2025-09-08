@@ -20,9 +20,9 @@ function NavBar(props) {
       <div className="navbar-main">
         <h1 className="navbar-greeting">{props.header}</h1>
         <div className="navbar-icons-container">
-          <img src="/assets/icons/notification.svg" alt="" className="navbar-notification" 
+          <img src={`${process.env.PUBLIC_URL}/assets/icons/notification.svg`} alt="" className="navbar-notification" 
             onClick={() => setIsNotificationsOpen(!isNotificationsOpen)} />
-          <img src="/assets/images/loggedIn.png" alt="" />
+          <img src={`${process.env.PUBLIC_URL}/assets/images/loggedIn.png`}  alt="" />
           {notification}
         </div>
       </div>

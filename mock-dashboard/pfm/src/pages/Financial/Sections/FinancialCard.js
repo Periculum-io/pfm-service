@@ -14,7 +14,7 @@ function FinancialCard(props) {
 
   const menuContainer = !Utils.isFieldEmpty(props.parentCallback)
     ? <div className="financial-card-menu-container" ref={ref}>
-        <img src="/assets/icons/menu.svg" alt="" onClick={() => setIsMenuOpen(!isMenuOpen)} />
+        <img src={`${process.env.PUBLIC_URL}/assets/icons/menu.svg`}  alt="" onClick={() => setIsMenuOpen(!isMenuOpen)} />
         {isMenuOpen &&
           <div className="financial-card-menu" onClick={() => handleMenuClick()}>
             View Transactions

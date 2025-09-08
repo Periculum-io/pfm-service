@@ -56,8 +56,8 @@ function Dropdown(props) {
       <div className={"dropdown-select-container " + props.selectClass} onClick={() => setIsOpen(!isOpen)}>
         <p>{dropdownSelection.label}</p>
         {isOpen 
-          ? <img src="/assets/icons/arrow-up-dark.svg" alt="" />
-          : <img src="/assets/icons/arrow-down-dark.svg" alt="" />
+          ? <img src={`${process.env.PUBLIC_URL}/assets/icons/arrow-up-dark.svg`}  alt="" />
+          : <img src={`${process.env.PUBLIC_URL}/assets/icons/arrow-down-dark.svg`}  alt="" />
         }
       </div>
       {isOpen &&

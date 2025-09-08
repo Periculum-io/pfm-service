@@ -16,7 +16,7 @@ function SpendingCategoriesContent(props) {
       accessor: 'iconLink',
       Cell: data => {
         return (
-          <div className="category-icon"><img src={data.row.original.iconLink} alt="" /></div>
+          <div className="category-icon"><img src={`${process.env.PUBLIC_URL}/${data.row.original.iconLink}`}  alt="" /></div>
         );
       },
       disableSortBy: true,
@@ -50,15 +50,15 @@ function SpendingCategoriesContent(props) {
       Header: ({ getToggleAllRowsExpandedProps, isAllRowsExpanded }) => (
         <span {...getToggleAllRowsExpandedProps()}>
           {isAllRowsExpanded 
-            ? <img src="/assets/icons/arrow-down-outline.svg" alt="" /> 
-            : <img src="/assets/icons/arrow-right-outline.svg" alt="" />}
+            ? <img src={`${process.env.PUBLIC_URL}/assets/icons/arrow-down-outline.svg`}  alt="" /> 
+            : <img src={`${process.env.PUBLIC_URL}/assets/icons/arrow-right-outline.svg`}  alt="" />}
         </span>
       ),
       Cell: ({ row }) => (
         <span {...row.getToggleRowExpandedProps()}>
           {row.isExpanded 
-            ? <img src="/assets/icons/arrow-down-outline.svg" alt="" /> 
-            : <img src="/assets/icons/arrow-right-outline.svg" alt="" />}
+            ? <img src={`${process.env.PUBLIC_URL}/assets/icons/arrow-down-outline.svg`} alt="" /> 
+            : <img src={`${process.env.PUBLIC_URL}/assets/icons/arrow-right-outline.svg`}  alt="" />}
         </span>
       )
     }]
