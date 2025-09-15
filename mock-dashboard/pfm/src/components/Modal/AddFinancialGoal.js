@@ -17,7 +17,7 @@ function AddFinancialGoal(props) {
   const watchSetReminder = watch("setReminder", false);
 
   const backButton = <button className="button-back" onClick={() => setView(AddFinancialGoalViews.INITIAL)}>
-    <img src="/assets/icons/arrow-left.svg" alt="" />
+    <img src={`${process.env.PUBLIC_URL}/assets/icons/arrow-left.svg`} alt="" />
     Back
   </button>
 
@@ -33,7 +33,7 @@ function AddFinancialGoal(props) {
     content = <>
       <div className="header-row">
         <h2 className="text-medium-bold text-light">Build wealth and discipline</h2>
-        <img src="/assets/icons/close-square.svg" alt="Close" onClick={props.close} />
+        <img src={`${process.env.PUBLIC_URL}/assets/icons/close-square.svg`} alt="Close" onClick={props.close} />
       </div>
       <div>
         <h4>What's your goal?</h4>
@@ -58,7 +58,7 @@ function AddFinancialGoal(props) {
       {backButton}
       <div className="header-row">
         <h2 className="text-medium-bold text-detail">Target savings</h2>
-        <img src="/assets/icons/close-square.svg" alt="Close" onClick={props.close} />
+        <img src={`${process.env.PUBLIC_URL}/assets/icons/close-square.svg`} alt="Close" onClick={props.close} />
       </div>
       <form className="target-form scrollbar" onSubmit={handleSubmit(onSubmit)}>
         <div className='input-with-label-container goal-name'>
@@ -142,7 +142,7 @@ function AddFinancialGoal(props) {
       {backButton}
       <div className="header-row">
         <h2 className="text-medium-bold text-detail">Target savings</h2>
-        <img src="/assets/icons/close-square.svg" alt="Close" onClick={props.close} />
+        <img src={`${process.env.PUBLIC_URL}/assets/icons/close-square.svg`} alt="Close" onClick={props.close} />
       </div>
       <form className="target-form scrollbar" onSubmit={handleSubmitSavings(onSubmitSavings)}>
         <div className='input-with-label-container'>
@@ -191,7 +191,7 @@ function AddFinancialGoal(props) {
       {backButton}
       <div className="header-row">
         <h2 className="text-medium-bold text-detail">Debt repayment</h2>
-        <img src="/assets/icons/close-square.svg" alt="Close" onClick={props.close} />
+        <img src={`${process.env.PUBLIC_URL}/assets/icons/close-square.svg`} alt="Close" onClick={props.close} />
       </div>
       <form className="target-form scrollbar" onSubmit={handleSubmitSavings(onSubmitSavings)}>
         <div className='input-with-label-container'>

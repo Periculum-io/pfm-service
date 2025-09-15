@@ -21,7 +21,7 @@ function AllCategories(props) {
   };
 
   const backButton = <button className="button-back" onClick={() => props.parentCallback()}>
-    <img src="/assets/icons/arrow-left.svg" alt="" />
+    <img src={`${process.env.PUBLIC_URL}/assets/icons/arrow-left.svg`}  alt="" />
     Back
   </button>
 

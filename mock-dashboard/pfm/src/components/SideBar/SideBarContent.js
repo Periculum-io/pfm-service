@@ -6,12 +6,12 @@ function SideBarContent() {
     <>
       <div className="logo-container">
         <Link to='/' className="logo-link" >
-          <img src="/assets/logo/insights-full.svg" alt="Insights" className="insights-logo" />
+          <img src={`${process.env.PUBLIC_URL}/assets/logo/insights-full.svg`} alt="Insights" className="insights-logo" />
         </Link>
       </div>
       <div className="sidebar-links">
         <NavLink exact to={"/"} className={"sidebar-link-row"}>
-          <img src="/assets/icons/home-hashtag.svg" alt="" />
+          <img src={`${process.env.PUBLIC_URL}/assets/icons/home-hashtag.svg`} alt="" />
           <p>Categories</p>
         </NavLink>
         {/* <NavLink exact to={"/budgets"} className="sidebar-link-row">
@@ -24,7 +24,7 @@ function SideBarContent() {
         </NavLink> */}
       </div>
       <Link to={"/"} className="sidebar-link-logout sidebar-link-row">
-        <img src="/assets/icons/logout.svg" alt="" />
+        <img src={`${process.env.PUBLIC_URL}/assets/icons/logout.svg`}  alt="" />
         <p>Log out</p>
       </Link>
     </>

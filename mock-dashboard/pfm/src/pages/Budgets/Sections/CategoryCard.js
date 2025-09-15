@@ -54,7 +54,7 @@ function CategoryCard(props) {
 
   const menuContainer = !Utils.isFieldEmpty(props.parentCallback)
     ? <div className="category-card-menu-container" ref={ref}>
-        <img src="/assets/icons/menu.svg" alt="" onClick={() => setIsMenuOpen(!isMenuOpen)} />
+        <img src={`${process.env.PUBLIC_URL}/assets/icons/menu.svg`} alt="" onClick={() => setIsMenuOpen(!isMenuOpen)} />
         {isMenuOpen &&
           <div className="category-card-menu" onClick={() => props.parentCallback(category)}>
             View Transactions
@@ -65,7 +65,7 @@ function CategoryCard(props) {
 
   const budgetExceededContent = isBudgetMet === true 
     ? <div className="budget-exceeded-container">
-        <img src="/assets/icons/danger.svg" alt="" />
+        <img src={`${process.env.PUBLIC_URL}/assets/icons/danger.svg`}  alt="" />
         <p>Budget limit {exceededOrReached}</p>
       </div>
     : null;

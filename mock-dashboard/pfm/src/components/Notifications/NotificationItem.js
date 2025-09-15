@@ -14,10 +14,10 @@ function NotificationItem(props) {
   }, [props.readAll])
   
   if(item.type === AlertTypes.INFO) {
-    iconType = <img src="/assets/icons/info-circle.svg" alt="" />;
+    iconType = <img src={`${process.env.PUBLIC_URL}/assets/icons/info-circle.svg`} alt="" />;
     messageClass = "notification-text-info";
   } else if(item.type === AlertTypes.WARNING) {
-    iconType = <img src="/assets/icons/danger-triangle.svg" alt="" />;
+    iconType = <img src={`${process.env.PUBLIC_URL}/assets/icons/danger-triangle.svg`} alt="" />;
     messageClass = "notification-text-warning";
   }
 

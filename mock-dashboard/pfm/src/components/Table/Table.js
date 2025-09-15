@@ -235,7 +235,7 @@ export function Table(props) {
           <GlobalFilter preGlobalFilteredRows={preGlobalFilteredRows} globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
           <div className="tb-filter-container" ref={filterRef}>
             <button id="tb-filter-button" onClick={() => setFilterShown(!isFilterShown)}>
-              <img src={"/assets/icons/filter.svg"} alt="" />
+              <img src={`${process.env.PUBLIC_URL}/assets/icons/filter.svg`} alt="" />
               Filter
             </button>
             {isFilterShown &&
@@ -254,7 +254,7 @@ export function Table(props) {
             {props.filter === true &&
               <div className="tb-filter-container tb-filter-single" ref={filterRef}>
                 <button id="tb-filter-button" onClick={() => setFilterShown(!isFilterShown)}>
-                  <img src={"/assets/icons/filter.svg"} alt="" />
+                  <img src={`${process.env.PUBLIC_URL}/assets/icons/filter.svg`} alt="" />
                   Filter
                 </button>
                 {isFilterShown &&
@@ -315,7 +315,7 @@ export function Table(props) {
                 previousPage();
                 document.getElementById('pagination-input').value = pageIndex;
               }} disabled={!canPreviousPage}>
-              <img src='/assets/icons/arrow_left_circle.svg' alt='' />
+              <img src={`${process.env.PUBLIC_URL}/assets/icons/arrow_left_circle.svg`}  alt='' />
             </button>
           </div>
           <div className='pagination-center'>
@@ -328,7 +328,7 @@ export function Table(props) {
                 nextPage();
                 document.getElementById('pagination-input').value = pageIndex + 2;
               }} disabled={!canNextPage}>
-              <img src='/assets/icons/arrow_ right_circle.svg' alt='' />
+              <img src={`${process.env.PUBLIC_URL}/assets/icons/arrow_ right_circle.svg`} alt='' />
             </button>
           </div>
         </div>
