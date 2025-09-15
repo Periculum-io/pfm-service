@@ -13,7 +13,7 @@ function SubscriptionsContent(props) {
       accessor: 'iconLink',
       Cell: data => {
         return (
-          <img className="subscription-icon" src={`${process.env.PUBLIC_URL}/${data.row.original.iconLink}`}  alt={data.row.original.name + " icon"} />
+          <img className="subscription-icon" src={`${data.row.original.iconLink}`}  alt={data.row.original.name + " icon"} />
         );
       },
       disableSortBy: true,

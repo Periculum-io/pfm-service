@@ -16,7 +16,7 @@ function SpendingCategoriesContent(props) {
       accessor: 'iconLink',
       Cell: data => {
         return (
-          <div className="category-icon"><img src={`${process.env.PUBLIC_URL}/${data.row.original.iconLink}`}  alt="" /></div>
+          <div className="category-icon"><img src={`${data.row.original.iconLink}`}  alt="" /></div>
         );
       },
       disableSortBy: true,
